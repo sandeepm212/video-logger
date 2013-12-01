@@ -30,3 +30,8 @@ uploadArchives {
        }
     }
 }
+
+[jettyRun, jettyRunWar,jettyStop]*.with {
+	//other configs 
+	webDefaultXml = file("${project.webAppDir}/WEB-INF/jetty-webdefault.xml")
+}
