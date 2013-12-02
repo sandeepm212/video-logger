@@ -2,7 +2,7 @@ $(document).ready(
 		function() {
 			$('#createLog').click(
 					function() {
-						createVideoLog();	
+						loadVideo();	
 					});
 			$('.link').click(
 					function() {
@@ -13,9 +13,9 @@ $('#video-source').bind('input propertychange', function() {
 	$('#create-log').show();
 });
 
-
-function createVideoLog () {
-	var paused = true, popcorn;
+var popcorn;
+function loadVideo () {
+	var paused = true;
 	var videoURL = $('#video-source').val();
 	var type = checkUrl (videoURL);
 	
@@ -202,7 +202,35 @@ function createVideoLog () {
 	} else if ( type === "null" ) {
 		
 	}
+}
+
+
+function logVideo () {
 	
-	
-	
+}
+
+
+function videoLogForm($scope) {
+    $scope.video = {
+    		logs: []
+    };
+
+    $scope.addItem = function() {
+    	if (popcorn != null) {
+    		var currentTime = popcorn.currentTime();
+    		var ss = popcorn;
+    		var se = ss;
+    		$scope.video.logs.push({
+                startTime: currentTime,
+                endTime: currentTime + 5
+            });
+    	} else {
+    		alert('Please load Video');
+    	}
+    	
+    },
+
+    $scope.removeItem = function(index) {
+        $scope.video.logs.splice(index, 1);
+    }    
 }
