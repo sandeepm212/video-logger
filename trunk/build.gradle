@@ -14,7 +14,9 @@ jar {
     }
 }
 
-jettyRun.contextPath = "/video-logger"
+jettyRun.contextPath = "video-logger"
+jettyRun.httpPort = 8080
+jettyRun.webDefaultXml = file("${project.webAppDir}/WEB-INF/jetty-webdefault.xml")
 
 repositories {
     mavenCentral()
@@ -37,7 +39,3 @@ uploadArchives {
     }
 }
 
-[jettyRun, jettyRunWar,jettyStop]*.with {
-	//other configs 
-	webDefaultXml = file("${project.webAppDir}/WEB-INF/jetty-webdefault.xml")
-}
