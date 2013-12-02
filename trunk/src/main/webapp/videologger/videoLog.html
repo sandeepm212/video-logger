@@ -1,19 +1,52 @@
 <html>
-	<head>
-		<script type="text/javascript" src="/video-logger/js/jQuery/jquery-1.10.2.min.js"></script>
-		<script type="text/javascript" src="/video-logger/js/popcorn-complete.js"></script>
-		<script type="text/javascript" src="/video-logger/js/utils.js"></script>
-		<script type="text/javascript" src="/video-logger/js/video-logger.js"></script>
-		
-		<title> Video Logger | Home </title>
-	</head>
-	<body>
-		<h1></h1>
-		<div> Paste a link from YouTube, SoundCloud, Vimeo or an HTML5 video </div>
-		<div>https://www.youtube.com/watch?v=spjab1eTTDE</div>
-		<div><textarea id="video-source" rows="3" cols="50" placeholder="Paste an HTML5, YouTube, Vimeo, or SoundCloud link here"></textarea></div>
-		<div><input type="button" id="createLog" value="Create Video Log" style=""/></div>
-		
-		<div id="video-container" style="width: 640px; height: 390px;" ></div>
-	</body>
+<head>
+<script type="text/javascript"
+	src="/video-logger/js/jQuery/jquery-1.10.2.min.js"></script>
+<script type="text/javascript"
+	src="/video-logger/js/popcorn-complete.js"></script>
+<script type="text/javascript" src="/video-logger/js/utils.js"></script>
+<script type="text/javascript" src="/video-logger/js/parseuri.js"></script>
+<script type="text/javascript" src="/video-logger/js/video-logger.js"></script>
+<link href="/video-logger/css/videolog.css" rel="stylesheet" type="text/css">
+<title>Video Logger | Home</title>
+</head>
+<body>
+	<h1></h1>
+	<div>Paste a link from YouTube, SoundCloud, Vimeo or an HTML5
+		video</div>
+	<div class="link">
+		Add Youtube Link<span style="display: none;">https://www.youtube.com/watch?v=spjab1eTTDE</span>
+	</div>
+	<div class="link">Vimeo Link
+		<span style="display: none;">http://vimeo.com/49444883</span>
+	</div>
+	 
+	<div class="link">
+		Soundcloud Link <span style="display: none;">https://soundcloud.com/victoriafredman/roar-katy-perry-official</span>
+	</div>
+	<div>
+		<textarea id="video-source" rows="3" cols="50"
+			placeholder="Paste an HTML5, YouTube, Vimeo, or SoundCloud link here"></textarea>
+	</div>
+	<div>
+		<input type="button" id="createLog" value="Create Video Log" style="" />
+	</div>
+
+	<div id="video-container" style="width: 640px; height: 390px;border: 1px solid red;"></div>
+	<div>
+		<table>
+			<tr>
+				<td>Start Time</td>
+				<td><input id="logStartTime"></td>
+			</tr>
+			<tr>
+				<td>End Time:</td>
+				<td><input id="logEndTime"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="button" value="Log"></td>
+			</tr>
+		</table>
+	</div>
+</body>
 </html>
