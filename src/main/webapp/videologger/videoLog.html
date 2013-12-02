@@ -1,16 +1,17 @@
 <html>
 <head>
-<script type="text/javascript"
-	src="/video-logger/js/jQuery/jquery-1.10.2.min.js"></script>
-<script type="text/javascript"
-	src="/video-logger/js/popcorn-complete.js"></script>
+<meta charset="UTF-8">
+<script type="text/javascript" src="/video-logger/js/jQuery/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/video-logger/js/angularjs/angular.js"></script>
+<script type="text/javascript" src="/video-logger/js/popcorn-complete.js"></script>
 <script type="text/javascript" src="/video-logger/js/utils.js"></script>
 <script type="text/javascript" src="/video-logger/js/parseuri.js"></script>
 <script type="text/javascript" src="/video-logger/js/video-logger.js"></script>
 <link href="/video-logger/css/videolog.css" rel="stylesheet" type="text/css">
+<link href="/video-logger/css/bootstrap.css" rel="stylesheet" type="text/css">
 <title>Video Logger | Home</title>
 </head>
-<body>
+<body ng:app>
 	<h1></h1>
 	<div>Paste a link from YouTube, SoundCloud, Vimeo or an HTML5
 		video</div>
@@ -20,16 +21,17 @@
 	<div class="link">Vimeo Link
 		<span style="display: none;">http://vimeo.com/49444883</span>
 	</div>
-	 
+	 <!-- 
 	<div class="link">
 		Soundcloud Link <span style="display: none;">https://soundcloud.com/victoriafredman/roar-katy-perry-official</span>
 	</div>
+	 -->
 	<div>
-		<textarea id="video-source" rows="3" cols="50"
-			placeholder="Paste an HTML5, YouTube, Vimeo, or SoundCloud link here"></textarea>
+		<textarea id="video-source" rows="2" cols="100"
+			placeholder="Paste an HTML5, YouTube, Vimeo link here"></textarea>
 	</div>
 	<div>
-		<input type="button" id="createLog" value="Create Video Log" style="" />
+		<input type="button" id="createLog" value="Load Video" style="" />
 	</div>
 
 	<div id="video-container" style="width: 640px; height: 390px;border: 1px solid red;"></div>
@@ -48,5 +50,34 @@
 			</tr>
 		</table>
 	</div>
+	<table>
+		<tbody id=""></tbody>
+	</table>
+	
+	
+	<h3>Video Log Details</h3>
+	<div ng:controller="videoLogForm">
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th></th>
+        </tr>
+        <tr ng:repeat="log in video.logs">
+            <td>&nbsp;</td>           
+            <td>{{log.startTime}}</td>
+            <td>{{log.endTime}}</td>
+            <td>
+                [<a href ng:click="removeItem($index)">X</a>]
+            </td>
+        </tr>
+        <tr>
+            <td><a href ng:click="addItem()" class="btn btn-small">add item</a></td>
+            <td colspan="3"></td>
+        </tr>
+    </table>
+	</div>
+	
 </body>
 </html>
