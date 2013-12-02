@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'jetty'
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '1.8.6'
+	gradleVersion = '1.8'
 }
 
 sourceCompatibility = 1.5
@@ -13,6 +13,8 @@ jar {
         attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
     }
 }
+
+jettyRun.contextPath = "/video-logger"
 
 repositories {
     mavenCentral()
