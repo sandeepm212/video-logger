@@ -2,6 +2,10 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'jetty'
 
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.8.6'
+}
+
 sourceCompatibility = 1.5
 version = '1.0'
 jar {
