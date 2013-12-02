@@ -4,6 +4,10 @@ $(document).ready(
 					function() {
 						createVideoLog();	
 					});
+			$('.link').click(
+					function() {
+						$('#video-source').html($(this).children( "span:first").html());
+					});
 		});
 $('#video-source').bind('input propertychange', function() {
 	$('#create-log').show();
@@ -14,16 +18,14 @@ function createVideoLog () {
 	var paused = true, popcorn;
 	var videoURL = $('#video-source').val();
 	var type = checkUrl (videoURL);
-	alert("TYPE:: " + type);
 	
 	var id,
     parsedUri,
     xhrURL,
-    type = this.checkUrl( baseUrl ),
     videoElem;
 	
 	if ( type === "YouTube" ) {
-		parsedUri = URI.parse( baseUrl );
+		parsedUri = URI.parse( videoURL );
         // youtube id can either be a query under v, example:
         // http://www.youtube.com/watch?v=p_7Qi3mprKQ
         // Or at the end of the url like this:
@@ -109,7 +111,7 @@ function createVideoLog () {
         });
 		popcorn = Popcorn.youtube('#video-container', videoURL);
 	} else if ( type === "SoundCloud" ) {
-		parsedUri = URI.parse( baseUrl );
+		parsedUri = URI.parse( videoURL );
         var splitUriDirectory = parsedUri.directory.split( "/" );
         id = splitUriDirectory[ splitUriDirectory.length - 1 ];
         var userId = splitUriDirectory[ splitUriDirectory.length - 2 ];
@@ -120,22 +122,25 @@ function createVideoLog () {
           }
 
           if ( respData.sharing === "private" || respData.embeddable_by === "none" ) {
-            errorCallback( SOUNDCLOUD_EMBED_DISABLED );
+            //errorCallback( SOUNDCLOUD_EMBED_DISABLED );
             return;
           }
-          successCallback({
-            source: baseUrl,
-            type: type,
-            thumbnail: respData.artwork_url || "../../resources/icons/soundcloud-small.png",
-            duration: respData.duration / 1000,
-            title: respData.title,
-            hidden: true
-          });
+          //alert(respData.title);
+          popcorn = Popcorn.soundcloud( "video-container", videoURL);
+          //popcorn = Popcorn.soundcloud( "video-container", "http://soundcloud.com/lilleput/popcorn" );
+          //popcorn = Popcorn.soundcloud( "media_1", "http://soundcloud.com/rhymesayers/brother-ali-us" );
+//            source: videoURL,
+//            type: type,
+//            thumbnail: respData.artwork_url || "../../resources/icons/soundcloud-small.png",
+//            duration: respData.duration / 1000,
+//            title: respData.title,
+//            hidden: true
+          
         });
         
-		popcorn = Popcorn.soundcloud( "#video-container", videoURL);
+		
 	} else if ( type === "Vimeo" ) {
-		parsedUri = URI.parse( baseUrl );
+		parsedUri = URI.parse( videoURL );
         var splitUriDirectory = parsedUri.directory.split( "/" );
         id = splitUriDirectory[ splitUriDirectory.length - 1 ];
         xhrURL = "https://vimeo.com/api/v2/video/" + id + ".json?callback=?";
@@ -144,25 +149,24 @@ function createVideoLog () {
           if ( !respData ) {
             return;
           }
-          successCallback({
-            source: baseUrl,
-            type: type,
-            thumbnail: respData.thumbnail_small,
-            duration: respData.duration,
-            title: respData.title
-          });
+          popcorn = Popcorn.vimeo( "#video-container", videoURL)
+          
+//            source: videoURL,
+//            type: type,
+//            thumbnail: respData.thumbnail_small,
+//            duration: respData.duration,
+//            title: respData.title
+          
         });
 		
-		
-		popcorn = Popcorn.vimeo( "#video-container", videoURL)
 	} else if ( type === "Archive" ) {
         // We don't accept direct MP4/OGV links to videos since Archive.org doesn't want to directly
         // expose the main video's. Until noted, keep it this way and don't change this.
-        if ( baseUrl.indexOf( "details" ) === -1 ) {
+        if ( videoURL.indexOf( "details" ) === -1 ) {
           return errorCallback( ARCHIVE_EMBED_DISABLED );
         }
 
-        xhrURL = "https://archive.org/services/maker.php?callback=caller&url=" + encodeURIComponent( baseUrl );
+        xhrURL = "https://archive.org/services/maker.php?callback=caller&url=" + encodeURIComponent( videoURL );
 
         Popcorn.getJSONP( xhrURL, function( respData ) {
 
