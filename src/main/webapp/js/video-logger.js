@@ -180,6 +180,11 @@ function videoLogForm($scope) {
     		logs: []
     };
 
+    $scope.types = [{key:"", value:"-- Select One --"},
+                    {key:"Text", value:"Text"},
+                    {key:"Image", value:"Image"}];
+    
+
     $scope.addItem = function() {
     	if (popcorn != null) {
     		var currentTime = popcorn.currentTime();
@@ -195,5 +200,9 @@ function videoLogForm($scope) {
 
     $scope.removeItem = function(index) {
         $scope.video.logs.splice(index, 1);
-    }    
+    }
+    
+    $scope.logElementType = function() {
+        alert("----");
+    }
 }
