@@ -27,15 +27,41 @@
 	</div>
 	 -->
 	<div>
-		<textarea id="video-source" rows="2" cols="100"
-			placeholder="Paste an HTML5, YouTube, Vimeo link here"></textarea>
+		<input id="video-source" type="text" placeholder="Paste an HTML5, YouTube, Vimeo link here" style="width: 500px;padding: 15px 3px;margin: 5px"/>
 	</div>
 	<div>
 		<input type="button" id="createLog" value="Load Video" style="" />
 	</div>
-
-	<div id="video-container" style="width: 640px; height: 390px;border: 1px solid red;"></div>
 	<div>
+		<div class="holder" id="video-container" style="width: 640px; height: 390px;border: 1px solid red;"></div>
+		<div class="holder"  style="width: 600px;">
+			<h3>Video Log Details</h3>
+			<div ng:controller="videoLogForm">
+		    <table class="table">
+		        <tr>
+		            <th></th>
+		            <th>Start Time</th>
+		            <th>End Time</th>
+		            <th></th>
+		        </tr>
+		        <tr ng:repeat="log in video.logs">
+		            <td>&nbsp;</td>           
+		            <td>{{log.startTime}}</td>
+		            <td>{{log.endTime}}</td>
+		            <td>
+		                [<a href ng:click="removeItem($index)">X</a>]
+		            </td>
+		        </tr>
+		        <tr>
+		            <td><a href ng:click="addItem()" class="btn btn-small">add item</a></td>
+		            <td colspan="3"></td>
+		        </tr>
+		    </table>
+			</div>
+		</div>
+		
+	</div>
+	<div style="width: 500px;">
 		<table>
 			<tr>
 				<td>Start Time</td>
@@ -44,6 +70,30 @@
 			<tr>
 				<td>End Time:</td>
 				<td><input id="logEndTime"></td>
+			</tr>
+			<tr>
+				<td>Element Type</td>
+				<td>
+					<select>
+						<option value="TEXT">Text</option>
+						<option value="IMAGE">Image</option>
+					</select>
+				</td>
+			</tr>
+			<tr id="logElementText">
+				<td>Input</td>
+				<td>
+					<input type="text" >
+				</td>
+			</tr>
+			<tr id="logElementImg">
+				<td>Element Type</td>
+				<td>
+					<select>
+						<option value="TEXT">Text</option>
+						<option value="IMAGE">Image</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="button" value="Log"></td>
@@ -55,29 +105,6 @@
 	</table>
 	
 	
-	<h3>Video Log Details</h3>
-	<div ng:controller="videoLogForm">
-    <table class="table">
-        <tr>
-            <th></th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th></th>
-        </tr>
-        <tr ng:repeat="log in video.logs">
-            <td>&nbsp;</td>           
-            <td>{{log.startTime}}</td>
-            <td>{{log.endTime}}</td>
-            <td>
-                [<a href ng:click="removeItem($index)">X</a>]
-            </td>
-        </tr>
-        <tr>
-            <td><a href ng:click="addItem()" class="btn btn-small">add item</a></td>
-            <td colspan="3"></td>
-        </tr>
-    </table>
-	</div>
 	
 </body>
 </html>

@@ -6,14 +6,14 @@ $(document).ready(
 					});
 			$('.link').click(
 					function() {
-						$('#video-source').html($(this).children( "span:first").html());
+						$('#video-source').val($(this).children( "span:first").html());
 					});
 		});
 $('#video-source').bind('input propertychange', function() {
 	$('#create-log').show();
 });
 
-var popcorn;
+var popcorn, cuePoint;
 function loadVideo () {
 	var paused = true;
 	var videoURL = $('#video-source').val();
@@ -160,48 +160,13 @@ function loadVideo () {
         });
 		
 	} else if ( type === "Archive" ) {
-        // We don't accept direct MP4/OGV links to videos since Archive.org doesn't want to directly
-        // expose the main video's. Until noted, keep it this way and don't change this.
-        if ( videoURL.indexOf( "details" ) === -1 ) {
-          return errorCallback( ARCHIVE_EMBED_DISABLED );
-        }
-
-        xhrURL = "https://archive.org/services/maker.php?callback=caller&url=" + encodeURIComponent( videoURL );
-
-        Popcorn.getJSONP( xhrURL, function( respData ) {
-
-          if ( !respData || respData.error || !respData.title || !respData.duration ) {
-            return errorCallback( ARCHIVE_EMBED_DISABLED );
-          }
-
-          videoElem = document.createElement( "video" );
-          videoElem.addEventListener( "error", function() {
-            var options = {
-              source: respData.media,
-              type: type,
-              title: respData.title,
-              thumbnail: respData.thumb,
-              linkback: respData.linkback
-            };
-            jwPlayerFallback( options, successCallback, errorCallback );
-          }, false );
-          videoElem.addEventListener( "loadedmetadata", function() {
-            successCallback({
-              source: respData.media,
-              type: type,
-              title: respData.title,
-              thumbnail: respData.thumb,
-              linkback: respData.linkback,
-              duration: videoElem.duration
-            });
-          }, false );
-          videoElem.src = URI.makeUnique( respData.media ).toString();
-        });
+        
 	} else if ( type === "HTML5" ) {
 		
 	} else if ( type === "null" ) {
 		
 	}
+	
 }
 
 
@@ -218,8 +183,6 @@ function videoLogForm($scope) {
     $scope.addItem = function() {
     	if (popcorn != null) {
     		var currentTime = popcorn.currentTime();
-    		var ss = popcorn;
-    		var se = ss;
     		$scope.video.logs.push({
                 startTime: currentTime,
                 endTime: currentTime + 5

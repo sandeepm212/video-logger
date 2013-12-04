@@ -1,3 +1,9 @@
 .link {
 	cursor: pointer;text-decoration:underline;color: blue;	
 }
+
+div.holder { 
+	width: 400px; 
+	border: 1px solid red; 
+	float: left
+}
