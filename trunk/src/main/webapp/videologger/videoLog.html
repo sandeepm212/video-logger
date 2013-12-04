@@ -1,110 +1,98 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript" src="/video-logger/js/jQuery/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="/video-logger/js/angularjs/angular.js"></script>
-<script type="text/javascript" src="/video-logger/js/popcorn-complete.js"></script>
+<script type="text/javascript"
+	src="/video-logger/js/jQuery/jquery-1.10.2.min.js"></script>
+<script type="text/javascript"
+	src="/video-logger/js/angularjs/angular.js"></script>
+<script type="text/javascript"
+	src="/video-logger/js/popcorn-complete.js"></script>
 <script type="text/javascript" src="/video-logger/js/utils.js"></script>
 <script type="text/javascript" src="/video-logger/js/parseuri.js"></script>
 <script type="text/javascript" src="/video-logger/js/video-logger.js"></script>
-<link href="/video-logger/css/videolog.css" rel="stylesheet" type="text/css">
-<link href="/video-logger/css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="/video-logger/css/videolog.css" rel="stylesheet"
+	type="text/css">
+<link href="/video-logger/css/bootstrap.css" rel="stylesheet"
+	type="text/css">
 <title>Video Logger | Home</title>
 </head>
 <body ng:app>
-	<h1></h1>
-	<div>Paste a link from YouTube, SoundCloud, Vimeo or an HTML5
-		video</div>
-	<div class="link">
-		Add Youtube Link<span style="display: none;">https://www.youtube.com/watch?v=spjab1eTTDE</span>
-	</div>
-	<div class="link">Vimeo Link
-		<span style="display: none;">http://vimeo.com/49444883</span>
-	</div>
-	 <!-- 
-	<div class="link">
-		Soundcloud Link <span style="display: none;">https://soundcloud.com/victoriafredman/roar-katy-perry-official</span>
-	</div>
-	 -->
-	<div>
-		<input id="video-source" type="text" placeholder="Paste an HTML5, YouTube, Vimeo link here" style="width: 500px;padding: 15px 3px;margin: 5px"/>
-	</div>
-	<div>
-		<input type="button" id="createLog" value="Load Video" style="" />
-	</div>
-	<div>
-		<div class="holder" id="video-container" style="width: 640px; height: 390px;border: 1px solid red;"></div>
-		<div class="holder"  style="width: 600px;">
-			<h3>Video Log Details</h3>
-			<div ng:controller="videoLogForm">
-		    <table class="table">
-		        <tr>
-		            <th></th>
-		            <th>Start Time</th>
-		            <th>End Time</th>
-		            <th></th>
-		        </tr>
-		        <tr ng:repeat="log in video.logs">
-		            <td>&nbsp;</td>           
-		            <td>{{log.startTime}}</td>
-		            <td>{{log.endTime}}</td>
-		            <td>
-		                [<a href ng:click="removeItem($index)">X</a>]
-		            </td>
-		        </tr>
-		        <tr>
-		            <td><a href ng:click="addItem()" class="btn btn-small">add item</a></td>
-		            <td colspan="3"></td>
-		        </tr>
-		    </table>
+	<div ng:controller="videoLogForm">
+		<h1></h1>
+		<div>Paste a link from YouTube, SoundCloud, Vimeo or an HTML5 video</div>
+		<div class="link">
+			Add Youtube Link<span style="display: none;">https://www.youtube.com/watch?v=spjab1eTTDE</span>
+		</div>
+		<div class="link">
+			Vimeo Link <span style="display: none;">http://vimeo.com/49444883</span>
+		</div>
+		<!-- 
+		<div class="link">
+			Soundcloud Link <span style="display: none;">https://soundcloud.com/victoriafredman/roar-katy-perry-official</span>
+		</div>
+		 -->
+		<div>
+			<input id="video-source" type="text"
+				placeholder="Paste an HTML5, YouTube, Vimeo link here"
+				style="width: 500px; padding: 15px 3px; margin: 5px" />
+		</div>
+		<div>
+			<input type="button" id="createLog" value="Load Video" style="" />
+		</div>
+		<div style="display: block;">
+			<div>&nbsp;</div>
+			<div class="holder" id="video-container" style="width: 640px; height: 390px; border: 1px solid red;"></div>
+			<div class="holder" style="width: 600px;">
+				<h3>Video Log Details</h3>
+				<table class="table">
+					<tr>
+						<th></th>
+						<th>Start Time</th>
+						<th>End Time</th>
+						<th></th>
+					</tr>
+					<tr ng:repeat="log in video.logs">
+						<td>&nbsp;</td>
+						<td>{{log.startTime}}</td>
+						<td>{{log.endTime}}</td>
+						<td>[<a href ng:click="removeItem($index)">X</a>]
+						</td>
+					</tr>
+					<tr>
+						<td><a href ng:click="addItem()" class="btn btn-small">add
+								item</a></td>
+						<td colspan="3"></td>
+					</tr>
+				</table>
+			
 			</div>
 		</div>
 		
+			<table>
+				<tr>
+					<td>Start Time</td>
+					<td><input id="logStartTime"></td>
+				</tr>
+				<tr>
+					<td>End Time:</td>
+					<td><input id="logEndTime"></td>
+				</tr>
+				<tr>
+					<td>Element Type</td>
+					<td><select ng:change="logElementType()">
+							<option ng:repeat="item in types" value="{{item.key}}">{{item.value}}</option>
+					</select></td>
+				</tr>
+				<tr id="logElement" style="display: none;">
+					<td>Text</td>
+					<td><input type="text"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="button" value="Log"></td>
+				</tr>
+			</table>
+		
 	</div>
-	<div style="width: 500px;">
-		<table>
-			<tr>
-				<td>Start Time</td>
-				<td><input id="logStartTime"></td>
-			</tr>
-			<tr>
-				<td>End Time:</td>
-				<td><input id="logEndTime"></td>
-			</tr>
-			<tr>
-				<td>Element Type</td>
-				<td>
-					<select>
-						<option value="TEXT">Text</option>
-						<option value="IMAGE">Image</option>
-					</select>
-				</td>
-			</tr>
-			<tr id="logElementText">
-				<td>Input</td>
-				<td>
-					<input type="text" >
-				</td>
-			</tr>
-			<tr id="logElementImg">
-				<td>Element Type</td>
-				<td>
-					<select>
-						<option value="TEXT">Text</option>
-						<option value="IMAGE">Image</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="button" value="Log"></td>
-			</tr>
-		</table>
-	</div>
-	<table>
-		<tbody id=""></tbody>
-	</table>
-	
-	
-	
+
 </body>
 </html>
