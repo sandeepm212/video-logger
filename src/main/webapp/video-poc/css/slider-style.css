@@ -1,0 +1,68 @@
+.jcarousel-skin-tango .jcarousel-container {
+}
+.jcarousel-skin-tango .jcarousel-container img {
+	 width: 100%;
+}
+.jcarousel-skin-tango .jcarousel-container-horizontal {
+	padding: 10px 30px;
+}
+.jcarousel-skin-tango .jcarousel-clip {
+	overflow: hidden;
+}
+.jcarousel-skin-tango .jcarousel-clip-horizontal {
+}
+.jcarousel-skin-tango .jcarousel-item {
+	width:100px;
+	padding: 6px;
+	border:1px solid #ccc;
+	-moz-box-shadow:    1px 4px 2px 1px #bbb;
+  	-webkit-box-shadow: 1px 4px 2px 1px #bbb;
+ 	 box-shadow:        1px 4px 2px 1px #bbb;
+	 filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30)";
+	zoom: 1;
+}
+.jcarousel-skin-tango .jcarousel-item-horizontal {
+	margin-left: 0;
+	margin-right: 10px;
+}
+.jcarousel-skin-tango .jcarousel-next-horizontal {
+	position: absolute;
+	top: 20%;
+	right: 0px;
+	width: 26px;
+	height: 74px;
+	cursor: pointer;
+	background: transparent url(../images/slider-arrow.png) no-repeat 0 0;
+}
+.jcarousel-skin-tango .jcarousel-next-horizontal:hover, .jcarousel-skin-tango .jcarousel-next-horizontal:focus, .jcarousel-skin-tango .jcarousel-next-horizontal:active {
+	background-position: 0 -73px;
+}
+.jcarousel-skin-tango .jcarousel-prev-horizontal {
+	position: absolute;
+	top: 20%;
+	left: 0px;
+	width: 26px;
+	height: 74px;
+	cursor: pointer;
+	background: transparent url(../images/slider-arrow.png) no-repeat -26px 0;
+}
+.jcarousel-skin-tango .jcarousel-prev-horizontal:hover, .jcarousel-skin-tango .jcarousel-prev-horizontal:focus, .jcarousel-skin-tango .jcarousel-prev-horizontal:active {
+	background-position: -26px -73px;
+}
+.jcarousel-skin-tango .jcarousel-item a {
+	opacity: 0.4;
+	filter:alpha(opacity=40); 
+	display:block;
+}
+.jcarousel-skin-tango .jcarousel-item a:hover,.jcarousel-skin-tango .jcarousel-item a.active {
+	opacity: 1;
+	filter:alpha(opacity=100);
+}
+.jcarousel-next-disabled,
+.jcarousel-prev-disabled
+{
+	opacity:0.3;
+	filter:alpha(opacity=30);
+	cursor:auto !important;
+}
