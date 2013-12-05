@@ -247,7 +247,7 @@ $(document).ready(function()
 			eachRow = '<tr>' +
 						'<td>' + startInput.val() + '</td>' +
 						'<td>' + clipAction.data('action-value') + '</td>' + 
-						//'<td>' + endInput.val() + '</td>' +
+						'<td>' + endInput.val() + '</td>' +
 						'<td>' + notesTextarea.val() + '</td>' +
 						'<td>' + '<a href="javascript:void(0)" class="delete-cue hideText" title="Delete this log entry">Delete this log entry</a>'+ '</td>' +
 					  '</tr>';
@@ -259,7 +259,7 @@ $(document).ready(function()
 			eachRowData = new Object();
 			eachRowData.action = clipAction.data('action-value');
 			eachRowData.startTime = startInput.val();
-			//eachRowData.endTime = endInput.val();
+			eachRowData.endTime = endInput.val();
 			eachRowData.notes = notesTextarea.val();
 			clipDataArray.push(eachRowData);
 			clearFields();
@@ -267,6 +267,11 @@ $(document).ready(function()
 			$('section.right').removeClass('hide');
 			videoObj.play();
 			logTable.trigger("update");
+			
+			$('#enter-out-time').css('display','-moz-stack');
+			$('#out-time-input').css('display','none');
+			
+			
 		}
 	});
 	
@@ -653,7 +658,7 @@ $(document).ready(function()
 	function clearFields()
 	{
 		startInput.val('');
-		//endInput.val('');
+		endInput.val('');
 		notesTextarea.val('');
 	}
 	
