@@ -587,6 +587,22 @@ $(document).ready(function()
 				       text: "DRUMBEAT",
 				       target: "previewData"
 				     });
+			videoObj.googlemap({
+	        	   start:1,
+	        	   end:15,
+	        	   target:"mapdiv",
+	        	   lat:35,
+	        	   lng:-80,
+	        	   type:"ROADMAP",
+	        	   zoom:10
+	           });
+			videoObj.wikipedia({
+		        start: 1,
+		        end: 10,
+		        src: "http://en.wikipedia.org/wiki/India",
+		        title: "this is an article about india",
+		        target: "wikidiv"
+		      });
 		}
 	}
 	
