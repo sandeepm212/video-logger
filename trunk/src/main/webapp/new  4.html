@@ -1,0 +1,45 @@
+ <html>
+     <head>
+	 <div id="footnote" style="height:300px;width=300px;border:1px solid black;"></div>
+	 <div id="footnote1" style="height:300px;width=300px;border:1px solid black;"></div>
+       <script src="http://popcornjs.org/code/dist/popcorn-complete.js"></script>
+       <script>
+         document.addEventListener( "DOMContentLoaded", function() {
+ 
+           
+		   
+		   var pop = Popcorn.youtube('#footnote','http://www.youtube.com/watch?v=uEdRLlqdgA4');
+           pop.footnote({
+        	   start:2,
+        	   end:5,
+        	   text:"popcorn test",
+        	   target:"footnote1"
+           }).footnote({
+        	   start:5,
+        	   end:10,
+        	   text:"popcorn test2",
+        	   target:"footnote1"  
+           }).googlemap({
+        	   start:11,
+        	   end:15,
+        	   target:"footnote1",
+        	   lat:35,
+        	   lng:-80,
+        	   type:"ROADMAP",
+        	   zoom:10
+           });
+           pop.subtitle({
+        	         start: 5,
+        	          end: 15,
+        	          text: "this is the first subtitle of 2011",
+        	       });
+           pop.play();
+ 
+         }, false );
+       </script>
+     </head>
+     <body>
+     
+       
+     </body>
+   </html>
