@@ -240,13 +240,15 @@ $(document).ready(function()
 	
 	
 	//Enter log button click handler - make entry of a row in the log table in UI, push new item in clipDataArray with new values
-	$('#enter-log-btn').on('click', function()
-	{
-		if(validateFields())
-		{
+	$('#enter-log-btn,#enter-log2').on('click', function() {
+		addLog();
+	});
+	
+	function addLog() {
+		if(validateFields()) {
 			eachRow = '<tr>' +
-						'<td>' + startInput.val() + '</td>' +
-						'<td>' + clipAction.data('action-value') + '</td>' + 
+						'<td>' + clipAction.data('action-value') + '</td>' +
+						'<td>' + startInput.val() + '</td>' +						 
 						'<td>' + endInput.val() + '</td>' +
 						'<td>' + notesTextarea.val() + '</td>' +
 						'<td>' + '<a href="javascript:void(0)" class="delete-cue hideText" title="Delete this log entry">Delete this log entry</a>'+ '</td>' +
@@ -263,17 +265,15 @@ $(document).ready(function()
 			eachRowData.notes = notesTextarea.val();
 			clipDataArray.push(eachRowData);
 			clearFields();
-			alert("Clip entry successfully logged");
+			//alert("Clip entry successfully logged");
 			$('section.right').removeClass('hide');
 			videoObj.play();
 			logTable.trigger("update");
 			
 			$('#enter-out-time').css('display','-moz-stack');
-			$('#out-time-input').css('display','none');
-			
-			
+			$('#out-time-input').css('display','none');		
 		}
-	});
+	}
 	
 	 
 	
@@ -663,8 +663,7 @@ $(document).ready(function()
 	}
 	
 	//Helper function to format the timestamp values (from seconds to SMPTE formatted string i.e. HH:MM:SS.FF)
-	function formatTime(sec)
-	{
+	function formatTime(sec) {
 		var d = new Date(Number(sec * 1000)),
 			HH = d.getUTCHours(),
 			MM = d.getUTCMinutes(),
@@ -676,12 +675,12 @@ $(document).ready(function()
 	}
 	
 	//Helper function of formatTime() function to add 0 before single digit number
-	function pad(num)
-	{
-		if (num > 9)
+	function pad(num) {
+		if (num > 9) {
 			return num;
-		else
+		} else {
 			return '0' + num;
+		}	
 	}
 	
 	//Helper function to return an array containing different filename versions of the media element

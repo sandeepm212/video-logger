@@ -255,12 +255,18 @@ a.intime-btn, a.outtime-btn {
 }
 .logger-note textarea {
 	height: 46px;
-	width: 98%;
+	width: 88%;
 	padding:5px;
 	margin:5px 0;
 	background-color:#e0e0e0;
 	border:1px solid #686868;
 }
+
+.enterLog {
+	margin-left: 5px;
+	cursor: pointer;
+}
+
 a.play-video {
 	margin: 0 10px 0 0;
 	padding:0 20px 0 0;
