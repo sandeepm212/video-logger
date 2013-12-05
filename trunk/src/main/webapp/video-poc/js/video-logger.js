@@ -558,6 +558,47 @@ $(document).ready(function()
 		}
 	});
 	
+	//Helper function to synchronize video with log record table
+	function syncVideoWidLog()
+	{
+		var inTime;
+		for(clipIndex in clipDataArray)
+		{
+			inTime = clipDataArray[clipIndex].startTime;
+			videoObj.cue(inTime, cueCallback(inTime));
+			videoObj.subtitle({
+    	         start: clipDataArray[clipIndex].startTime,
+    	          end: clipDataArray[clipIndex].endTime,
+    	          text: clipDataArray[clipIndex].notes
+    	       });
+			videoObj.footnote({
+				  start: clipDataArray[clipIndex].startTime,
+	   	          end: clipDataArray[clipIndex].endTime,
+	   	          text: clipDataArray[clipIndex].notes,
+	   	          target:"previewData"  
+	           });
+			videoObj.image({
+				        // seconds
+				        start: 1,
+				       // seconds
+				       end: 15,
+				       href: "http://www.drumbeat.org/",
+				     src: "https://www.drumbeat.org/media//images/drumbeat-logo-splash.png",
+				       text: "DRUMBEAT",
+				       target: "previewData"
+				     });
+		}
+	}
+	
+	//Cue event callback function
+	function cueCallback(inTime)
+	{
+		return function()
+		{
+			$('tbody tr', logTable).removeClass('row-highlight').filter(function() {return $.data(this, 'stratTime') == inTime;}).addClass('row-highlight');
+		};
+	}
+	
 	//Back from preview screen
 	$('#back-to-logger').live('click', function()
 	{
@@ -582,25 +623,7 @@ $(document).ready(function()
 		actionArray.splice(liIndex, 1);
 	}
 	
-	//Helper function to synchronize video with log record table
-	function syncVideoWidLog()
-	{
-		var inTime;
-		for(clipIndex in clipDataArray)
-		{
-			inTime = clipDataArray[clipIndex].startTime;
-			videoObj.cue(inTime, cueCallback(inTime));
-		}
-	}
-	
-	//Cue event callback function
-	function cueCallback(inTime)
-	{
-		return function()
-		{
-			$('tbody tr', logTable).removeClass('row-highlight').filter(function() {return $.data(this, 'stratTime') == inTime;}).addClass('row-highlight');
-		};
-	}
+
 	
 	//Helper function to load a video either from local resource or from web
 	function loadVideo()
