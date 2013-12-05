@@ -79,9 +79,11 @@
 				</tr>
 				<tr>
 					<td>Element Type</td>
-					<td><select ng:change="logElementType()">
+					<td>
+						<select ng-change="logElementType()">
 							<option ng:repeat="item in types" value="{{item.key}}">{{item.value}}</option>
-					</select></td>
+						</select>
+					</td>
 				</tr>
 				<tr id="logElement" style="display: none;">
 					<td>Text</td>
