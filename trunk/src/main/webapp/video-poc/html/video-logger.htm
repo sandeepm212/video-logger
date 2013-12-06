@@ -61,6 +61,7 @@
                 <div class="panel-wrap step-1">
                     <h3>Step 1: Select video</h3>
                     <div class="panel-body clearfix">
+                    
                         <p class="instruction">You can select any existing video from the below thumbnail menu or can type the URL of a video in the provided text input box.</p>
                         <h2>
                         <input type="radio" value="existing" checked id="exsting-video" name="video-type-rdo">Select from existing video files (Click on any thumbnail to select the video)</h2>
@@ -132,7 +133,11 @@
                             </div>
                         </div>
                         <div class="logger-holder rounded-holder">
-                        <p class="instruction">Click on any action button or press the key board shortcut key to start logging activity</p>
+                        <h3>Logger
+                        <a class="tip-trigger" href="javascript:void(0)"> <img style="position: relative; top: 6px;" src="../images/info.png">  </a>
+                         <p class="tooltip-content hide">Click on any action button or press the key board shortcut key to start logging activity</p>
+                        </h3>
+                        
                             <section class="actions"></section>
                             <div class="time-logger clearfix">
                                 <section class="time-inputs">
@@ -140,13 +145,13 @@
                                     <div class="row">
                                         <label>In time:</label>
                                         <input type="text" disabled="disabled" id="in-time-input"/>
-                                        <!--<a href="javascript:void(0)" class="intime-btn hideText" title="Click to log clip start time">Click to log clip start time</a>-->
+                                        <a href="javascript:void(0)" class="intime-btn hideText" title="Click to log clip start time"></a>
                                     </div>
                                     <div class="row">
                                         <label>Out time:</label> 
                                         <input type="button" value="Out Time" id="enter-out-time" class="enter-log" title="Out Time"> 
                                         <input type="text" id="out-time-input" style="display:none;"/>
-                                        <!--<a href="javascript:void(0)" class="outtime-btn hideText" title="Click to log clip end time">Click to log clip end time</a>-->
+                                        <a href="javascript:void(0)" class="outtime-btn hideText" title="Click to log clip end time">Click to log clip end time</a>
                                     </div>
                                 </section>
                                 <section class="logger-note">
