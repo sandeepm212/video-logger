@@ -328,7 +328,7 @@ th.tablesorter-header
 	cursor:pointer;
 	background: url(../images/sortable.png) no-repeat right center;
 }
-.col-1, .col-2
+.col-1, .col-2,.col-5
 {
 	width:25%;
 }

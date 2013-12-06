@@ -49,7 +49,7 @@ $(document).ready(function()
 	
 	//Calling the table sorter plugin
 	logTable.tablesorter({
-		headers:{ 2 : {sorter : false}, 3 : {sorter : false}}
+		headers:{ 3 : {sorter : false}, 4 : {sorter : false}}
 	});
 	
 	//Handling selection radio buttons
