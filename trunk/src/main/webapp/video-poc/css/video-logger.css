@@ -207,6 +207,31 @@ ul.added-action-list li {
 	color:#fff;
 	box-shadow: 4px 4px 6px #999999;
 }
+ul.added-action-list1 li {
+	margin:0 5px;
+	cursor:pointer;
+	line-height: 16px;
+	
+	background: #f1e767;
+	background: -moz-linear-gradient(top,  #f1e767 0%, #feb645 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f1e767), color-stop(100%,#feb645));
+	background: -webkit-linear-gradient(top,  #f1e767 0%,#feb645 100%);
+	background: -o-linear-gradient(top,  #f1e767 0%,#feb645 100%);
+	background: -ms-linear-gradient(top,  #f1e767 0%,#feb645 100%);
+	background: linear-gradient(to bottom,  #f1e767 0%,#feb645 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1e767', endColorstr='#feb645',GradientType=0 );
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	display: inline-block;
+	padding: 5px 8px;
+	border:1px solid #B5EFFE;
+	text-decoration:none;
+	color:#fff;
+	box-shadow: 4px 4px 6px #999999;
+}
+
 .actions li:hover, .actions li.selected {
 	color:#5E4108;
 	
@@ -419,6 +444,13 @@ ul.added-action-list li {
 	cursor:auto;
 	position:relative;
 }
+
+ul.added-action-list1 li {
+	box-shadow:none;
+	margin:4px;
+	cursor:auto;
+	position:relative;
+}
 .delete-action, .delete-cue {
 	width:16px;
 	height:16px;
@@ -577,7 +609,12 @@ a.help{
 }
 ul.added-action-list li.has-hot-key
 {
-	margin-left:15px;
+	margin-left:30px;
+}
+
+ul.added-action-list1 li.has-hot-key
+{
+	margin-left:30px;
 }
 .hotkey{
     background-color: #FF3321;
@@ -586,12 +623,28 @@ ul.added-action-list li.has-hot-key
     display: inline-block;
     font-size: 0.8em;
     height: 16px;
-    left: -12px;
+    left: -25px;
     padding: 2px;
     position: absolute;
     text-align: center;
     text-shadow: 1px 1px 1px #000000;
-    top: -13px;
+    top: 2px;
+    width: 16px;
+	cursor:help;
+	color:#fff;
+}
+
+.hotkeyl{
+    background-color: #FF3321;
+    border-radius: 16px 16px 16px 16px;
+    display: inline-block;
+    font-size: 0.8em;
+    height: 16px;
+    right: 5px;
+    padding: 2px;
+    position: relative;
+    text-align: center;
+    top: -2px;
     width: 16px;
 	cursor:help;
 	color:#fff;

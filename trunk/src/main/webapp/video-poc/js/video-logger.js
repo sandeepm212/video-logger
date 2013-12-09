@@ -27,12 +27,12 @@ $(document).ready(function()
 		localFilePath = '../assets/',
 		slideTime = 300,
 		fadeTime = 500,
-		cricketActionProfile = [{"action":"Boundary","hotKeyChar":"B","hotKeyCode":66},
-								{"action":"Over boundary","hotKeyChar":"6","hotKeyCode":54},
-								{"action":"3 runs","hotKeyChar":"3","hotKeyCode":51},
-								{"action":"Out","hotKeyChar":"O","hotKeyCode":79},
-								{"action":"One run","hotKeyChar":"1","hotKeyCode":49},
-								{"action":"Two runs","hotKeyChar":"2","hotKeyCode":50}],
+		cricketActionProfile = [{"action":"Boundary","hotKeyChar":"B","hotKeyCode":66,"legend":"#FFFF00"},
+								{"action":"Over boundary","hotKeyChar":"6","hotKeyCode":54,"legend":"#00CC00"},
+								{"action":"3 runs","hotKeyChar":"3","hotKeyCode":51,"legend":"#0066FF"},
+								{"action":"Out","hotKeyChar":"O","hotKeyCode":79,"legend":"#993300"},
+								{"action":"One run","hotKeyChar":"1","hotKeyCode":49,"legend":"#FF0066"},
+								{"action":"Two runs","hotKeyChar":"2","hotKeyCode":50,"legend":"#660066"}],
 								
 		soccerActionProfile = [	{"action":"Goal","hotKeyChar":"G","hotKeyCode":71},
 								{"action":"Penalty","hotKeyChar":"P","hotKeyCode":80},
@@ -167,6 +167,7 @@ $(document).ready(function()
 				eachAction.hotKeyChar = $(this).data('hotKeyChar');
 				eachAction.hotKeyCode = $(this).data('hotKeyCode');
 				actionArray.push(eachAction);
+				//$('.step-3 .added-action-list1').append(this);
 			});
 			//renderActionButtons();
 			var actionClone = $('.step-2 .added-action-list').clone(true).removeClass('rounded-holder');
@@ -176,6 +177,23 @@ $(document).ready(function()
 			if(!videoObj)
 			{
 				loadVideo();
+			}
+			for(actionIndex in cricketActionProfile)
+			
+			{
+				var liStr = '<li>' + cricketActionProfile[actionIndex].action + '</li>',
+				liObj = $(liStr);
+				if(cricketActionProfile[actionIndex].hotKeyChar != '')
+				{
+					var spanObj = '<span class="hotkey" style="background-color:'+cricketActionProfile[actionIndex].legend+'" title="Key board shortcut for this action is ' + cricketActionProfile[actionIndex].hotKeyChar + '">' + 
+									cricketActionProfile[actionIndex].hotKeyChar + '</span>';
+					liObj.append(spanObj).addClass('has-hot-key');
+				}
+				liObj.data({'action' : cricketActionProfile[actionIndex].action, 
+							'hotKeyChar' : cricketActionProfile[actionIndex].hotKeyChar, 
+							'hotKeyCode' : cricketActionProfile[actionIndex].keyCode});		
+				$('.step-3 .added-action-list1').append(liObj);
+				
 			}
 		}
 	});
@@ -246,8 +264,23 @@ $(document).ready(function()
 	
 	function addLog() {
 		if(validateFields()) {
+			legend="";
+			
+			for(actionIndex in cricketActionProfile)
+				
+			{
+				if(clipAction.data('action-value')==cricketActionProfile[actionIndex].action){
+					legend=cricketActionProfile[actionIndex].legend;
+				}			
+				
+			}
+			spanText="";
+			if(legend!=""){
+				spanText='<span style="background-color:'+legend+'" class="hotkeyl">&nbsp;</span>'
+			}
+			
 			eachRow = '<tr>' +
-						'<td>' + clipAction.data('action-value') + '</td>' +
+						'<td>' + spanText + clipAction.data('action-value') + '</td>' +
 						'<td>' + startInput.val() + '</td>' +						 
 						'<td>' + endInput.val() + '</td>' +
 						'<td>' + notesTextarea.val() + '</td>' +
@@ -748,7 +781,7 @@ $(document).ready(function()
 			liObj = $(liStr);
 			if(actionProfile[actionIndex].hotKeyChar != '')
 			{
-				var spanObj = '<span class="hotkey" title="Key board shortcut for this action is ' + actionProfile[actionIndex].hotKeyChar + '">' + 
+				var spanObj = '<span class="hotkey" style="background-color:'+actionProfile[actionIndex].legend+'" title="Key board shortcut for this action is ' + actionProfile[actionIndex].hotKeyChar + '">' + 
 								actionProfile[actionIndex].hotKeyChar + '</span>';
 				liObj.append(spanObj).addClass('has-hot-key');
 			}
@@ -756,6 +789,7 @@ $(document).ready(function()
 						'hotKeyChar' : actionProfile[actionIndex].hotKeyChar, 
 						'hotKeyCode' : actionProfile[actionIndex].keyCode});		
 			$('.step-2 .added-action-list').append(liObj);
+			
 		}
 		$('.step-2 .added-action-list').slideDown(slideTime);
 	}
