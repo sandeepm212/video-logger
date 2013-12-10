@@ -277,7 +277,7 @@ $(document).ready(function()
 			}
 			spanText="";
 			if(legend!=""){
-				spanText='<span style="background-color:'+legend+'" class="hotkeyl" title="Key board shortcut for this action is ' + clipAction.data('action-value') + '">&nbsp;</span>'
+				spanText='<span style="background-color:'+legend+'" class="hotkeyl" title="' + clipAction.data('action-value') + '">&nbsp;</span>'
 			}
 			
 			eachRow = '<tr>' +
@@ -371,7 +371,6 @@ $(document).ready(function()
 	$('.add-action').live('click', function()
 	{
 		var action = $('#action-name').val();
-			
 		if(action != '')
 		{
 			var liStr = '<li>' + action + 
