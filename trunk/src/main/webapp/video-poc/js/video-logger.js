@@ -277,11 +277,11 @@ $(document).ready(function()
 			}
 			spanText="";
 			if(legend!=""){
-				spanText='<span style="background-color:'+legend+'" class="hotkeyl">&nbsp;</span>'
+				spanText='<span style="background-color:'+legend+'" class="hotkeyl" title="Key board shortcut for this action is ' + clipAction.data('action-value') + '">&nbsp;</span>'
 			}
 			
 			eachRow = '<tr>' +
-						'<td>' + spanText + clipAction.data('action-value') + '</td>' +
+						'<td>' + spanText + '</td>' +
 						'<td>' + startInput.val() + '</td>' +						 
 						'<td>' + endInput.val() + '</td>' +
 						'<td>' + notesTextarea.val() + '</td>' +
@@ -291,11 +291,13 @@ $(document).ready(function()
 			var eachRowObj = $(eachRow);
 			eachRowObj.data('stratTime', startInput.val());
 			$('tbody', logTable).append(eachRowObj);
+			var eventTypeSelect = $( "#eventSelect" ).val();
 			
 			eachRowData = new Object();
 			eachRowData.action = clipAction.data('action-value');
 			eachRowData.startTime = startInput.val();
 			eachRowData.endTime = endInput.val();
+			eachRowData.eventType = eventTypeSelect;
 			eachRowData.notes = notesTextarea.val();
 			clipDataArray.push(eachRowData);
 			clearFields();
@@ -601,45 +603,45 @@ $(document).ready(function()
 			inTime = clipDataArray[clipIndex].startTime;
 			videoObj.cue(inTime, cueCallback(inTime));
 			
-			videoObj.subtitle({
-    	         start: clipDataArray[clipIndex].startTime,
-    	          end: clipDataArray[clipIndex].endTime,
-    	          text: clipDataArray[clipIndex].notes
-    	       });
-			videoObj.footnote({
-				  start: clipDataArray[clipIndex].startTime,
-	   	          end: clipDataArray[clipIndex].endTime,
-	   	          text: clipDataArray[clipIndex].notes,
-	   	          target:"previewData"  
-	           });
-			videoObj.image({
-				        // seconds
+			if(clipDataArray[clipIndex].eventType == "Subtitle"){			
+				videoObj.subtitle({
+	    	         start: clipDataArray[clipIndex].startTime,
+	    	          end: clipDataArray[clipIndex].endTime,
+	    	          text: clipDataArray[clipIndex].notes
+	    	       });
+			}else if(clipDataArray[clipIndex].eventType == "Footnote"){
+				videoObj.footnote({
+					  start: clipDataArray[clipIndex].startTime,
+		   	          end: clipDataArray[clipIndex].endTime,
+		   	          text: clipDataArray[clipIndex].notes,
+		   	          target:"previewData"  
+		           });
+			}else if(clipDataArray[clipIndex].eventType == "Pop"){
+				videoObj.pop({
+					start: clipDataArray[clipIndex].startTime,
+	   	            end: clipDataArray[clipIndex].endTime,
+	   	            text: clipDataArray[clipIndex].notes,
+			        target:"video-holder-div",
+			        top:"50%",
+			        left:"10%",
+			        icon:"http://www.rebelliouspixels.com/popupvideo/images/flag-icon.png"
+				});
+			}
+			/*videoObj.image({
 				        start: 1,
-				       // seconds
 				       end: 15,
 				       href: "http://www.drumbeat.org/",
 				     src: "https://www.drumbeat.org/media//images/drumbeat-logo-splash.png",
 				       text: "DRUMBEAT",
 				       target: "previewData"
-				     });
-			
-			videoObj.wikipedia({
+				     });*/
+			/*videoObj.wikipedia({
 		        start: 1,
 		        end: 10,
 		        src: "http://en.wikipedia.org/wiki/India",
 		        title: "this is an article about india",
 		        target: "wikidiv"
-		      });
-			
-			videoObj.pop({
-				 start: 1,
-			        end: 10,
-			        target:"video-holder-div",
-			        text:"The whole Twilight film...ed blue for some reason",
-			        top:"50%",
-			        left:"10%",
-			        icon:"http://www.rebelliouspixels.com/popupvideo/images/flag-icon.png"
-			});
+		      });*/
 		}
 	}
 	
