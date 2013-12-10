@@ -27,6 +27,7 @@ $(document).ready(function()
 		localFilePath = '../assets/',
 		slideTime = 300,
 		fadeTime = 500,
+		currentProfile,
 		cricketActionProfile = [{"action":"Boundary","hotKeyChar":"B","hotKeyCode":66,"legend":"#FFFF00"},
 								{"action":"Over boundary","hotKeyChar":"6","hotKeyCode":54,"legend":"#00CC00"},
 								{"action":"3 runs","hotKeyChar":"3","hotKeyCode":51,"legend":"#0066FF"},
@@ -34,10 +35,10 @@ $(document).ready(function()
 								{"action":"One run","hotKeyChar":"1","hotKeyCode":49,"legend":"#FF0066"},
 								{"action":"Two runs","hotKeyChar":"2","hotKeyCode":50,"legend":"#660066"}],
 								
-		soccerActionProfile = [	{"action":"Goal","hotKeyChar":"G","hotKeyCode":71},
-								{"action":"Penalty","hotKeyChar":"P","hotKeyCode":80},
-								{"action":"Free kick","hotKeyChar":"F","hotKeyCode":70},
-								{"action":"Super save","hotKeyChar":"S","hotKeyCode":83}];
+		soccerActionProfile = [	{"action":"Goal","hotKeyChar":"G","hotKeyCode":71,"legend":"#660066"},
+								{"action":"Penalty","hotKeyChar":"P","hotKeyCode":80,"legend":"#FF0066"},
+								{"action":"Free kick","hotKeyChar":"F","hotKeyCode":70,"legend":"#993300"},
+								{"action":"Super save","hotKeyChar":"S","hotKeyCode":83,"legend":"#0066FF"}];
 		
 	//Constant declaration
 	var MP4 = '.mp4',
@@ -178,20 +179,20 @@ $(document).ready(function()
 			{
 				loadVideo();
 			}
-			for(actionIndex in cricketActionProfile)
+			for(actionIndex in currentProfile)
 			
 			{
-				var liStr = '<li>' + cricketActionProfile[actionIndex].action + '</li>',
+				var liStr = '<li>' + currentProfile[actionIndex].action + '</li>',
 				liObj = $(liStr);
-				if(cricketActionProfile[actionIndex].hotKeyChar != '')
+				if(currentProfile[actionIndex].hotKeyChar != '')
 				{
-					var spanObj = '<span class="hotkey" style="background-color:'+cricketActionProfile[actionIndex].legend+'" title="Key board shortcut for this action is ' + cricketActionProfile[actionIndex].hotKeyChar + '">' + 
-									cricketActionProfile[actionIndex].hotKeyChar + '</span>';
+					var spanObj = '<span class="hotkey" style="background-color:'+currentProfile[actionIndex].legend+'" title="Key board shortcut for this action is ' + currentProfile[actionIndex].hotKeyChar + '">' + 
+									currentProfile[actionIndex].hotKeyChar + '</span>';
 					liObj.append(spanObj).addClass('has-hot-key');
 				}
-				liObj.data({'action' : cricketActionProfile[actionIndex].action, 
-							'hotKeyChar' : cricketActionProfile[actionIndex].hotKeyChar, 
-							'hotKeyCode' : cricketActionProfile[actionIndex].keyCode});		
+				liObj.data({'action' : currentProfile[actionIndex].action, 
+							'hotKeyChar' : currentProfile[actionIndex].hotKeyChar, 
+							'hotKeyCode' : currentProfile[actionIndex].keyCode});		
 				$('.step-3 .added-action-list1').append(liObj);
 				
 			}
@@ -266,11 +267,11 @@ $(document).ready(function()
 		if(validateFields()) {
 			legend="";
 			
-			for(actionIndex in cricketActionProfile)
+			for(actionIndex in currentProfile)
 				
 			{
-				if(clipAction.data('action-value')==cricketActionProfile[actionIndex].action){
-					legend=cricketActionProfile[actionIndex].legend;
+				if(clipAction.data('action-value')==currentProfile[actionIndex].action){
+					legend=currentProfile[actionIndex].legend;
 				}			
 				
 			}
@@ -785,6 +786,7 @@ $(document).ready(function()
 	//Helper function to render the action list in step 2 with pre existing action profiles
 	function populateSelectedActions(actionProfile)
 	{
+		currentProfile = actionProfile;
 		$('.step-2 .added-action-list').html('');
 		for(actionIndex in actionProfile)
 		{
