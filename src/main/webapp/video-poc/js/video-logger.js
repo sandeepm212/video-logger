@@ -40,6 +40,15 @@ $(document).ready(function()
 								{"action":"Free kick","hotKeyChar":"F","hotKeyCode":70,"legend":"#993300"},
 								{"action":"Super save","hotKeyChar":"S","hotKeyCode":83,"legend":"#0066FF"}];
 		
+	
+	var exisitngData = [];
+	$.get( "/video-logger/getVideoLog", function( data ) {
+		exisitngData = eval(data);
+		$(exisitngData).each(function( i ) {
+		    
+		});
+	});
+	
 	//Constant declaration
 	var MP4 = '.mp4',
 		OGV = '.ogv',
@@ -75,6 +84,7 @@ $(document).ready(function()
 		$('#video-carousel li a').removeClass('active');
 		$('a', liObj).addClass('active');
 		videoPath = liObj.data('video-path');
+		videoId = liObj.data('video-id');
 	});
 	
 	//Step 1 button handler
