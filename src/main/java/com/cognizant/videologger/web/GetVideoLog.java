@@ -21,7 +21,10 @@ public class GetVideoLog extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String data = Utils.readFromFile(new File("videolog.data"));
 		System.out.println("Data saved:: " + data);
+		resp.setContentType("application/json");
+		
 		PrintWriter out = resp.getWriter();
+		
 		out.println(data);
 
 	}

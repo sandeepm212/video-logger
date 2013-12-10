@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.collections.map.HashedMap;
-
 import com.cognizant.videologger.model.VideoLog;
 import com.cognizant.videologger.util.Utils;
 import com.google.gson.Gson;
