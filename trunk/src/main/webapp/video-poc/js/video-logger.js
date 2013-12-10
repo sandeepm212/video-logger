@@ -599,6 +599,7 @@ $(document).ready(function()
 		{
 			inTime = clipDataArray[clipIndex].startTime;
 			videoObj.cue(inTime, cueCallback(inTime));
+			
 			videoObj.subtitle({
     	         start: clipDataArray[clipIndex].startTime,
     	          end: clipDataArray[clipIndex].endTime,
@@ -628,6 +629,16 @@ $(document).ready(function()
 		        title: "this is an article about india",
 		        target: "wikidiv"
 		      });
+			
+			videoObj.pop({
+				 start: 1,
+			        end: 10,
+			        target:"video-holder-div",
+			        text:"The whole Twilight film...ed blue for some reason",
+			        top:"50%",
+			        left:"10%",
+			        icon:"http://www.rebelliouspixels.com/popupvideo/images/flag-icon.png"
+			});
 		}
 	}
 	
