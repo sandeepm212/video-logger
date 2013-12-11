@@ -249,7 +249,7 @@ $(document).ready(function()
 	});
 	
 	//In/out time click handler
-	/*$('a.intime-btn, a.outtime-btn').on('click', function()
+	$('a.intime-btn, a.outtime-btn').on('click', function()
 	{
 		currentTime = videoObj.currentTime();
 		if(currentTime > 0 && currentTime < duration)
@@ -267,7 +267,7 @@ $(document).ready(function()
 		{
 			alert("The video has not yet started playing. Try logging after you have started playing the video");
 		}
-	});*/
+	});
 	
 	//Play the video
 	$('.play-video').live('click', function()
@@ -705,11 +705,22 @@ $(document).ready(function()
 	   	            end: clipDataArray[clipIndex].endTime,
 	   	            text: clipDataArray[clipIndex].notes,
 			        target:"video-holder-div",
-			        top:"50%",
-			        left:"10%",
+			        top:"217px",
+			        left:"594px",
 			        icon:"http://www.rebelliouspixels.com/popupvideo/images/flag-icon.png"
 				});
+				
+				
 			}
+			
+			videoObj.footnoteAnimated({
+				  start: 2,
+				  end: 6,
+				  text: "Pop!",
+				  target: "previewData"
+				});
+			
+			
 			/*videoObj.image({
 				        start: 1,
 				       end: 15,
