@@ -42,10 +42,19 @@ $(document).ready(function()
 		
 	
 	var exisitngData = [];
+	var exisitngDataMap = [];
 	$.get( "/video-logger/getVideoLog", function( data ) {
 		exisitngData = eval(data);
 		$(exisitngData).each(function( i ) {
-		    
+			exisitngDataMap[this.id] = this;
+		});
+		$('#video-carousel li').each(function ( i ) {
+				var liObj = $(this);
+				var savedId = liObj.data('video-id');
+				if (exisitngDataMap[savedId] != null) {
+					$('a', liObj).addClass('saved-video');
+					$('a', liObj).attr('saved', 'true');
+				}
 		});
 	});
 	
@@ -81,7 +90,13 @@ $(document).ready(function()
 	$('#video-carousel li').live('click', function()
 	{
 		var liObj = $(this);
-		$('#video-carousel li a').removeClass('active');
+		$('#video-carousel li').each(function () {
+			var locLiObj = $(this);
+			var savedId = locLiObj.data('video-id');
+			if (exisitngDataMap[savedId] == null) {
+				$('a', locLiObj).removeClass('active');
+			}			
+		});
 		$('a', liObj).addClass('active');
 		videoPath = liObj.data('video-path');
 		videoId = liObj.data('video-id');
@@ -692,6 +707,9 @@ $(document).ready(function()
 	//Helper function to load a video either from local resource or from web
 	function loadVideo()
 	{
+		//TODO::
+		
+		
 		url = $('#exsting-video').is(':checked') ? getLocalFileNameArr(videoPath) : videoPath;
 		videoObj = Popcorn.smart('#video-holder-div', url);
 		$('#video-holder-div').slideDown(slideTime);

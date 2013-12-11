@@ -666,3 +666,6 @@ ul.added-action-list1 li.has-hot-key
 	width:50px;
 	text-align:center;
 }
+.saved-video {
+	border: 4px solid red !important;
+}
