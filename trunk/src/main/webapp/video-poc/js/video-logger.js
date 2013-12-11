@@ -326,6 +326,7 @@ $(document).ready(function()
 			eachRowData.endTime = endInput.val();
 			eachRowData.eventType = eventTypeSelect;
 			eachRowData.notes = notesTextarea.val();
+			eachRowData.videoId = videoId;
 			clipDataArray.push(eachRowData);
 			clearFields();
 			//alert("Clip entry successfully logged");
@@ -342,11 +343,15 @@ $(document).ready(function()
 		var logData = exisitngDataMap[videoId]; 
 		if (logData != null) {
 			$(logData.videoLogs).each(function( i ) {
+				var notes = "";
+				if (this.note != null) {
+					notes = this.note;
+				}
 				eachRow = '<tr>' +
 				'<td>' + this.action + '</td>' +
 				'<td>' + this.startTime + '</td>' +						 
 				'<td>' + this.endTime + '</td>' +
-				'<td>' + this.note + '</td>' +
+				'<td>' + notes + '</td>' +
 				'<td>' + '<a href="javascript:void(0)" class="delete-cue hideText" title="Delete this log entry">Delete this log entry</a>'+ '</td>' +
 			  '</tr>';
 			  
@@ -360,6 +365,7 @@ $(document).ready(function()
 				eachRData.endTime = this.endTime;
 				eachRData.eventType = this.eventType;
 				eachRData.notes = this.note;
+				eachRData.videoId = this.videoId;
 				clipDataArray.push(eachRData);
 			});
 		}
@@ -512,12 +518,38 @@ $(document).ready(function()
 	//Submit log button handler - Generate final JSON data with all logged clip items
 	submitBtn.on('click', function()
 	{
-		finalVO = new Object();
-		finalVO.videoData = videoData;
-		finalVO.actions = actionArray;
-		finalVO.clipData = clipDataArray;
-		console.log(JSON.stringify(finalVO));	
+		var clipData = clipDataArray;
+		var vObject = new Object();
+		vObject.id = videoId;
 		
+		var videoData = [vObject];
+		var videoLog = [];
+		vObject.videoLogs = videoLog;
+		
+		
+		$(clipDataArray).each(function () {
+			
+			var logObject = new Object();
+			logObject.action = this.action;
+			logObject.startTime = this.startTime;
+			logObject.endTime = this.endTime;
+			logObject.eventType = this.eventType;
+			logObject.note = this.notes;
+			videoLog.push(logObject);
+		});
+		//alert(JSON.stringify(videoData));
+		
+		//SaveDATA
+		//clipDataArray
+		$.ajax({
+			  type: "POST",
+			  url: "/video-logger/saveVideoLog",
+			  data: JSON.stringify(videoData),
+			  success: function (data) {
+				  
+			  },
+			  dataType: "json"
+		});
 		/*var sample = {"videoData":{"type":"stored","url":"trailer","duration":64.541666},"actions":["Goal","Penalty","Free kick","Super save"],"clipData":[{"action":"Penalty","startTime":"00:00:01.01","endTime":"00:00:02.06","notes":"test note 1111"}]}
 		$.ajax({
 			url : '../services/video-logger-save-data.php',

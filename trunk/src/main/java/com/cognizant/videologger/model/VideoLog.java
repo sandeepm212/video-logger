@@ -3,8 +3,8 @@ package com.cognizant.videologger.model;
 public class VideoLog {
 	private String action;
 	private String note;
-	private long startTime;
-	private long endTime;
+	private String startTime;
+	private String endTime;
 	private String iconUrl;
 
 	public String getAction() {
@@ -23,19 +23,19 @@ public class VideoLog {
 		this.note = note;
 	}
 
-	public long getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(long startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public long getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(long endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 
