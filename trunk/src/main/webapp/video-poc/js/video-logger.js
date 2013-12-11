@@ -87,6 +87,7 @@ $(document).ready(function()
 	});
 	
 	//Carousel thumbnail click handler
+	var videoId = null;
 	$('#video-carousel li').live('click', function()
 	{
 		var liObj = $(this);
@@ -203,6 +204,7 @@ $(document).ready(function()
 			if(!videoObj)
 			{
 				loadVideo();
+				showExistingLog();
 			}
 			for(actionIndex in currentProfile)
 			
@@ -336,7 +338,32 @@ $(document).ready(function()
 		}
 	}
 	
-	 
+	function showExistingLog () {
+		var logData = exisitngDataMap[videoId]; 
+		if (logData != null) {
+			$(logData.videoLogs).each(function( i ) {
+				eachRow = '<tr>' +
+				'<td>' + this.action + '</td>' +
+				'<td>' + this.startTime + '</td>' +						 
+				'<td>' + this.endTime + '</td>' +
+				'<td>' + this.note + '</td>' +
+				'<td>' + '<a href="javascript:void(0)" class="delete-cue hideText" title="Delete this log entry">Delete this log entry</a>'+ '</td>' +
+			  '</tr>';
+			  
+				var eachRowObj = $(eachRow);
+				$('tbody', logTable).append(eachRowObj);
+				//logTable.trigger("update");
+				
+				var eachRData = new Object();
+				eachRData.action = this.action;
+				eachRData.startTime = this.startTime;
+				eachRData.endTime = this.endTime;
+				eachRData.eventType = this.eventType;
+				eachRData.notes = this.note;
+				clipDataArray.push(eachRData);
+			});
+		}
+	}
 	
 	//Logger table row click handler
 	$('tbody tr', logTable).live('click', function()
