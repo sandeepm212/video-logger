@@ -149,15 +149,13 @@ $('#eventSelect').on('change', function (e) {
 	});
 	
 	//Handling selection radio buttons
-	$('input[name="video-type-rdo"]').live('change', function()
-	{
+	$('input[name="video-type-rdo"]').live('change', function() {
 		$('input[name="video-type-rdo"]').parent('h2').next().slideUp(slideTime);
 		$(this).is(':checked') ? $(this).parent('h2').next().slideDown(slideTime): $(this).parent('h2').next().slideUp(slideTime);
 	});
 	
 	//Handling action radio buttons handler in step 2
-	$('input[name="action-rdo"]').live('change', function()
-	{
+	$('input[name="action-rdo"]').live('change', function() {
 		$('input[name="action-rdo"]').parent('h2').next().slideUp(slideTime);
 		$(this).is(':checked') ? $(this).parent('h2').next().slideDown(slideTime): $(this).parent('h2').next().slideUp(slideTime);
 		$('.step-2 .added-action-list').html('').slideUp(slideTime);
@@ -165,8 +163,7 @@ $('#eventSelect').on('change', function (e) {
 	
 	//Carousel thumbnail click handler
 	var videoId = null;
-	$('#video-carousel li').live('click', function()
-	{
+	$('#video-carousel li').live('click', function() {
 		var liObj = $(this);
 		$('#video-carousel li').each(function () {
 			var locLiObj = $(this);
@@ -181,48 +178,34 @@ $('#eventSelect').on('change', function (e) {
 	});
 	
 	//Step 1 button handler
-	$('#to-step-2-btn').live('click', function()
-	{
+	$('#to-step-2-btn').live('click', function() {
 		var isPassed = false;
-		if($('#exsting-video').is(':checked'))
-		{
-			if($('#video-carousel li a').hasClass('active'))
-			{
+		if($('#exsting-video').is(':checked')) {
+			if($('#video-carousel li a').hasClass('active')) {
 				videoPath = $('#video-carousel li a.active').parent('li').data('video-path');
 				videoType = 'stored';
 				isPassed = true;
-			}
-			else
-			{
+			} else {
 				alert("Please select any video from the existing list to proceed");
 				isPassed = false;
 			}
-		}
-		else if($('#web-video').is(':checked'))
-		{
-			if($.trim(urlInput.val()) != '')
-			{
+		} else if($('#web-video').is(':checked')) {
+			if($.trim(urlInput.val()) != '') {
 				videoPath = urlInput.val();
 				videoType = 'web-video';
 				isPassed = true;
-			}
-			else
-			{
+			} else {
 				alert("Please type a URL of a video in the input box to proceed");
 				isPassed = false;
 			}
-		}
-		else
-		{
+		} else {
 			alert("You should either select from existing video or type a URL to proceed to next step");
 			isPassed = false;
 		}
 		
-		if(isPassed)
-		{
+		if (isPassed) {
 			goToNextPage('.step-2');
-			if(videoObj)
-			{
+			if (videoObj) {
 				videoObj.pause();
 			}
 			$('#video-name').text(videoPath);
@@ -232,38 +215,27 @@ $('#eventSelect').on('change', function (e) {
 	});
 	
 	//Step 2 button handler
-	$('#to-step-3-btn').live('click', function()
-	{
+	$('#to-step-3-btn').live('click', function() {
 		//goToNextPage('.step-3');
 		var isPassed = false;
 			
-		if($('#custom-actions').is(':checked'))
-		{
-			if($('.step-2 .added-action-list').children().length > 0)
-			{
+		if($('#custom-actions').is(':checked')) {
+			if($('.step-2 .added-action-list').children().length > 0) {
 				isPassed = true;
-			}
-			else
-			{
+			} else {
 				isPassed = false;
 				alert("Please set up at least 1 custom action in Step 2 to proceed to next step");
 			}
-		}
-		else
-		{
-			if($('.step-2 .added-action-list').children().length > 0)
-			{
+		} else {
+			if($('.step-2 .added-action-list').children().length > 0) {
 				isPassed = true;
-			}
-			else
-			{
+			} else {
 				isPassed = false;
 				alert("Please select from available action profile in Step 2 to proceed to next step");
 			}
 		}
 		
-		if(isPassed)
-		{
+		if (isPassed) {
 			actionArray = [];
 			$('.step-2 .added-action-list li').each(function() {
 				var eachAction = new Object();
@@ -278,18 +250,15 @@ $('#eventSelect').on('change', function (e) {
 			$('.actions').html(actionClone).find('.delete-action').remove();
 			goToNextPage('.step-3');
 			highlightCurrentTab(2);
-			if(!videoObj)
-			{
+			
+			if (!videoObj) {
 				loadVideo();
 				showExistingLog();
 			}
-			for(actionIndex in currentProfile)
-			
-			{
+			for(actionIndex in currentProfile) {
 				var liStr = '<li>' + currentProfile[actionIndex].action + '</li>',
 				liObj = $(liStr);
-				if(currentProfile[actionIndex].hotKeyChar != '')
-				{
+				if(currentProfile[actionIndex].hotKeyChar != '') {
 					var spanObj = '<span class="hotkey" style="background-color:'+currentProfile[actionIndex].legend+'" title="Key board shortcut for this action is ' + currentProfile[actionIndex].hotKeyChar + '">' + 
 									currentProfile[actionIndex].hotKeyChar + '</span>';
 					liObj.append(spanObj).addClass('has-hot-key');
@@ -304,20 +273,17 @@ $('#eventSelect').on('change', function (e) {
 	});
 	
 	//Load button click handler
-	$('#play-btn').on('click', function()
-	{
+	$('#play-btn').on('click', function() {
 		var videoPath = ($('#video-location').val() == 'local-video') ? getLocalFileNameArr($('#local-video-list').val()) : $('#url-input').val();
 		//console.log(videoPath)
-		if(videoObj)
-		{
+		if(videoObj) {
 			Popcorn.destroy(videoObj);
 			resetLoggingScope();
 		}
 		videoObj = Popcorn.smart('#video-holder-div', videoPath);
 		$('#video-holder-div').slideDown(slideTime);
 		//Caching media properties once the media metadata are loaded
-		videoObj.on('loadedmetadata', function()
-		{
+		videoObj.on('loadedmetadata', function() {
 			duration = videoObj.duration();
 			frameRate = videoObj.options.framerate ? videoObj.options.framerate : 30;// TBD : Calculation of framerate needs to be accurate
 			$('.panel-wrap.logger').slideDown(slideTime);
@@ -326,34 +292,25 @@ $('#eventSelect').on('change', function (e) {
 	});
 	
 	//In/out time click handler
-	$('a.intime-btn, a.outtime-btn').on('click', function()
-	{
+	$('a.intime-btn, a.outtime-btn').on('click', function() {
 		currentTime = videoObj.currentTime();
-		if(currentTime > 0 && currentTime < duration)
-		{
+		if(currentTime > 0 && currentTime < duration) {
 			var btnObj = $(this);
-			videoObj.pause();
-			
+			videoObj.pause();			
 			btnObj.prev('input[type="text"]').val(formatTime(currentTime));
-		}
-		else if(currentTime > duration)
-		{
+		} else if(currentTime > duration) {
 			alert("The video playing is over. You can't log time now. To log time, replay the video");
-		}
-		else
-		{
+		} else {
 			alert("The video has not yet started playing. Try logging after you have started playing the video");
 		}
 	});
 	
 	//Play the video
-	$('.play-video').live('click', function()
-	{
+	$('.play-video').live('click', function() {
 		videoObj.play();
 	});
 	
-	$('#enter-out-time').live('click', function()
-	{
+	$('#enter-out-time').live('click', function() {
 		endTime = videoObj.currentTime();
 		endInput.val(formatTime(endTime));
 		$('#enter-out-time').css('display','none');
@@ -372,16 +329,13 @@ $('#eventSelect').on('change', function (e) {
 		if(validateFields()) {
 			legend="";
 			
-			for(actionIndex in currentProfile)
-				
-			{
+			for(actionIndex in currentProfile) {
 				if(clipAction.data('action-value')==currentProfile[actionIndex].action){
 					legend=currentProfile[actionIndex].legend;
-				}			
-				
+				}				
 			}
 			spanText="";
-			if(legend!=""){
+			if(legend!="") {
 				spanText='<span style="background-color:'+legend+'" class="hotkeyl" title="' + clipAction.data('action-value') + '">&nbsp;</span>'
 			}
 			
@@ -435,13 +389,10 @@ $('#eventSelect').on('change', function (e) {
 				
 				legend="";
 				
-				for(actionIndex in currentProfile)
-					
-				{
+				for(actionIndex in currentProfile) {
 					if(this.action==currentProfile[actionIndex].action){
 						legend=currentProfile[actionIndex].legend;
-					}			
-					
+					}				
 				}
 				spanText="";
 				if(legend!=""){
