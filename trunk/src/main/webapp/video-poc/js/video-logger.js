@@ -1,5 +1,11 @@
 $(document).ready(function()
 {
+	
+	$('#helper').draggable({
+        containment: "#video-holder-div",
+        scroll: false
+});
+	
 	//variable declaration
 	var videoObj,
 		videoPath = '',
@@ -327,6 +333,12 @@ $(document).ready(function()
 			eachRowData.eventType = eventTypeSelect;
 			eachRowData.notes = notesTextarea.val();
 			eachRowData.videoId = videoId;
+			
+			var relativeY = - $("#video-holder-div").offset().top + $("#image").offset().top;
+			var relativeX = - $("#video-holder-div").offset().left + $("#image").offset().left;
+			eachRowData.relX = relativeX;
+			eachRowData.relY = relativeY;
+			
 			clipDataArray.push(eachRowData);
 			clearFields();
 			//alert("Clip entry successfully logged");
@@ -667,9 +679,11 @@ $(document).ready(function()
 	$(document).keyup(function(e)
 	{
 		var pressedKey = String.fromCharCode(e.keyCode).toUpperCase();
+		if(e.target.localName != 'textarea'){
 		if(allowedKeysRegex.test(pressedKey) && $('.actions .added-action-list').children().length > 0)
 		{
 			$('.actions .added-action-list li').filter(function() { return $.data(this, 'hotKeyChar') == pressedKey; }).click();
+		}
 		}
 	});
 	
@@ -724,20 +738,20 @@ $(document).ready(function()
 	   	            end: clipDataArray[clipIndex].endTime,
 	   	            text: clipDataArray[clipIndex].notes,
 			        target:"video-holder-div",
-			        top:"217px",
-			        left:"594px",
-			        icon:"http://www.rebelliouspixels.com/popupvideo/images/flag-icon.png"
+			        top: ($("#video-holder-div").offset().top + clipDataArray[clipIndex].relY) + "px",
+			        left: ($("#video-holder-div").offset().top + clipDataArray[clipIndex].relX - 120) + "px",
+			        icon:"../css/images/pointer.png"
 				});
 				
 				
 			}
 			
-			videoObj.footnoteAnimated({
+			/*videoObj.footnoteAnimated({
 				  start: 2,
 				  end: 6,
 				  text: "Pop!",
 				  target: "previewData"
-				});
+				});*/
 			
 			
 			/*videoObj.image({

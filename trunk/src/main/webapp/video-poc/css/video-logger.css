@@ -509,7 +509,7 @@ h2 {
 }
 .video-holder video
 {
-	width:95%;
+	width:720px;
 }
 ul.logging-nav {
     padding: 20px 0;
@@ -668,4 +668,12 @@ ul.added-action-list1 li.has-hot-key
 }
 .saved-video {
 	border: 4px solid red !important;
+}
+
+#image {
+    width: 50px;
+    height: 50px;
+	cursor:pointer;
+    background-size: 100% 100%;
+    background-image: url('images/drag.png');
 }
