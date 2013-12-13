@@ -5,7 +5,6 @@ public class VideoLog {
 	private String note;
 	private String startTime;
 	private String endTime;
-	private String iconUrl;
 
 	public String getAction() {
 		return action;
@@ -38,13 +37,4 @@ public class VideoLog {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-
-	public String getIconUrl() {
-		return iconUrl;
-	}
-
-	public void setIconUrl(String iconUrl) {
-		this.iconUrl = iconUrl;
-	}
-
 }

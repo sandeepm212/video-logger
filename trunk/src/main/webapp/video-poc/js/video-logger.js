@@ -1,18 +1,79 @@
-$(document).ready(function()
-{
-	
+function Style (backgroundColor, fontColor, fontStyle, fontWeight, fontSize) {
+	this.backgroundColor = backgroundColor;
+	this.fontColor = fontColor;
+	this.fontStyle = fontStyle;
+	this.fontWeight = fontWeight;
+	this.fontSize = fontSize;
+}
+
+function Action (name, shortCutKey, description) {
+	this.name = name;
+	this.shortCutKey = shortCutKey;
+	this.description = description;
+	this.style = new Style();
+}
+
+function VideoLog (action, note, startTime, endTime) {
+	this.action = action;
+	this.note = note;
+	this.startTime = startTime;
+	this.endTime = endTime;
+}
+
+function Video (id) {
+	this.id = id;
+	this.videoLogs = [];
+	this.actions = [];
+}
+
+var videoLogObject = [
+    {
+        "id": 6,
+        "videoLogs": [
+            {
+                "action": "Boundary",
+                "startTime": "00:00:03.04",
+                "endTime": "00:00:13.06",
+                "eventType": "Subtitle"
+            },
+            {
+                "action": "Out",
+                "startTime": "00:00:21.14",
+                "endTime": "00:00:21.13",
+                "eventType": "Pop"
+            }
+        ],
+        "actions": [
+            {
+                "name": "Over boundary",
+                "shortCutKey": "6",
+                "description": "",
+                "style": {
+                    "backgroundColor": "",
+                    "fontColor": "",
+                    "fontStyle": "",
+                    "fontWeight": "",
+                    "fontSize": ""
+                }
+            }
+        ]
+    }
+];
+
+
+$(document).ready(function() {
 	$('#helper').draggable({
         containment: "#video-holder-div",
         scroll: false
 });
 	
-	$('#eventSelect').on('change', function (e) {
-	    var optionSelected = $("option:selected", this);
-	    var valueSelected = this.value;
-	    if(valueSelected == "Pop"){
-	    	$('#image').css('display','block');
-	    }
-	});
+$('#eventSelect').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    if (valueSelected == "Pop") {
+    	$('#image').css('display','block');
+    }
+});
 
 
 	
@@ -592,29 +653,6 @@ $(document).ready(function()
 			  },
 			  dataType: "json"
 		});
-		/*var sample = {"videoData":{"type":"stored","url":"trailer","duration":64.541666},"actions":["Goal","Penalty","Free kick","Super save"],"clipData":[{"action":"Penalty","startTime":"00:00:01.01","endTime":"00:00:02.06","notes":"test note 1111"}]}
-		$.ajax({
-			url : '../services/video-logger-save-data.php',
-			type : 'POST',
-			data : {jsonData : JSON.stringify(sample)},
-			//dataType : 'json',
-			success : function(response, textStatus)
-			{
-				if(textStatus === 'success' && response)
-				{
-					//showMessage(response);
-				}
-				else
-				{
-					//showMessage("Some error has occurred. Please try after sometime.");
-				}
-			},
-			error : function(jqXHR, textStatus, errorThrown)
-			{
-				//showMessage("Some error has occurred. Please try after sometime.");
-				//TBD : Refinement of error messages according to different error conditions
-			}
-		});*/
 	});
 		
 	// Action click handler
