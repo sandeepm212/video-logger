@@ -174,6 +174,7 @@ $('#eventSelect').on('change', function (e) {
 			var savedId = locLiObj.data('video-id');
 			if (exisitngDataMap[savedId] == null) {
 				$('a', locLiObj).removeClass('active');
+				//showSavedVideo(exisitngDataMap[savedId]);
 				//to-step-3-btn
 			}			
 		});
@@ -1005,21 +1006,8 @@ $('#eventSelect').on('change', function (e) {
 
 
 
-function showSavedVideo () {
-	actionArray = [];
-	$('.step-2 .added-action-list li').each(function() {
-		var eachAction = new Object();
-		eachAction.action = $(this).data('action');
-		eachAction.hotKeyChar = $(this).data('hotKeyChar');
-		eachAction.hotKeyCode = $(this).data('hotKeyCode');
-		actionArray.push(eachAction);
-		//$('.step-3 .added-action-list1').append(this);
-	});
-	//renderActionButtons();
-	var actionClone = $('.step-2 .added-action-list').clone(true).removeClass('rounded-holder');
-	$('.actions').html(actionClone).find('.delete-action').remove();
-	goToNextPage('.step-3');
-	highlightCurrentTab(2);
+function showSavedVideo (videoInfo) {
+	actionArray = videoInfo.actions;
 	
 	if (!videoObj) {
 		loadVideo();
