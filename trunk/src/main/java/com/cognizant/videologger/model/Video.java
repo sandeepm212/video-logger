@@ -5,6 +5,15 @@ import java.util.List;
 public class Video {
 	private int id;
 	private List<VideoLog> videoLogs;
+	private List<Action> actions;
+
+	public List<Action> getActions() {
+		return actions;
+	}
+
+	public void setActions(List<Action> actions) {
+		this.actions = actions;
+	}
 
 	public int getId() {
 		return id;
