@@ -6,6 +6,16 @@ $(document).ready(function()
         scroll: false
 });
 	
+	$('#eventSelect').on('change', function (e) {
+	    var optionSelected = $("option:selected", this);
+	    var valueSelected = this.value;
+	    if(valueSelected == "Pop"){
+	    	$('#image').css('display','block');
+	    }
+	});
+
+
+	
 	//variable declaration
 	var videoObj,
 		videoPath = '',
@@ -294,6 +304,7 @@ $(document).ready(function()
 	//Enter log button click handler - make entry of a row in the log table in UI, push new item in clipDataArray with new values
 	$('#enter-log-btn,#enter-log2').on('click', function() {
 		addLog();
+		$('#image').css('display','none');
 	});
 	
 	function addLog() {
