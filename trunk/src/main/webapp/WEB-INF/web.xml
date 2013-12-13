@@ -20,4 +20,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>GetVideoLog</servlet-name>
 		<url-pattern>/getVideoLog</url-pattern>
 	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>/video-poc/html/video-logger.htm</welcome-file>
+	</welcome-file-list>
 </web-app>
