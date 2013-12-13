@@ -5,6 +5,8 @@ public class VideoLog {
 	private String note;
 	private String startTime;
 	private String endTime;
+	private String relativeX;
+	private String relativeY;
 
 	public String getAction() {
 		return action;
@@ -37,4 +39,21 @@ public class VideoLog {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
+
+	public String getRelativeX() {
+		return relativeX;
+	}
+
+	public void setRelativeX(String relativeX) {
+		this.relativeX = relativeX;
+	}
+
+	public String getRelativeY() {
+		return relativeY;
+	}
+
+	public void setRelativeY(String relativeY) {
+		this.relativeY = relativeY;
+	}
+
 }

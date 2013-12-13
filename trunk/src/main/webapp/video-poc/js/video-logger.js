@@ -6,9 +6,10 @@ function Style (backgroundColor, fontColor, fontStyle, fontWeight, fontSize) {
 	this.fontSize = fontSize;
 }
 
-function Action (name, shortCutKey, description) {
+function Action (name, hotKeyChar, hotKeyCode, relativeX, relativeY, description) {
 	this.name = name;
-	this.shortCutKey = shortCutKey;
+	this.hotKeyChar = hotKeyChar;
+	this.hotKeyCode = hotKeyCode;
 	this.description = description;
 	this.style = new Style();
 }
@@ -18,6 +19,8 @@ function VideoLog (action, note, startTime, endTime) {
 	this.note = note;
 	this.startTime = startTime;
 	this.endTime = endTime;
+	this.relativeX = relativeX;
+	this.relativeY = relativeY;
 }
 
 function Video (id) {
@@ -26,6 +29,7 @@ function Video (id) {
 	this.actions = [];
 }
 
+// Sample data format
 var videoLogObject = [
     {
         "id": 6,
@@ -170,6 +174,7 @@ $('#eventSelect').on('change', function (e) {
 			var savedId = locLiObj.data('video-id');
 			if (exisitngDataMap[savedId] == null) {
 				$('a', locLiObj).removeClass('active');
+				//to-step-3-btn
 			}			
 		});
 		$('a', liObj).addClass('active');
@@ -580,9 +585,10 @@ $('#eventSelect').on('change', function (e) {
 		var videoLog = [];
 		vObject.videoLogs = videoLog;
 		
+		var videoActions = [];
+		vObject.actions = videoActions;
 		
 		$(clipDataArray).each(function () {
-			
 			var logObject = new Object();
 			logObject.action = this.action;
 			logObject.startTime = this.startTime;
@@ -591,7 +597,11 @@ $('#eventSelect').on('change', function (e) {
 			logObject.note = this.notes;
 			videoLog.push(logObject);
 		});
-		//alert(JSON.stringify(videoData));
+		
+		$(actionArray).each(function () {
+			var action = new Action (this.action, this.hotKeyChar, this.hotKeyCode);
+			videoActions.push(action);
+		});
 		
 		//SaveDATA
 		//clipDataArray
@@ -992,3 +1002,42 @@ $('#eventSelect').on('change', function (e) {
 		return (keyVal != '' && allowedKeysRegex.test(keyVal)) ? keyVal.charCodeAt(0) : '';
 	 }
 });
+
+
+
+function showSavedVideo () {
+	actionArray = [];
+	$('.step-2 .added-action-list li').each(function() {
+		var eachAction = new Object();
+		eachAction.action = $(this).data('action');
+		eachAction.hotKeyChar = $(this).data('hotKeyChar');
+		eachAction.hotKeyCode = $(this).data('hotKeyCode');
+		actionArray.push(eachAction);
+		//$('.step-3 .added-action-list1').append(this);
+	});
+	//renderActionButtons();
+	var actionClone = $('.step-2 .added-action-list').clone(true).removeClass('rounded-holder');
+	$('.actions').html(actionClone).find('.delete-action').remove();
+	goToNextPage('.step-3');
+	highlightCurrentTab(2);
+	
+	if (!videoObj) {
+		loadVideo();
+		showExistingLog();
+	}
+	for(actionIndex in currentProfile) {
+		var liStr = '<li>' + currentProfile[actionIndex].action + '</li>',
+		liObj = $(liStr);
+		if(currentProfile[actionIndex].hotKeyChar != '') {
+			var spanObj = '<span class="hotkey" style="background-color:'+currentProfile[actionIndex].legend+'" title="Key board shortcut for this action is ' + currentProfile[actionIndex].hotKeyChar + '">' + 
+							currentProfile[actionIndex].hotKeyChar + '</span>';
+			liObj.append(spanObj).addClass('has-hot-key');
+		}
+		liObj.data({'action' : currentProfile[actionIndex].action, 
+					'hotKeyChar' : currentProfile[actionIndex].hotKeyChar, 
+					'hotKeyCode' : currentProfile[actionIndex].keyCode});		
+		$('.step-3 .added-action-list1').append(liObj);
+		
+	}
+	
+}

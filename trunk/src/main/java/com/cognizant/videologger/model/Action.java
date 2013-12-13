@@ -2,7 +2,8 @@ package com.cognizant.videologger.model;
 
 public class Action {
 	private String name;
-	private String shortCutKey;
+	private String hotKeyChar;
+	private String hotKeyCode;
 	private String description;
 	private Style style;
 
@@ -14,12 +15,20 @@ public class Action {
 		this.name = name;
 	}
 
-	public String getShortCutKey() {
-		return shortCutKey;
+	public String getHotKeyChar() {
+		return hotKeyChar;
 	}
 
-	public void setShortCutKey(String shortCutKey) {
-		this.shortCutKey = shortCutKey;
+	public void setHotKeyChar(String hotKeyChar) {
+		this.hotKeyChar = hotKeyChar;
+	}
+
+	public String getHotKeyCode() {
+		return hotKeyCode;
+	}
+
+	public void setHotKeyCode(String hotKeyCode) {
+		this.hotKeyCode = hotKeyCode;
 	}
 
 	public String getDescription() {
