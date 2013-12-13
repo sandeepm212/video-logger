@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Video {
 	private int id;
+	private String url;
+	private String videoType;
 	private List<VideoLog> videoLogs;
 	private List<Action> actions;
 
@@ -29,6 +31,22 @@ public class Video {
 
 	public void setVideoLogs(List<VideoLog> videoLogs) {
 		this.videoLogs = videoLogs;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getVideoType() {
+		return videoType;
+	}
+
+	public void setVideoType(String videoType) {
+		this.videoType = videoType;
 	}
 
 }
