@@ -340,6 +340,7 @@ $(document).ready(function()
 	}
 	
 	function showExistingLog () {
+		//asdf
 		var logData = exisitngDataMap[videoId]; 
 		if (logData != null) {
 			$(logData.videoLogs).each(function( i ) {
@@ -347,15 +348,33 @@ $(document).ready(function()
 				if (this.note != null) {
 					notes = this.note;
 				}
+				
+				legend="";
+				
+				for(actionIndex in currentProfile)
+					
+				{
+					if(this.action==currentProfile[actionIndex].action){
+						legend=currentProfile[actionIndex].legend;
+					}			
+					
+				}
+				spanText="";
+				if(legend!=""){
+					spanText='<span style="background-color:'+legend+'" class="hotkeyl" title="' + clipAction.data('action-value') + '">&nbsp;</span>'
+				}
+				
 				eachRow = '<tr>' +
-				'<td>' + this.action + '</td>' +
+				
+				'<td>' + spanText + '</td>' +
 				'<td>' + this.startTime + '</td>' +						 
 				'<td>' + this.endTime + '</td>' +
 				'<td>' + notes + '</td>' +
 				'<td>' + '<a href="javascript:void(0)" class="delete-cue hideText" title="Delete this log entry">Delete this log entry</a>'+ '</td>' +
 			  '</tr>';
 			  
-				var eachRowObj = $(eachRow);
+				var eachRowObj = $(eachRow);				
+				eachRowObj.data('stratTime', this.startTime);
 				$('tbody', logTable).append(eachRowObj);
 				//logTable.trigger("update");
 				
