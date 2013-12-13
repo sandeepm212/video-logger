@@ -6,6 +6,16 @@ task wrapper(type: Wrapper) {
 	gradleVersion = '1.8'
 }
 
+task videoLoggerInfo {
+	println '+++++++++++++++++++++++++++++++++++++++++++++++++'
+	println '+++++++++++++++++++++++++++++++++++++++++++++++++'
+	println '++                                             ++'
+	println '++               Video Logger                  ++'
+	println '++                                             ++'
+	println '+++++++++++++++++++++++++++++++++++++++++++++++++'
+	println '+++++++++++++++++++++++++++++++++++++++++++++++++'
+}
+
 sourceCompatibility = 1.5
 version = '1.0'
 jar {
@@ -17,6 +27,8 @@ jar {
 jettyRun.contextPath = "video-logger"
 jettyRun.httpPort = 8080
 jettyRun.webDefaultXml = file("${project.webAppDir}/WEB-INF/jetty-webdefault.xml")
+
+jettyRun.dependsOn videoLoggerInfo
 
 repositories {
     mavenCentral()
