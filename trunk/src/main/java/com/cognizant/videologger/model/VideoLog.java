@@ -7,6 +7,7 @@ public class VideoLog {
 	private String endTime;
 	private String relativeX;
 	private String relativeY;
+	private String eventType;
 
 	public String getAction() {
 		return action;
