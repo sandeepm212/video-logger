@@ -1,3 +1,6 @@
+/**
+ * Styles to be applied for every Action 
+ */
 function Style (backgroundColor, fontColor, fontStyle, fontWeight, fontSize) {
 	this.backgroundColor = backgroundColor;
 	this.fontColor = fontColor;
@@ -6,6 +9,9 @@ function Style (backgroundColor, fontColor, fontStyle, fontWeight, fontSize) {
 	this.fontSize = fontSize;
 }
 
+/**
+ * Actions details
+ */
 function Action (name, hotKeyChar, hotKeyCode, relativeX, relativeY, description) {
 	this.name = name;
 	this.hotKeyChar = hotKeyChar;
@@ -14,11 +20,16 @@ function Action (name, hotKeyChar, hotKeyCode, relativeX, relativeY, description
 	this.style = new Style();
 }
 
-function VideoLog (action, note, startTime, endTime) {
+
+/**
+ * Video log details.
+ */
+function VideoLog (action, eventType, startTime, endTime, note, relativeX, relativeY) {
 	this.action = action;
-	this.note = note;
+	this.eventType = eventType;
 	this.startTime = startTime;
 	this.endTime = endTime;
+	this.note = note;
 	this.relativeX = relativeX;
 	this.relativeY = relativeY;
 }
@@ -595,16 +606,15 @@ $('#eventSelect').on('change', function (e) {
 		
 		$(clipDataArray).each(function () {
 			var logObject = new Object();
-			logObject.action = this.action;
-			logObject.startTime = this.startTime;
-			logObject.endTime = this.endTime;
-			logObject.eventType = this.eventType;
-			logObject.note = this.notes;
+			logObject = new VideoLog (this.action, this.eventType, this.startTime, this.endTime, this.notes);			
 			videoLog.push(logObject);
 		});
 		
 		$(actionArray).each(function () {
 			var action = new Action (this.action, this.hotKeyChar, this.hotKeyCode);
+			var style = new Style();
+			style.backgroundColor = this.legend;
+			action.style = style;
 			videoActions.push(action);
 		});
 		

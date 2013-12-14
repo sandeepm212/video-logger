@@ -4,7 +4,7 @@ public class Action {
 	private String name;
 	private String hotKeyChar;
 	private String hotKeyCode;
-	private String description;
+	private String description;	
 	private Style style;
 
 	public String getName() {
