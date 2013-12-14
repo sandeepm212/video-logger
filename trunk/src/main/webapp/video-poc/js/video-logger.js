@@ -358,18 +358,12 @@ $('#eventSelect').on('change', function (e) {
 				spanText='<span style="background-color:'+legend+'" class="hotkeyl" title="' + clipAction.data('action-value') + '">&nbsp;</span>'
 			}
 			
-			eachRow = '<tr>' +
-						'<td>' + spanText + '</td>' +
-						'<td>' + startInput.val() + '</td>' +						 
-						'<td>' + endInput.val() + '</td>' +
-						'<td>' + notesTextarea.val() + '</td>' +
-						'<td>' + '<a href="javascript:void(0)" class="delete-cue hideText" title="Delete this log entry">Delete this log entry</a>'+ '</td>' +
-					  '</tr>';
-					  
-			var eachRowObj = $(eachRow);
-			eachRowObj.data('stratTime', startInput.val());
-			$('tbody', logTable).append(eachRowObj);
 			var eventTypeSelect = $( "#eventSelect" ).val();
+			var relativeY = - $("#video-holder-div").offset().top + $("#image").offset().top;
+			var relativeX = - $("#video-holder-div").offset().left + $("#image").offset().left;
+			
+			var log = new VideoLog (clipAction.data('action-value'), eventTypeSelect, startInput.val(), endInput.val(), notesTextarea.val(), relativeX, relativeY);
+			ngVideoLogInfo.addVideoLog(log);
 			
 			eachRowData = new Object();
 			eachRowData.action = clipAction.data('action-value');
@@ -379,8 +373,7 @@ $('#eventSelect').on('change', function (e) {
 			eachRowData.notes = notesTextarea.val();
 			eachRowData.videoId = videoId;
 			
-			var relativeY = - $("#video-holder-div").offset().top + $("#image").offset().top;
-			var relativeX = - $("#video-holder-div").offset().left + $("#image").offset().left;
+			
 			eachRowData.relX = relativeX;
 			eachRowData.relY = relativeY;
 			
