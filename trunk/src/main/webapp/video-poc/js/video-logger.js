@@ -1,45 +1,3 @@
-/**
- * Styles to be applied for every Action 
- */
-function Style (backgroundColor, fontColor, fontStyle, fontWeight, fontSize) {
-	this.backgroundColor = backgroundColor;
-	this.fontColor = fontColor;
-	this.fontStyle = fontStyle;
-	this.fontWeight = fontWeight;
-	this.fontSize = fontSize;
-}
-
-/**
- * Actions details
- */
-function Action (name, hotKeyChar, hotKeyCode, relativeX, relativeY, description) {
-	this.name = name;
-	this.hotKeyChar = hotKeyChar;
-	this.hotKeyCode = hotKeyCode;
-	this.description = description;
-	this.style = new Style();
-}
-
-
-/**
- * Video log details.
- */
-function VideoLog (action, eventType, startTime, endTime, note, relativeX, relativeY) {
-	this.action = action;
-	this.eventType = eventType;
-	this.startTime = startTime;
-	this.endTime = endTime;
-	this.note = note;
-	this.relativeX = relativeX;
-	this.relativeY = relativeY;
-}
-
-function Video (id) {
-	this.id = id;
-	this.videoLogs = [];
-	this.actions = [];
-}
-
 // Sample data format
 var videoLogObject = [
     {
@@ -93,8 +51,7 @@ $('#eventSelect').on('change', function (e) {
 
 	
 	//variable declaration
-	var videoObj,
-		videoPath = '',
+	var videoPath = '',
 		videoType = '',
 		duration = 0,
 		frameRate = 0,
@@ -110,7 +67,6 @@ $('#eventSelect').on('change', function (e) {
 		submitBtn = $('#submit-log'),
 		eachRowData,
 		actionArray,
-		clipDataArray = [],
 		existingHotkeys = [],
 		videoData,
 		finalVO,
@@ -131,10 +87,7 @@ $('#eventSelect').on('change', function (e) {
 								{"action":"Penalty","hotKeyChar":"P","hotKeyCode":80,"legend":"#FF0066"},
 								{"action":"Free kick","hotKeyChar":"F","hotKeyCode":70,"legend":"#993300"},
 								{"action":"Super save","hotKeyChar":"S","hotKeyCode":83,"legend":"#0066FF"}];
-		
 	
-	var exisitngData = [];
-	var exisitngDataMap = [];
 	$.get( "/video-logger/getVideoLog", function( data ) {
 		exisitngData = eval(data);
 		$(exisitngData).each(function( i ) {
@@ -177,7 +130,6 @@ $('#eventSelect').on('change', function (e) {
 	});
 	
 	//Carousel thumbnail click handler
-	var videoId = null;
 	$('#video-carousel li').live('click', function() {
 		var liObj = $(this);
 		$('#video-carousel li').each(function () {
@@ -363,7 +315,7 @@ $('#eventSelect').on('change', function (e) {
 			var relativeX = - $("#video-holder-div").offset().left + $("#image").offset().left;
 			
 			var log = new VideoLog (clipAction.data('action-value'), eventTypeSelect, startInput.val(), endInput.val(), notesTextarea.val(), relativeX, relativeY);
-			ngVideoLogInfo.addVideoLog(log);
+			addVideoLog(log);
 			
 			eachRowData = new Object();
 			eachRowData.action = clipAction.data('action-value');
@@ -388,64 +340,6 @@ $('#eventSelect').on('change', function (e) {
 			$('#out-time-input').css('display','none');		
 		}
 	}
-	
-	function showExistingLog () {
-		//asdf
-		var logData = exisitngDataMap[videoId]; 
-		if (logData != null) {
-			$(logData.videoLogs).each(function( i ) {
-				var notes = "";
-				if (this.note != null) {
-					notes = this.note;
-				}
-				
-				legend="";
-				
-				for(actionIndex in currentProfile) {
-					if(this.action==currentProfile[actionIndex].action){
-						legend=currentProfile[actionIndex].legend;
-					}				
-				}
-				spanText="";
-				if(legend!=""){
-					spanText='<span style="background-color:'+legend+'" class="hotkeyl" title="' + clipAction.data('action-value') + '">&nbsp;</span>'
-				}
-				
-				eachRow = '<tr>' +
-				
-				'<td>' + spanText + '</td>' +
-				'<td>' + this.startTime + '</td>' +						 
-				'<td>' + this.endTime + '</td>' +
-				'<td>' + notes + '</td>' +
-				'<td>' + '<a href="javascript:void(0)" class="delete-cue hideText" title="Delete this log entry">Delete this log entry</a>'+ '</td>' +
-			  '</tr>';
-			  
-				var eachRowObj = $(eachRow);				
-				eachRowObj.data('stratTime', this.startTime);
-				$('tbody', logTable).append(eachRowObj);
-				//logTable.trigger("update");
-				
-				var eachRData = new Object();
-				eachRData.action = this.action;
-				eachRData.startTime = this.startTime;
-				eachRData.endTime = this.endTime;
-				eachRData.eventType = this.eventType;
-				eachRData.notes = this.note;
-				eachRData.videoId = this.videoId;
-				clipDataArray.push(eachRData);
-			});
-		}
-	}
-	
-	//Logger table row click handler
-	$('tbody tr', logTable).live('click', function()
-	{
-		var rowIndex = $(this).index();
-		videoObj.play(clipDataArray[rowIndex].startTime);
-		/*videoObj.cue(clipDataArray[rowIndex].endTime, function() {
-					videoObj.pause();
-				});*/
-	});
 	
 	//View log button handler
 	$('#view-log').live('click', function()
@@ -567,19 +461,6 @@ $('#eventSelect').on('change', function (e) {
 		}
 	});
 	
-	//Delete a logged entry
-	$('.delete-cue').live('click', function(e)
-	{
-		if(confirm("Are you sure to delete this log entry?"))
-		{
-			var rowIndex = $(this).closest('tr').index();
-			$(this).closest('tr').remove();
-			clipDataArray.splice(rowIndex, 1);
-		}
-		e.stopPropagation();
-		logTable.trigger("update");
-		return false;
-	});
 	
 	//Submit log button handler - Generate final JSON data with all logged clip items
 	submitBtn.on('click', function()
