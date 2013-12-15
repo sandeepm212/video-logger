@@ -1,3 +1,40 @@
+//variable declaration
+	var videoPath = '',
+		videoType = '',
+		duration = 0,
+		frameRate = 0,
+		currentTime = 0,
+		action = '',
+		eachRow = '',
+		urlInput = '',
+		startInput = '',
+		endInput = '',
+		notesTextarea = '',
+		logTable = '',
+		clipAction = '',
+		submitBtn = '',
+		eachRowData,
+		actionArray,
+		existingHotkeys = [],
+		videoData,
+		finalVO,
+		allowedKeysRegex = /[a-z0-9]/i,
+		//localFilePath = 'http://localhost/projects/video-logger/assets/',
+		slideTime = 300,
+		fadeTime = 500,
+		currentProfile,
+		cricketActionProfile = [{"action":"Boundary","hotKeyChar":"B","hotKeyCode":66,"legend":"#FFFF00"},
+								{"action":"Over boundary","hotKeyChar":"6","hotKeyCode":54,"legend":"#00CC00"},
+								{"action":"3 runs","hotKeyChar":"3","hotKeyCode":51,"legend":"#0066FF"},
+								{"action":"Out","hotKeyChar":"O","hotKeyCode":79,"legend":"#993300"},
+								{"action":"One run","hotKeyChar":"1","hotKeyCode":49,"legend":"#FF0066"},
+								{"action":"Two runs","hotKeyChar":"2","hotKeyCode":50,"legend":"#660066"}],
+								
+		soccerActionProfile = [	{"action":"Goal","hotKeyChar":"G","hotKeyCode":71,"legend":"#660066"},
+								{"action":"Penalty","hotKeyChar":"P","hotKeyCode":80,"legend":"#FF0066"},
+								{"action":"Free kick","hotKeyChar":"F","hotKeyCode":70,"legend":"#993300"},
+								{"action":"Super save","hotKeyChar":"S","hotKeyCode":83,"legend":"#0066FF"}];
+
 /**
  * Styles to be applied for every Action 
  */
@@ -34,11 +71,26 @@ function VideoLog (action, eventType, startTime, endTime, note, relativeX, relat
 	this.relativeY = relativeY;
 }
 
-function Video (id) {
+function Video (id, url, thumbnailUrl) {
 	this.id = id;
+	this.url = url;
+	this.thumbnailUrl = thumbnailUrl;
 	this.videoLogs = [];
 	this.actions = [];
 }
+
+var videos = [new Video(1, "trailer", "../images/slider.png"),
+              new Video(2, "trailer", "../images/slider.png"),
+              new Video(3, "trailer", "../images/slider.png"),
+              new Video(4, "trailer", "../images/slider.png"),
+              new Video(5, "trailer", "../images/slider.png"),
+              new Video(6, "trailer", "../images/slider.png"),
+              new Video(7, "trailer", "../images/slider.png"),
+              new Video(8, "trailer", "../images/slider.png"),
+              new Video(9, "trailer", "../images/slider.png"),
+              new Video(10, "trailer", "../images/slider.png"),
+              new Video(11, "trailer", "../images/slider.png"),
+              new Video(12, "trailer", "../images/slider.png")];
 
 var myAppModule = angular.module('videoLoggerApp', []);
 
@@ -48,6 +100,14 @@ var exisitngDataMap = [];
 var videoId = null;
 var clipDataArray = [];
 var videoObj = null;
+var videoPath = '';
+var videoId = '';
+var localFilePath = '../assets/';
+//Constant declaration
+var MP4 = '.mp4',
+	OGV = '.ogv',
+	WEBM = '.webm';
+
 
 var ngVideoLogInfoScope = null;
 myAppModule.controller('ngVideoLogInfoController', function($scope) {
@@ -71,12 +131,41 @@ myAppModule.controller('ngVideoLogInfoController', function($scope) {
 	$scope.showLogVideo = function  (index) {
 		videoObj.play(videoLogs[index].startTime);
 	}
+	
+	$scope.safeApply = function(fn) {
+		  var phase = this.$root.$$phase;
+		  if(phase == '$apply' || phase == '$digest') {
+		    if(fn && (typeof(fn) === 'function')) {
+		      fn();
+		    }
+		  } else {
+		    this.$apply(fn);
+		  }
+	};
+});
+
+var selectedVideo = null;
+myAppModule.controller('step1Controller', function($scope) {
+	$scope.videos = videos;
+	
+	$scope.selectVideo = function  (index, event) {
+		var videoInfo = $scope.videos[index];
+		videoPath = videoInfo.url;
+		videoId = videoInfo.id;
+		if (exisitngDataMap[videoId] != null) {
+			showSavedVideo(exisitngDataMap[videoId]);			
+		}
+		$('#video-carousel li').each(function () {
+			$('a', this).removeClass('active');				
+		});
+		$('a', event.currentTarget).addClass('active');
+	}
 });
 
 
 function addVideoLog (logDetails) {
 	if (logDetails != null) {
-		ngVideoLogInfoScope.$apply(function() {
+		ngVideoLogInfoScope.safeApply(function() {
 			ngVideoLogInfoScope.addVideoLog(logDetails);
 	    });
 	}
@@ -100,3 +189,10 @@ function showExistingLog () {
 		});
 	}
 }
+
+angular.module('exceptionOverride', []).factory('$exceptionHandler', function () {
+	  return function (exception, cause) {
+	    exception.message += ' (caused by "' + cause + '")';
+	    throw exception;
+	  };
+});

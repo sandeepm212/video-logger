@@ -64,7 +64,7 @@
         </section>
         <section class="right">
         	<div class="panels">
-                <div class="panel-wrap step-1">
+                <div class="panel-wrap step-1" ng-controller="step1Controller">
                     <h3>Step 1: Select video</h3>
                     <div class="panel-body clearfix">
                     
@@ -73,18 +73,9 @@
                         <input type="radio" value="existing" checked id="exsting-video" name="video-type-rdo">Select from existing video files (Click on any thumbnail to select the video)</h2>
                         <div class="rounded-holder">
                         <ul id="video-carousel" class="jcarousel-skin-tango">
-                            <li data-video-path='trailer' data-video-id='1'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
-                            <li data-video-path='trailer' data-video-id='2'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
-                            <li data-video-path='trailer' data-video-id='3'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
-                            <li data-video-path='trailer' data-video-id='4'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
-                            <li data-video-path='trailer' data-video-id='5'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
-                            <li data-video-path='trailer' data-video-id='6'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
-                            <li data-video-path='trailer' data-video-id='7'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
-                            <li data-video-path='trailer' data-video-id='8'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
-                            <li data-video-path='trailer' data-video-id='9'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
-                            <li data-video-path='trailer' data-video-id='10'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
-                            <li data-video-path='trailer' data-video-id='11'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
-                            <li data-video-path='trailer' data-video-id='12'><a href="javascript:void(0);"><img src="../images/slider.png"  alt="" /></a></li>
+                            <li ng-repeat="video in videos" ng-click="selectVideo($index, $event)" data-video-path='{{video.url}}' data-video-id='{{video.id}}'>
+                            	<a href="javascript:void(0);"><img src="{{video.thumbnailUrl}}"  alt="" /></a>
+                            </li>
                         </ul>
         				</div>
                         <h2><input type="radio" value="web" id="web-video" name="video-type-rdo">Type URL of a video in the below input box</h2>

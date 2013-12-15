@@ -35,6 +35,15 @@ var videoLogObject = [
 
 
 $(document).ready(function() {
+	
+	urlInput = $('#url-input'),
+	startInput = $('#in-time-input'),
+	endInput = $('#out-time-input'),
+	notesTextarea = $('#clip-notes'),
+	logTable = $('#clip-logger'),
+	clipAction = $('#action-value'),
+	submitBtn = $('#submit-log'),
+	
 	$('#helper').draggable({
         containment: "#video-holder-div",
         scroll: false
@@ -47,46 +56,7 @@ $('#eventSelect').on('change', function (e) {
     	$('#image').css('display','block');
     }
 });
-
-
 	
-	//variable declaration
-	var videoPath = '',
-		videoType = '',
-		duration = 0,
-		frameRate = 0,
-		currentTime = 0,
-		action = '',
-		eachRow = '',
-		urlInput = $('#url-input'),
-		startInput = $('#in-time-input'),
-		endInput = $('#out-time-input'),
-		notesTextarea = $('#clip-notes'),
-		logTable = $('#clip-logger'),
-		clipAction = $('#action-value'),
-		submitBtn = $('#submit-log'),
-		eachRowData,
-		actionArray,
-		existingHotkeys = [],
-		videoData,
-		finalVO,
-		allowedKeysRegex = /[a-z0-9]/i,
-		//localFilePath = 'http://localhost/projects/video-logger/assets/',
-		localFilePath = '../assets/',
-		slideTime = 300,
-		fadeTime = 500,
-		currentProfile,
-		cricketActionProfile = [{"action":"Boundary","hotKeyChar":"B","hotKeyCode":66,"legend":"#FFFF00"},
-								{"action":"Over boundary","hotKeyChar":"6","hotKeyCode":54,"legend":"#00CC00"},
-								{"action":"3 runs","hotKeyChar":"3","hotKeyCode":51,"legend":"#0066FF"},
-								{"action":"Out","hotKeyChar":"O","hotKeyCode":79,"legend":"#993300"},
-								{"action":"One run","hotKeyChar":"1","hotKeyCode":49,"legend":"#FF0066"},
-								{"action":"Two runs","hotKeyChar":"2","hotKeyCode":50,"legend":"#660066"}],
-								
-		soccerActionProfile = [	{"action":"Goal","hotKeyChar":"G","hotKeyCode":71,"legend":"#660066"},
-								{"action":"Penalty","hotKeyChar":"P","hotKeyCode":80,"legend":"#FF0066"},
-								{"action":"Free kick","hotKeyChar":"F","hotKeyCode":70,"legend":"#993300"},
-								{"action":"Super save","hotKeyChar":"S","hotKeyCode":83,"legend":"#0066FF"}];
 	
 	$.get( "/video-logger/getVideoLog", function( data ) {
 		exisitngData = eval(data);
@@ -103,10 +73,6 @@ $('#eventSelect').on('change', function (e) {
 		});
 	});
 	
-	//Constant declaration
-	var MP4 = '.mp4',
-		OGV = '.ogv',
-		WEBM = '.webm';
 	
 	//loading the existing video carousel
 	$('#video-carousel').jcarousel();
@@ -131,21 +97,21 @@ $('#eventSelect').on('change', function (e) {
 	
 	//Carousel thumbnail click handler
 	$('#video-carousel li').live('click', function() {
-		var liObj = $(this);
-		$('#video-carousel li').each(function () {
-			var locLiObj = $(this);
-			var savedId = locLiObj.data('video-id');
-			if (exisitngDataMap[savedId] == null) {
-				$('a', locLiObj).removeClass('active');				
-				//to-step-3-btn
-			}
-		});
-		$('a', liObj).addClass('active');
-		videoPath = liObj.data('video-path');
-		videoId = liObj.data('video-id');
-		if (exisitngDataMap[videoId] != null) {
-			showSavedVideo(exisitngDataMap[videoId]);			
-		}
+//		var liObj = $(this);
+//		$('#video-carousel li').each(function () {
+//			var locLiObj = $(this);
+//			var savedId = locLiObj.data('video-id');
+//			if (exisitngDataMap[savedId] == null) {
+//				$('a', locLiObj).removeClass('active');				
+//				//to-step-3-btn
+//			}
+//		});
+//		$('a', liObj).addClass('active');
+//		videoPath = liObj.data('video-path');
+//		videoId = liObj.data('video-id');
+//		if (exisitngDataMap[videoId] != null) {
+//			showSavedVideo(exisitngDataMap[videoId]);			
+//		}
 	});
 	
 	//Step 1 button handler
@@ -704,30 +670,6 @@ $('#eventSelect').on('change', function (e) {
 		actionArray.splice(liIndex, 1);
 	}
 	
-
-	
-	//Helper function to load a video either from local resource or from web
-	function loadVideo(videoURL) {
-		url = videoURL;
-		if (url == null) {
-			url = $('#exsting-video').is(':checked') ? getLocalFileNameArr(videoPath) : videoPath;			
-		}
-		videoObj = Popcorn.smart('#video-holder-div', url);
-		$('#video-holder-div').slideDown(slideTime);
-		//Caching media properties once the media metadata are loaded
-		videoObj.on('loadedmetadata', function()
-		{
-			duration = videoObj.duration();
-			frameRate = videoObj.options.framerate ? videoObj.options.framerate : 30;// TBD : Calculation of framerate needs to be accurate
-			$('.loading-wrap').addClass('hide');
-			videoData = new Object();
-			videoData.type = videoType;
-			videoData.url = videoPath;
-			videoData.duration = duration;
-			videoObj.controls(true);
-		});
-	}
-	
 	//Helper function to validate intime, outtime and notes field
 	function validateFields()
 	{
@@ -789,19 +731,6 @@ $('#eventSelect').on('change', function (e) {
 		}	
 	}
 	
-	//Helper function to return an array containing different filename versions of the media element
-	function getLocalFileNameArr(fileName)
-	{
-		var fileNameArr = [],
-			ogvFormat = localFilePath + fileName + OGV,
-			mp4Format = localFilePath + fileName + MP4,
-			webmFormat = localFilePath + fileName + WEBM;
-			
-		fileNameArr = [ogvFormat, mp4Format, webmFormat];
-		
-		return fileNameArr;
-	}
-	
 	//Helper function to render the UI for actions in Logger section
 	function renderActionButtons()
 	{
@@ -811,30 +740,6 @@ $('#eventSelect').on('change', function (e) {
 			liStr += '<li>' + actionArray[actionIndex].action + '</li>';
 		}
 		$('ul.actions').html(liStr);
-	}
-	
-	//Helper function to render the action list in step 2 with pre existing action profiles
-	function populateSelectedActions(actionProfile)
-	{
-		currentProfile = actionProfile;
-		$('.step-2 .added-action-list').html('');
-		for(actionIndex in actionProfile)
-		{
-			var liStr = '<li>' + actionProfile[actionIndex].action + '</li>',
-			liObj = $(liStr);
-			if(actionProfile[actionIndex].hotKeyChar != '')
-			{
-				var spanObj = '<span class="hotkey" style="background-color:'+actionProfile[actionIndex].legend+'" title="Key board shortcut for this action is ' + actionProfile[actionIndex].hotKeyChar + '">' + 
-								actionProfile[actionIndex].hotKeyChar + '</span>';
-				liObj.append(spanObj).addClass('has-hot-key');
-			}
-			liObj.data({'action' : actionProfile[actionIndex].action, 
-						'hotKeyChar' : actionProfile[actionIndex].hotKeyChar, 
-						'hotKeyCode' : actionProfile[actionIndex].keyCode});		
-			$('.step-2 .added-action-list').append(liObj);
-			
-		}
-		$('.step-2 .added-action-list').slideDown(slideTime);
 	}
 	
 	//Resetting the UI and flushing the stored objects on loading a new instance of video
@@ -865,13 +770,6 @@ $('#eventSelect').on('change', function (e) {
 		finalVO = null;
 	}
 	
-	//Helper function for navigating from one step to another
-	function goToNextPage(panelName)
-	{
-		$('.panels > .panel-wrap').addClass('hide');
-		$('.panels').children(panelName).removeClass('hide');
-	}
-	
 	//Helper function to highlight current tab
 	function highlightCurrentTab(liIndex)
 	{
@@ -890,49 +788,113 @@ $('#eventSelect').on('change', function (e) {
 		return (keyVal != '' && allowedKeysRegex.test(keyVal)) ? keyVal.charCodeAt(0) : '';
 	 }
 	
-	function showSavedVideo (videoInfo) {
-		if (videoInfo != null) {
-			actionArray = [];
-			var videoActions = videoInfo.actions;
-						
-			videoPath = videoInfo.url;
-			videoType = videoInfo.videoType;
-			if (videoPath != null && videoType != null) {
-				loadVideo();
-				showExistingLog();			
-				$(videoInfo.actions).each(function () {
-					
-					var eachAction = new Object();
-					eachAction.action = this.name;
-					eachAction.hotKeyChar = this.hotKeyChar;
-					eachAction.keyCode = this.hotKeyCode;
-					actionArray.push(eachAction);
-					
-					var liStr = '<li>' + this.name + '</li>',
-					liObj = $(liStr);
-					if(this.hotKeyChar != '') {
-						var spanObj = '<span class="hotkey" style="background-color:'+this.legend+'" title="Key board shortcut for this action is ' + this.hotKeyChar + '">' + 
-						this.hotKeyChar + '</span>';
-						liObj.append(spanObj).addClass('has-hot-key');
-					}
-					liObj.data({'action' : this.action,
-								'hotKeyChar' : this.hotKeyChar, 
-								'hotKeyCode' : this.hotKeyCode});		
-					$('.step-3 .added-action-list1').append(liObj);
-					//$('.step-2 .added-action-list').append(liObj);			
-									
-				});
-				
-				populateSelectedActions(actionArray);					
-				var actionClone = $('.step-2 .added-action-list').clone(true).removeClass('rounded-holder hide').attr("style", "display: block;");
-				var ss = $(actionClone).html();
-				$('.actions').html(actionClone).find('.delete-action').remove();
-				goToNextPage('.step-3');
-				
-			}
-		}		
-	}
+	
 });
 
 
 
+//Helper function to load a video either from local resource or from web
+function loadVideo(videoURL) {
+	url = videoURL;
+	if (url == null) {
+		url = $('#exsting-video').is(':checked') ? getLocalFileNameArr(videoPath) : videoPath;			
+	}
+	videoObj = Popcorn.smart('#video-holder-div', url);
+	$('#video-holder-div').slideDown(slideTime);
+	//Caching media properties once the media metadata are loaded
+	videoObj.on('loadedmetadata', function()
+	{
+		duration = videoObj.duration();
+		frameRate = videoObj.options.framerate ? videoObj.options.framerate : 30;// TBD : Calculation of framerate needs to be accurate
+		$('.loading-wrap').addClass('hide');
+		videoData = new Object();
+		videoData.type = videoType;
+		videoData.url = videoPath;
+		videoData.duration = duration;
+		videoObj.controls(true);
+	});
+}
+
+
+function showSavedVideo (videoInfo) {
+	if (videoInfo != null) {
+		actionArray = [];
+		var videoActions = videoInfo.actions;
+					
+		videoPath = videoInfo.url;
+		videoType = videoInfo.videoType;
+		if (videoPath != null && videoType != null) {
+			loadVideo();
+			showExistingLog();			
+			$(videoInfo.actions).each(function () {
+				
+				var eachAction = new Object();
+				eachAction.action = this.name;
+				eachAction.hotKeyChar = this.hotKeyChar;
+				eachAction.keyCode = this.hotKeyCode;
+				actionArray.push(eachAction);
+				
+				var liStr = '<li>' + this.name + '</li>',
+				liObj = $(liStr);
+				if(this.hotKeyChar != '') {
+					var spanObj = '<span class="hotkey" style="background-color:'+this.legend+'" title="Key board shortcut for this action is ' + this.hotKeyChar + '">' + 
+					this.hotKeyChar + '</span>';
+					liObj.append(spanObj).addClass('has-hot-key');
+				}
+				liObj.data({'action' : this.action,
+							'hotKeyChar' : this.hotKeyChar, 
+							'hotKeyCode' : this.hotKeyCode});		
+				$('.step-3 .added-action-list1').append(liObj);
+				//$('.step-2 .added-action-list').append(liObj);			
+								
+			});
+			
+			populateSelectedActions(actionArray);					
+			var actionClone = $('.step-2 .added-action-list').clone(true).removeClass('rounded-holder hide').attr("style", "display: block;");
+			var ss = $(actionClone).html();
+			$('.actions').html(actionClone).find('.delete-action').remove();
+			goToNextPage('.step-3');
+			
+		}
+	}		
+}
+
+//Helper function to render the action list in step 2 with pre existing action profiles
+function populateSelectedActions(actionProfile)
+{
+	currentProfile = actionProfile;
+	$('.step-2 .added-action-list').html('');
+	for(actionIndex in actionProfile)
+	{
+		var liStr = '<li>' + actionProfile[actionIndex].action + '</li>',
+		liObj = $(liStr);
+		if(actionProfile[actionIndex].hotKeyChar != '')
+		{
+			var spanObj = '<span class="hotkey" style="background-color:'+actionProfile[actionIndex].legend+'" title="Key board shortcut for this action is ' + actionProfile[actionIndex].hotKeyChar + '">' + 
+							actionProfile[actionIndex].hotKeyChar + '</span>';
+			liObj.append(spanObj).addClass('has-hot-key');
+		}
+		liObj.data({'action' : actionProfile[actionIndex].action, 
+					'hotKeyChar' : actionProfile[actionIndex].hotKeyChar, 
+					'hotKeyCode' : actionProfile[actionIndex].keyCode});		
+		$('.step-2 .added-action-list').append(liObj);
+		
+	}
+	$('.step-2 .added-action-list').slideDown(slideTime);
+}
+
+//Helper function for navigating from one step to another
+function goToNextPage(panelName)
+{
+	$('.panels > .panel-wrap').addClass('hide');
+	$('.panels').children(panelName).removeClass('hide');
+}
+
+//Helper function to return an array containing different filename versions of the media element
+function getLocalFileNameArr(fileName)
+{
+	var fileNameArr = [], ogvFormat = localFilePath + fileName + OGV, mp4Format = localFilePath + fileName + MP4, webmFormat = localFilePath + fileName + WEBM;
+		
+	fileNameArr = [ogvFormat, mp4Format, webmFormat];
+	return fileNameArr;
+}
