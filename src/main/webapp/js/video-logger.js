@@ -195,7 +195,6 @@ function videoLogForm($scope) {
     	} else {
     		alert('Please load Video');
     	}
-    	
     },
 
     $scope.removeItem = function(index) {

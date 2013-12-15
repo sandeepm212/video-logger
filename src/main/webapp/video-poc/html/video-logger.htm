@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="videoLoggerApp">
 <head>
 <title>Video logger</title>
 <link type="text/css" rel="stylesheet" media="all" href="../css/jquery-ui-1.9.2.custom.min.css" />
@@ -9,10 +9,12 @@
 <!--<script src="../js/popcorn/popcorn.js"></script>
 <script src="../js/popcorn/popcorn.player.js"></script>
 <script src="../js/popcorn/popcorn.youtube.js"></script>-->
-<script type="text/javascript" src="../js/angularjs/angular.js"></script>
-<script type="text/javascript" src="../js/logger.js"></script>
 <script src="../js/jquery-1.8.3.js"></script>
 <script src="../js/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="../js/angularjs/angular.js"></script>
+<script type="text/javascript" src="../js/logger.js"></script>
+
+
 <script type="text/javascript" src="../js/jquery.jcarousel.min.js"></script>
 <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript" src="../js/popcorn/popcorn.pop.js"></script>
@@ -193,7 +195,7 @@
 				                        <a title="Submit the log to server" id="submit-log" class="log-action" href="javascript:void(0)">Submit log</a>
 				                    </div>
 				                </h3>
-				                <div class="panel-body" ng-controller="ngVideoLogInfo">
+				                <div class="panel-body" ng-controller="ngVideoLogInfoController" id="ngVideoLogInfoController">
 				                	<table class="logg-table" id="clip-logger">
 				                    	<thead>
 				                        	<tr>
@@ -203,7 +205,9 @@
 				                                <th class="col-3">Note</th>
 				                                <th class="col-4">&nbsp;</th>
 				                            </tr>
-				                            <tr ng-repeat="log in videoLogs">
+				                         </thead>
+				                         <tbody>
+				                            <tr ng-repeat="log in videoLogs" ng-click="showLogVideo($index)">
 				                            	<td>
 				                            		<span style="background-color:undefined" class="hotkeyl" title="">{{log.action}}</span>
 				                            	</td>
@@ -212,7 +216,7 @@
 				                            	<td>{{log.note}}</td>
 				                            	<td><a href="javascript:void(0)" ng-click="deleteLog()" class="delete-cue hideText" title="Delete this log entry">Delete this log entry</a></td>
 				                            </tr>
-				                        </thead>
+				                        </tbody>
 				                        <tbody></tbody>
 				                    </table>
 				                </div>
