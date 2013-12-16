@@ -112,18 +112,18 @@
                         </h2>
                         <div class="add-action-wrap hide">
                             <label for="popular-action-list">Available action profiles:</label>
-                            <select id="popular-action-list">
+                            <select id="popular-action-list" ng-model="selectedProfile">
                             	<option value="select">--Select--</option>
-                            	<option value="cricket">Cricket</option>
-                                <option value="soccer">Soccer</option>
+                            	<option ng-repeat="profile in actionProfiles" value="{{profile.id}}">{{profile.name}}</option>
                             </select>
-                            <input type="button" class="add-popular-action" value="Load selected action profile">
+                            <input type="button" class="add-popular-action" value="Load selected action profile" ng-click="loadSavedProfile()">
                         </div>
                         <ul class="added-action-list rounded-holder clearfix">
                         	<!-- ngRepeat: action in actions -->
                      	   	<li ng-class="{'has-hot-key': hasHotKey(action)}" ng-repeat="action in actions">{{action.name}}
                         	<a href="javascript:void(0)" class="delete-action hideText" title="Delete this action">Delete this action</a>
-                        	<span ng-if="hasHotKey(action)" title="Key board shortcut for this action is {{action.hotKeyChar}}" class="hotkey">{{action.hotKeyChar}}</span>
+                        	<span ng-if="hasHotKey(action)" title="Key board shortcut for this action is {{action.hotKeyChar}}" class="hotkey"
+                        	 style="background-color: {{action.style.backgroundColor}}">{{action.hotKeyChar}}</span>
                         	</li>
                         </ul>
                         <input type="button" class="video-logger-btn f-right top-gap" id="to-step-3-btn" value="Save &amp; go to step 3" />
