@@ -162,6 +162,52 @@ myAppModule.controller('step1Controller', function($scope) {
 	}
 });
 
+var actions = [];
+myAppModule.controller('step2Controller', function($scope) {
+	$scope.actions = actions;
+	
+	$scope.addLogAction = function (action) {
+		if (action.name != '') {
+			var hasError = false;
+			if (action.hotKeyChar != null && action.hotKeyChar != '') {
+				action.keyCode = extractKeyCode(action.hotKeyChar.toUpperCase());
+				if(action.keyCode != '') {
+					if($.inArray(action.hotKeyChar.toUpperCase(), existingHotkeys) == -1) {
+						existingHotkeys.push(action.hotKeyChar.toUpperCase());
+					} else {
+						hasError = true;
+						alert("This hot key has already been used. Please choose another key for this action.");
+					}
+				}
+			}
+			if (!hasError) {
+				$scope.actions.push(action);
+				$scope.action = {};
+			}
+		} else {
+			alert("Please enter an action name");
+		}
+		$('#action-name').focus();
+	}
+	
+	$scope.hasHotKey = function (action) {
+		return (action.hotKeyChar != '' && action.hotKeyChar != null);
+	}
+	
+	$scope.loadProfileActions = function () {
+		
+	}
+});
+
+//helper function to extract hot key code of a corresponding action
+function extractKeyCode(keyVal) {
+	return (keyVal != '' && allowedKeysRegex.test(keyVal)) ? keyVal.charCodeAt(0) : '';
+}
+
+myAppModule.controller('step3Controller', function($scope) {
+	$scope.actions = actions;
+});
+
 
 function addVideoLog (logDetails) {
 	if (logDetails != null) {

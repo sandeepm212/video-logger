@@ -351,46 +351,6 @@ $('#eventSelect').on('change', function (e) {
 		$('#log-preview-popup').dialog('open');
 	});
 	
-	//Add custom action in step 2
-	$('.add-action').live('click', function()
-	{
-		var action = $('#action-name').val();
-		if(action != '')
-		{
-			var liStr = '<li>' + action + 
-							'<a title="Delete this action" class="delete-action hideText" href="javascript:void(0)">Delete this action</a>' +
-        				'</li>',
-				liObj = $(liStr),
-				hotKeyChar = $('#hot-key').val().toUpperCase(),
-				keyCode = extractKeyCode(hotKeyChar);
-				
-			if(keyCode != '')
-			{
-				if($.inArray(hotKeyChar, existingHotkeys) == -1)
-				{
-					var spanObj = '<span class="hotkey" title="Key board shortcut for this action is ' + hotKeyChar + '">' + hotKeyChar + '</span>';
-					liObj.append(spanObj).addClass('has-hot-key').attr('hotKeyCode');
-					existingHotkeys.push(hotKeyChar);
-				}
-				else
-				{
-					alert("This hot key has already been used. Please choose another key for this action.");
-					$('#hot-key').val('').focus();
-					return;
-				}
-			}
-			
-			liObj.data({'action' : action, 'hotKeyChar' : hotKeyChar, 'hotKeyCode' : keyCode});		
-			$('.step-2 .added-action-list').append(liObj).slideDown(slideTime);
-		}
-		else
-		{
-			alert("Please enter an action name");
-		}
-		$('#action-name').val('').focus();
-		$('#hot-key').val('');
-	});
-	
 	//Select from available action profile in step 2
 	$('.add-popular-action').live('click', function()
 	{
@@ -782,11 +742,7 @@ $('#eventSelect').on('change', function (e) {
 		alert(msg);
 	}
 	
-	//helper function to extract hot key code of a corresponding action
-	function extractKeyCode(keyVal)
-	 {
-		return (keyVal != '' && allowedKeysRegex.test(keyVal)) ? keyVal.charCodeAt(0) : '';
-	 }
+	
 	
 	
 });
