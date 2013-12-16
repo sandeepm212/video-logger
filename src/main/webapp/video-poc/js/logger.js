@@ -23,18 +23,28 @@
 		slideTime = 300,
 		fadeTime = 500,
 		currentProfile,
-		cricketActionProfile = [{"action":"Boundary","hotKeyChar":"B","hotKeyCode":66,"legend":"#FFFF00"},
-								{"action":"Over boundary","hotKeyChar":"6","hotKeyCode":54,"legend":"#00CC00"},
-								{"action":"3 runs","hotKeyChar":"3","hotKeyCode":51,"legend":"#0066FF"},
-								{"action":"Out","hotKeyChar":"O","hotKeyCode":79,"legend":"#993300"},
-								{"action":"One run","hotKeyChar":"1","hotKeyCode":49,"legend":"#FF0066"},
-								{"action":"Two runs","hotKeyChar":"2","hotKeyCode":50,"legend":"#660066"}],
+		cricketActionProfile = [{"action":"Boundary","hotKeyChar":"B","hotKeyCode":66,"legend":"#FFFF00","style": {"backgroundColor" : "#FFFF00"}},
+								{"action":"Over boundary","hotKeyChar":"6","hotKeyCode":54,"legend":"#00CC00","style": {"backgroundColor" : "#00CC00"}},
+								{"action":"3 runs","hotKeyChar":"3","hotKeyCode":51,"legend":"#0066FF","style": {"backgroundColor" : "#993300"}},
+								{"action":"Out","hotKeyChar":"O","hotKeyCode":79,"legend":"#993300","style": {"backgroundColor" : "#993300"}},
+								{"action":"One run","hotKeyChar":"1","hotKeyCode":49,"legend":"#FF0066","style": {"backgroundColor" : "#FF0066"}},
+								{"action":"Two runs","hotKeyChar":"2","hotKeyCode":50,"legend":"#660066","style": {"backgroundColor" : "#660066"}}],
 								
-		soccerActionProfile = [	{"action":"Goal","hotKeyChar":"G","hotKeyCode":71,"legend":"#660066"},
-								{"action":"Penalty","hotKeyChar":"P","hotKeyCode":80,"legend":"#FF0066"},
-								{"action":"Free kick","hotKeyChar":"F","hotKeyCode":70,"legend":"#993300"},
-								{"action":"Super save","hotKeyChar":"S","hotKeyCode":83,"legend":"#0066FF"}];
+		soccerActionProfile = [	{"action":"Goal","hotKeyChar":"G","hotKeyCode":71,"legend":"#660066","style": {"backgroundColor" : "#660066"}},
+								{"action":"Penalty","hotKeyChar":"P","hotKeyCode":80,"legend":"#FF0066","style": {"backgroundColor" : "#FF0066"}},
+								{"action":"Free kick","hotKeyChar":"F","hotKeyCode":70,"legend":"#993300","style": {"backgroundColor" : "#993300"}},
+								{"action":"Super save","hotKeyChar":"S","hotKeyCode":83,"legend":"#0066FF","style": {"backgroundColor" : "#0066FF"}}];
 
+function ActionProfile(id, name, actions) {
+	this.name = name;
+	this.id = id;
+	this.actions = actions;
+}
+
+var actionProfiles = [];
+actionProfiles.push(new ActionProfile("cricket", "Cricket", cricketActionProfile));
+actionProfiles.push(new ActionProfile("soccer", "Soccer", soccerActionProfile));
+	
 /**
  * Styles to be applied for every Action 
  */
@@ -165,6 +175,8 @@ myAppModule.controller('step1Controller', function($scope) {
 var actions = [];
 myAppModule.controller('step2Controller', function($scope) {
 	$scope.actions = actions;
+	$scope.actionProfiles = actionProfiles;
+	$scope.selectedProfile = "";
 	
 	$scope.addLogAction = function (action) {
 		if (action.name != '') {
@@ -194,8 +206,9 @@ myAppModule.controller('step2Controller', function($scope) {
 		return (action.hotKeyChar != '' && action.hotKeyChar != null);
 	}
 	
-	$scope.loadProfileActions = function () {
-		
+	$scope.loadSavedProfile = function () {
+		$scope.actions = [];
+		console.log($scope.selectedProfile);
 	}
 });
 
