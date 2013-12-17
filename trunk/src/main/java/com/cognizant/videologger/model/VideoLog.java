@@ -9,6 +9,14 @@ public class VideoLog {
 	private String relativeY;
 	private String eventType;
 
+	public String getEventType() {
+		return eventType;
+	}
+
+	public void setEventType(String eventType) {
+		this.eventType = eventType;
+	}
+
 	public String getAction() {
 		return action;
 	}

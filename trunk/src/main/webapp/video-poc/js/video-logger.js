@@ -92,7 +92,7 @@ $('#eventSelect').on('change', function (e) {
 	$('input[name="action-rdo"]').live('change', function() {
 		$('input[name="action-rdo"]').parent('h2').next().slideUp(slideTime);
 		$(this).is(':checked') ? $(this).parent('h2').next().slideDown(slideTime): $(this).parent('h2').next().slideUp(slideTime);
-		$('.step-2 .added-action-list').html('').slideUp(slideTime);
+		//$('.step-2 .added-action-list').html('').slideUp(slideTime);
 	});
 	
 	//Carousel thumbnail click handler
@@ -183,8 +183,8 @@ $('#eventSelect').on('change', function (e) {
 				//$('.step-3 .added-action-list1').append(this);
 			});
 			//renderActionButtons();
-			var actionClone = $('.step-2 .added-action-list').clone(true).removeClass('rounded-holder');
-			$('.actions').html(actionClone).find('.delete-action').remove();
+//			var actionClone = $('.step-2 .added-action-list').clone(true).removeClass('rounded-holder');
+//			$('.actions').html(actionClone).find('.delete-action').remove();
 			goToNextPage('.step-3');
 			highlightCurrentTab(2);
 			
@@ -258,54 +258,11 @@ $('#eventSelect').on('change', function (e) {
 	
 	//Enter log button click handler - make entry of a row in the log table in UI, push new item in clipDataArray with new values
 	$('#enter-log-btn,#enter-log2').on('click', function() {
-		addLog();
+		//addLog();
 		$('#image').css('display','none');
 	});
 	
-	function addLog() {
-		if(validateFields()) {
-			legend="";
-			
-			for(actionIndex in currentProfile) {
-				if(clipAction.data('action-value')==currentProfile[actionIndex].action){
-					legend=currentProfile[actionIndex].legend;
-				}				
-			}
-			spanText="";
-			if(legend!="") {
-				spanText='<span style="background-color:'+legend+'" class="hotkeyl" title="' + clipAction.data('action-value') + '">&nbsp;</span>'
-			}
-			
-			var eventTypeSelect = $( "#eventSelect" ).val();
-			var relativeY = - $("#video-holder-div").offset().top + $("#image").offset().top;
-			var relativeX = - $("#video-holder-div").offset().left + $("#image").offset().left;
-			
-			var log = new VideoLog (clipAction.data('action-value'), eventTypeSelect, startInput.val(), endInput.val(), notesTextarea.val(), relativeX, relativeY);
-			addVideoLog(log);
-			
-			eachRowData = new Object();
-			eachRowData.action = clipAction.data('action-value');
-			eachRowData.startTime = startInput.val();
-			eachRowData.endTime = endInput.val();
-			eachRowData.eventType = eventTypeSelect;
-			eachRowData.notes = notesTextarea.val();
-			eachRowData.videoId = videoId;
-			
-			
-			eachRowData.relX = relativeX;
-			eachRowData.relY = relativeY;
-			
-			clipDataArray.push(eachRowData);
-			clearFields();
-			//alert("Clip entry successfully logged");
-			$('section.right').removeClass('hide');
-			videoObj.play();
-			logTable.trigger("update");
-			
-			$('#enter-out-time').css('display','-moz-stack');
-			$('#out-time-input').css('display','none');		
-		}
-	}
+	
 	
 	//View log button handler
 	$('#view-log').live('click', function()
@@ -350,26 +307,7 @@ $('#eventSelect').on('change', function (e) {
 		
 		$('#log-preview-popup').dialog('open');
 	});
-	
-	//Select from available action profile in step 2
-	$('.add-popular-action').live('click', function()
-	{
-		var selectedProfile = $('#popular-action-list').val();
-		switch (selectedProfile)
-		{
-			case 'cricket':
-				populateSelectedActions(cricketActionProfile);
-				break;
-				
-			case 'soccer':
-				populateSelectedActions(soccerActionProfile);
-				break;
-				
-			default:
-				alert("Please select a valid action profile");
-		}
-	});
-	
+		
 	//Delete an action in step 2
 	$('.delete-action').live('click', function()
 	{
@@ -431,38 +369,6 @@ $('#eventSelect').on('change', function (e) {
 		});
 	});
 		
-	// Action click handler
-	$('.actions .added-action-list li').live('click', function()
-	{
-		currentTime = videoObj.currentTime();
-		if(currentTime > 0 && currentTime < duration)
-		{
-			var index = $(this).index();
-			$('.actions li').removeClass('selected');
-			$(this).addClass('selected');
-			clipAction.text(actionArray[index].action).data('action-value', actionArray[index].action).css('display', 'inline-block');
-			//videoObj.pause();
-			startInput.val(formatTime(currentTime));
-		}
-		else if(currentTime >= duration)
-		{
-			alert("The video playing is over. You can't log time now. To log time, replay the video");
-		}
-		else
-		{
-			alert("The video has not yet started playing. Try logging after you have started playing the video");
-		}
-	});
-	
-	//Pause the video if something notes textarea gets focus
-	notesTextarea.focus(function()
-	{
-		if(videoObj)
-		{
-			videoObj.pause();
-		}
-	});
-	
 	//navigation menu click handler
 	$('ul.logging-nav li').live('click', function()
 	{
@@ -516,31 +422,25 @@ $('#eventSelect').on('change', function (e) {
 	var timeStore; 
 	$('#preview').live('click', function()
 	{
-		if(clipDataArray.length > 0)
-		{
+		if(clipDataArray.length > 0) {
 			$('.logger-holder, section.left, #preview, #view-log, #submit-log').hide();
 			$('section.right').css('width', '100%');
 			$('#back-to-logger').show();
 			$('th:last-child, tr td:last-child', logTable).addClass('hide');
-			if(videoObj)
-			{
+			if (videoObj) {
 				timeStore = videoObj.currentTime(); 
 				videoObj.currentTime(0).play();
 				syncVideoWidLog();
 			}
-		}
-		else
-		{
+		} else {
 			alert("At least one action should be captured to preview the logged video.");
 		}
 	});
 	
 	//Helper function to synchronize video with log record table
-	function syncVideoWidLog()
-	{
+	function syncVideoWidLog() {
 		var inTime;
-		for(clipIndex in clipDataArray)
-		{
+		for(clipIndex in clipDataArray) {
 			inTime = clipDataArray[clipIndex].startTime;
 			videoObj.cue(inTime, cueCallback(inTime));
 			
@@ -567,8 +467,6 @@ $('#eventSelect').on('change', function (e) {
 			        left: ($("#video-holder-div").offset().top + clipDataArray[clipIndex].relX - 120) + "px",
 			        icon:"../css/images/pointer.png"
 				});
-				
-				
 			}
 			
 			/*videoObj.footnoteAnimated({
@@ -630,38 +528,6 @@ $('#eventSelect').on('change', function (e) {
 		actionArray.splice(liIndex, 1);
 	}
 	
-	//Helper function to validate intime, outtime and notes field
-	function validateFields()
-	{
-		var isValid = false;
-		
-		if($.trim(clipAction.text()) == '')
-		{
-			alert("To log a clip in the video, 'Action' must be specified");
-		}		
-		else if(startInput.val() == '')
-		{
-			alert("To log a clip in the video, 'In time' must be captured");
-		}
-		/*else if(endInput.val() == '')
-		{
-			alert("To log a clip in the video, 'Out time' must be captured");
-		}
-		else if(notesTextarea.val() == '')
-		{
-			alert("To log a clip in the video, 'Notes' must be entered");
-		}
-		else if(startInput.val() > endInput.val())
-		{
-			alert("'Out time' must be greater than 'In time'. Please replay the video and log time properly");
-		}*/
-		else
-		{
-			isValid = true;
-		}
-		return isValid;
-	}
-	
 	//Helper function to clear fields after logging
 	function clearFields()
 	{
@@ -670,26 +536,6 @@ $('#eventSelect').on('change', function (e) {
 		notesTextarea.val('');
 	}
 	
-	//Helper function to format the timestamp values (from seconds to SMPTE formatted string i.e. HH:MM:SS.FF)
-	function formatTime(sec) {
-		var d = new Date(Number(sec * 1000)),
-			HH = d.getUTCHours(),
-			MM = d.getUTCMinutes(),
-			SS = d.getUTCSeconds(),
-			FF = ((d.getUTCMilliseconds() * frameRate) / 1000).toFixed(0),
-			timecode = [ pad(HH), pad(MM), pad(SS) ];
-			
-		return timecode.join(':') + '.' + pad(FF); // HH:MM:SS.FF
-	}
-	
-	//Helper function of formatTime() function to add 0 before single digit number
-	function pad(num) {
-		if (num > 9) {
-			return num;
-		} else {
-			return '0' + num;
-		}	
-	}
 	
 	//Helper function to render the UI for actions in Logger section
 	function renderActionButtons()
@@ -772,7 +618,7 @@ function loadVideo(videoURL) {
 }
 
 
-function showSavedVideo (videoInfo) {
+function showSavedVideo1 (videoInfo) {
 	if (videoInfo != null) {
 		actionArray = [];
 		var videoActions = videoInfo.actions;
