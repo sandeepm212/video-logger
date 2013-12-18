@@ -228,41 +228,17 @@ $('#eventSelect').on('change', function (e) {
 		});
 	});
 	
-	//In/out time click handler
-	$('a.intime-btn, a.outtime-btn').on('click', function() {
-		currentTime = videoObj.currentTime();
-		if(currentTime > 0 && currentTime < duration) {
-			var btnObj = $(this);
-			videoObj.pause();			
-			btnObj.prev('input[type="text"]').val(formatTime(currentTime));
-		} else if(currentTime > duration) {
-			alert("The video playing is over. You can't log time now. To log time, replay the video");
-		} else {
-			alert("The video has not yet started playing. Try logging after you have started playing the video");
-		}
-	});
-	
 	//Play the video
 	$('.play-video').live('click', function() {
 		videoObj.play();
 	});
-	
-	$('#enter-out-time').live('click', function() {
-		endTime = videoObj.currentTime();
-		endInput.val(formatTime(endTime));
-		$('#enter-out-time').css('display','none');
-		$('#out-time-input').css('display','-moz-stack');
-		videoObj.pause();
-	});
-	
 	
 	//Enter log button click handler - make entry of a row in the log table in UI, push new item in clipDataArray with new values
 	$('#enter-log-btn,#enter-log2').on('click', function() {
 		//addLog();
 		$('#image').css('display','none');
 	});
-	
-	
+		
 	
 	//View log button handler
 	$('#view-log').live('click', function()
@@ -327,7 +303,7 @@ $('#eventSelect').on('change', function (e) {
 	
 	
 	//Submit log button handler - Generate final JSON data with all logged clip items
-	submitBtn.on('click', function()
+	submitBtn.on('click11', function()
 	{
 		var clipData = clipDataArray;
 		var vObject = new Object();
@@ -418,91 +394,6 @@ $('#eventSelect').on('change', function (e) {
 		}
 	});
 	
-	//Preview button handler
-	var timeStore; 
-	$('#preview').live('click', function()
-	{
-		if(clipDataArray.length > 0) {
-			$('.logger-holder, section.left, #preview, #view-log, #submit-log').hide();
-			$('section.right').css('width', '100%');
-			$('#back-to-logger').show();
-			$('th:last-child, tr td:last-child', logTable).addClass('hide');
-			if (videoObj) {
-				timeStore = videoObj.currentTime(); 
-				videoObj.currentTime(0).play();
-				syncVideoWidLog();
-			}
-		} else {
-			alert("At least one action should be captured to preview the logged video.");
-		}
-	});
-	
-	//Helper function to synchronize video with log record table
-	function syncVideoWidLog() {
-		var inTime;
-		for(clipIndex in clipDataArray) {
-			inTime = clipDataArray[clipIndex].startTime;
-			videoObj.cue(inTime, cueCallback(inTime));
-			
-			if(clipDataArray[clipIndex].eventType == "Subtitle"){			
-				videoObj.subtitle({
-	    	         start: clipDataArray[clipIndex].startTime,
-	    	          end: clipDataArray[clipIndex].endTime,
-	    	          text: clipDataArray[clipIndex].notes
-	    	       });
-			}else if(clipDataArray[clipIndex].eventType == "Footnote"){
-				videoObj.footnote({
-					  start: clipDataArray[clipIndex].startTime,
-		   	          end: clipDataArray[clipIndex].endTime,
-		   	          text: clipDataArray[clipIndex].notes,
-		   	          target:"previewData"  
-		           });
-			}else if(clipDataArray[clipIndex].eventType == "Pop"){
-				videoObj.pop({
-					start: clipDataArray[clipIndex].startTime,
-	   	            end: clipDataArray[clipIndex].endTime,
-	   	            text: clipDataArray[clipIndex].notes,
-			        target:"video-holder-div",
-			        top: ($("#video-holder-div").offset().top + clipDataArray[clipIndex].relY) + "px",
-			        left: ($("#video-holder-div").offset().top + clipDataArray[clipIndex].relX - 120) + "px",
-			        icon:"../css/images/pointer.png"
-				});
-			}
-			
-			/*videoObj.footnoteAnimated({
-				  start: 2,
-				  end: 6,
-				  text: "Pop!",
-				  target: "previewData"
-				});*/
-			
-			
-			/*videoObj.image({
-				        start: 1,
-				       end: 15,
-				       href: "http://www.drumbeat.org/",
-				     src: "https://www.drumbeat.org/media//images/drumbeat-logo-splash.png",
-				       text: "DRUMBEAT",
-				       target: "previewData"
-				     });*/
-			/*videoObj.wikipedia({
-		        start: 1,
-		        end: 10,
-		        src: "http://en.wikipedia.org/wiki/India",
-		        title: "this is an article about india",
-		        target: "wikidiv"
-		      });*/
-		}
-	}
-	
-	//Cue event callback function
-	function cueCallback(inTime)
-	{
-		return function()
-		{
-			$('tbody tr', logTable).removeClass('row-highlight').filter(function() {return $.data(this, 'stratTime') == inTime;}).addClass('row-highlight');
-		};
-	}
 	
 	//Back from preview screen
 	$('#back-to-logger').live('click', function()

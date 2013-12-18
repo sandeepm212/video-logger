@@ -179,13 +179,13 @@
                                     <div class="row">
                                         <label>In time:</label>
                                         <input type="text" disabled="disabled" id="in-time-input" ng-model="currentLog.startTime" value="{{currentLog.startTime}}" />
-                                        <a href="javascript:void(0)" class="intime-btn hideText" title="Click to log clip start time"></a>
+                                        <a href="javascript:void(0)" class="intime-btn hideText" title="Click to log clip start time" ng-click="logCurrentTime(currentLog.startTime)"></a>
                                     </div>
                                     <div class="row">
                                         <label>Out time:</label> 
-                                        <input type="button" value="Out Time" id="enter-out-time" class="enter-log" title="Out Time" > 
+                                        <input type="button" value="Out Time" id="enter-out-time" ng-click="logOutTime()" class="enter-log" title="Out Time" > 
                                         <input type="text" id="out-time-input" style="display:none;" ng-model="currentLog.endTime" value="{{currentLog.endTime}}"/>
-                                        <a href="javascript:void(0)" class="outtime-btn hideText" title="Click to log clip end time">Click to log clip end time</a>
+                                        <a href="javascript:void(0)" class="outtime-btn hideText" title="Click to log clip end time" ng-click="logCurrentTime(currentLog.endTime)">Click to log clip end time</a>
                                     </div>
                                     <div class="row">
                                         <label>Event:</label> 
@@ -208,7 +208,7 @@
                       		<div class="panel-wrap">
 				            	<h3>Captured moments
 				                	<div class="f-right">
-				                        <a title="Preview logged video" id="preview" class="log-action" href="javascript:void(0)">Preview</a>
+				                        <a title="Preview logged video" id="preview" class="log-action" href="javascript:void(0)" ng-click="preview()">Preview</a>
 				                        <a title="Go back to logger screen" id="back-to-logger" class="log-action hide" href="javascript:void(0)">Back to logger</a>
 				                        <a title="View generated log" id="view-log" class="log-action" href="javascript:void(0)">View log</a>
 				                        <a title="Submit the log to server" id="submit-log" class="log-action" href="javascript:void(0)" ng-click="saveVideoLog()">Submit log</a>
@@ -226,7 +226,7 @@
 				                            </tr>
 				                         </thead>
 				                         <tbody>
-				                            <tr ng-repeat="log in videoLogs" ng-click="showLogVideo($index)">
+				                            <tr ng-repeat="log in videoLogs" ng-click="showLogVideo($index)" ng-class="{rowHighlight : {{$index}} === log.index}">
 				                            	<td>
 				                            		<span style="background-color:undefined" class="hotkeyl" title="">{{log.hotKeyChar}}</span>
 				                            	</td>
