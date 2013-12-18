@@ -432,6 +432,15 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		console.log(logObject);
 		logObject.index = index;
 	}
+	
+	$scope.backToLogger = function () {
+		//videoObj.pause().currentTime(timeStore);
+		$('.logger-holder, section.left, #preview, #view-log, #submit-log').show();
+		$('section.right').css('width', '85%');
+		$('#back-to-logger').hide();
+		$('th:last-child, tr td:last-child', logTable).removeClass('hide');
+		$('tbody tr', logTable).removeClass('row-highlight');
+	}
 });
 
 function addLog() {
