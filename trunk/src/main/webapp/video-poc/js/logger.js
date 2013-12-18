@@ -219,6 +219,11 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		
 	ngVideoLogInfoScope = $scope;
 	$scope.videoLogs = videoLogs;	 
+	$scope.actions = [];
+	$scope.videoLogs = [];
+	$scope.selectedVideoInfo = null;
+	$scope.currentLog = new VideoLog();
+	var actionsMap = [];
 	
 	$scope.deleteLog = function(logToRemove) {
 		if(confirm("Are you sure to delete this log entry?")) {
@@ -250,11 +255,6 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	};
 	
 	
-	$scope.actions = [];
-	$scope.videoLogs = [];
-	$scope.selectedVideoInfo = null;
-	$scope.currentLog = new VideoLog();
-	var actionsMap = [];
 	
 	$scope.$on('ACTIONS', function(value) {
 		$scope.setActions(sharedService.getActions());		
