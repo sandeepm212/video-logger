@@ -409,13 +409,13 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 				videoObj.subtitle({
 	    	         start: $scope.videoLogs[clipIndex].startTime,
 	    	          end: $scope.videoLogs[clipIndex].endTime,
-	    	          text: $scope.videoLogs[clipIndex].notes
+	    	          text: $scope.videoLogs[clipIndex].note
 	    	       });
 			} else if($scope.videoLogs[clipIndex].eventType == "Footnote") {
 				videoObj.footnote({
 					  start: $scope.videoLogs[clipIndex].startTime,
 		   	          end: $scope.videoLogs[clipIndex].endTime,
-		   	          text: $scope.videoLogs[clipIndex].notes,
+		   	          text: $scope.videoLogs[clipIndex].note,
 		   	          target:"previewData"  
 		           });
 			} else if($scope.videoLogs[clipIndex].eventType == "Pop") {
@@ -426,8 +426,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	   	            end: $scope.videoLogs[clipIndex].endTime,
 	   	            text: $scope.videoLogs[clipIndex].note,
 			        target:"video-holder-div",
-			        top: ($("#video-holder-div").offset().top + $scope.videoLogs[clipIndex].relativeY) + "px",
-			        left: ($("#video-holder-div").offset().top + $scope.videoLogs[clipIndex].relativeX - 120) + "px",
+			        top: ($("#video-holder-div").offset().top +  parseInt($scope.videoLogs[clipIndex].relativeY)) + "px",
+			        left: ($("#video-holder-div").offset().top +  parseInt($scope.videoLogs[clipIndex].relativeX - 120)) + "px",
 			        icon:"../css/images/pointer.png"
 				});
 			}
