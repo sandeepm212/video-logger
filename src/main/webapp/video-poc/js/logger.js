@@ -272,6 +272,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	}
 	$scope.applyAction = function (index, event) {
 		var selectedAction = $scope.actions[index];
+		$scope.currentLog.action = selectedAction.action;
+		console.log($scope.currentLog);
 		currentTime = videoObj.currentTime();
 		if(currentTime > 0 && currentTime < duration) {
 			$scope.currentLog.startTime = formatTime(currentTime);
