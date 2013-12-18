@@ -394,18 +394,6 @@ $('#eventSelect').on('change', function (e) {
 		}
 	});
 	
-	
-	//Back from preview screen
-	$('#back-to-logger').live('click', function()
-	{
-		videoObj.pause().currentTime(timeStore);
-		$('.logger-holder, section.left, #preview, #view-log, #submit-log').show();
-		$('section.right').css('width', '85%');
-		$('#back-to-logger').hide();
-		$('th:last-child, tr td:last-child', logTable).removeClass('hide');
-		$('tbody tr', logTable).removeClass('row-highlight');
-	});
-		
 	//helper function to remove an action and associated hotkey, also delete corresponding item from actionArray[]
 	function removeAction(liObj)
 	{
