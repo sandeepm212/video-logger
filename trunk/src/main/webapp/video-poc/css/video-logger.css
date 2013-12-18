@@ -338,7 +338,7 @@ a.play-video {
  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e4efc0', endColorstr='#abbd73', GradientType=0 );
 	cursor:pointer;
 }
-.row-highlight
+.row-highlight, .rowHighlight
 {
 	background-color:#f2fd78;
 }

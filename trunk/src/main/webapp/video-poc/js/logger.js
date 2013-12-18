@@ -240,7 +240,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	}
 	
 	$scope.showLogVideo = function  (index) {
-		videoObj.play(videoLogs[index].startTime);
+		videoObj.play($scope.videoLogs[index].startTime);
 	}
 	
 	$scope.safeApply = function(fn) {
@@ -253,8 +253,6 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		    this.$apply(fn);
 		  }
 	};
-	
-	
 	
 	$scope.$on('ACTIONS', function(value) {
 		$scope.setActions(sharedService.getActions());		
@@ -272,7 +270,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	}
 	$scope.applyAction = function (index, event) {
 		var selectedAction = $scope.actions[index];
-		$scope.currentLog.action = selectedAction.action;
+		$scope.currentLog.action = selectedAction.name;
 		console.log($scope.currentLog);
 		currentTime = videoObj.currentTime();
 		if(currentTime > 0 && currentTime < duration) {
@@ -303,7 +301,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		
 		var videoActions = [];
 		vObject.actions = $scope.actions;
-					
+							
 		//SaveDATA		
 		$.ajax({
 			  type: "POST",
@@ -325,7 +323,16 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		console.log($scope.currentLog);
 		$scope.videoLogs.push($scope.currentLog);
 		$scope.currentLog = new VideoLog();
+		$('.actions li').removeClass('selected');
 	}
+	
+	$scope.logOutTime = function () {
+		endTime = videoObj.currentTime();
+		$scope.currentLog.endTime = formatTime(endTime);
+		$('#enter-out-time').css('display','none');
+		$('#out-time-input').css('display','-moz-stack');
+		videoObj.pause();
+	}	
 	
 	$scope.showSavedVideo = function(videoInfo) {
 		if (videoInfo != null) {				
@@ -336,6 +343,79 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 				goToNextPage('.step-3');
 			}
 		}		
+	}
+	
+	$scope.logCurrentTime = function (param) {
+		currentTime = videoObj.currentTime();
+		if(currentTime > 0 && currentTime < duration) {
+			videoObj.pause();
+			console.log(param);
+			param = formatTime(currentTime);
+		} else if(currentTime > duration) {
+			alert("The video playing is over. You can't log time now. To log time, replay the video");
+		} else {
+			alert("The video has not yet started playing. Try logging after you have started playing the video");
+		}
+	}
+	
+	$scope.preview = function () {
+		//Preview button handler
+		var timeStore; 
+		
+		if($scope.videoLogs.length > 0) {
+			$('.logger-holder, section.left, #preview, #view-log, #submit-log').hide();
+			$('section.right').css('width', '100%');
+			$('#back-to-logger').show();
+			$('th:last-child, tr td:last-child', logTable).addClass('hide');
+			if (videoObj) {
+				timeStore = videoObj.currentTime(); 
+				videoObj.currentTime(0).play();
+				$scope.syncVideoWidLog();
+			}
+		} else {
+			alert("At least one action should be captured to preview the logged video.");
+		}		
+	}
+	
+	//Helper function to synchronize video with log record table
+	$scope.syncVideoWidLog = function () {
+		var inTime;
+		for(clipIndex in $scope.videoLogs) {
+			inTime = $scope.videoLogs[clipIndex].startTime;
+			console.log("CUE OBJECT");
+			videoObj.cue(inTime, $scope.cueCallback(clipIndex, $scope.videoLogs[clipIndex]));			
+			if ($scope.videoLogs[clipIndex].eventType == "Subtitle") {			
+				videoObj.subtitle({
+	    	         start: $scope.videoLogs[clipIndex].startTime,
+	    	          end: $scope.videoLogs[clipIndex].endTime,
+	    	          text: $scope.videoLogs[clipIndex].notes
+	    	       });
+			} else if($scope.videoLogs[clipIndex].eventType == "Footnote") {
+				videoObj.footnote({
+					  start: $scope.videoLogs[clipIndex].startTime,
+		   	          end: $scope.videoLogs[clipIndex].endTime,
+		   	          text: $scope.videoLogs[clipIndex].notes,
+		   	          target:"previewData"  
+		           });
+			} else if($scope.videoLogs[clipIndex].eventType == "Pop") {
+				videoObj.pop({
+					start: $scope.videoLogs[clipIndex].startTime,
+	   	            end: $scope.videoLogs[clipIndex].endTime,
+	   	            text: $scope.videoLogs[clipIndex].notes,
+			        target:"video-holder-div",
+			        top: ($("#video-holder-div").offset().top + $scope.videoLogs[clipIndex].relY) + "px",
+			        left: ($("#video-holder-div").offset().top + $scope.videoLogs[clipIndex].relX - 120) + "px",
+			        icon:"../css/images/pointer.png"
+				});
+			}
+		}
+	}
+	
+	//Cue event callback function
+	$scope.cueCallback = function (index, logObject) {
+		console.log(index);
+		console.log(logObject);
+		logObject.index = index;
 	}
 });
 

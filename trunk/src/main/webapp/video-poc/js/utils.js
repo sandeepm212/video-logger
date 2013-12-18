@@ -19,6 +19,11 @@ function pad(num) {
 	}	
 }
 
+//helper function to extract hot key code of a corresponding action
+function extractKeyCode(keyVal) {
+	return (keyVal != '' && allowedKeysRegex.test(keyVal)) ? keyVal.charCodeAt(0) : '';
+}
+
 var REGEX_MAP = {
 	YouTube : /(?:https?:\/\/www\.|https?:\/\/|www\.|\.|^)youtu/,
 	Vimeo : /https?:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/,
