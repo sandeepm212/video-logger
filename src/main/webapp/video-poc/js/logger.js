@@ -319,7 +319,12 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	}
 	
 	$scope.addLog = function () {
+		var relativeY = - $("#video-holder-div").offset().top + $("#image").offset().top;
+		var relativeX = - $("#video-holder-div").offset().left + $("#image").offset().left;
+		
 		videoObj.play();
+		$scope.currentLog.relativeX = relativeX;
+		$scope.currentLog.relativeY = relativeY;
 		$scope.videoLogs.push($scope.currentLog);
 		$scope.currentLog = new VideoLog();
 		$('.actions li').removeClass('selected');
@@ -399,7 +404,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 				videoObj.cue(outTime, $scope.cueCallback(clipIndex, $scope.videoLogs[clipIndex], "OUT"));				
 			}
 			if ($scope.videoLogs[clipIndex].eventType == "Subtitle") {
-				console.log("Subtitle :: " + clipIndex);				
+				console.log("Subtitle :: " + clipIndex);
+				console.log($scope.videoLogs[clipIndex]);
 				videoObj.subtitle({
 	    	         start: $scope.videoLogs[clipIndex].startTime,
 	    	          end: $scope.videoLogs[clipIndex].endTime,
@@ -413,13 +419,15 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		   	          target:"previewData"  
 		           });
 			} else if($scope.videoLogs[clipIndex].eventType == "Pop") {
+				console.log("POP :: " + clipIndex);
+				console.log($scope.videoLogs[clipIndex]);
 				videoObj.pop({
 					start: $scope.videoLogs[clipIndex].startTime,
 	   	            end: $scope.videoLogs[clipIndex].endTime,
-	   	            text: $scope.videoLogs[clipIndex].notes,
+	   	            text: $scope.videoLogs[clipIndex].note,
 			        target:"video-holder-div",
-			        top: ($("#video-holder-div").offset().top + $scope.videoLogs[clipIndex].relY) + "px",
-			        left: ($("#video-holder-div").offset().top + $scope.videoLogs[clipIndex].relX - 120) + "px",
+			        top: ($("#video-holder-div").offset().top + $scope.videoLogs[clipIndex].relativeY) + "px",
+			        left: ($("#video-holder-div").offset().top + $scope.videoLogs[clipIndex].relativeX - 120) + "px",
 			        icon:"../css/images/pointer.png"
 				});
 			}
