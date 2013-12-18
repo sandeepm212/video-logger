@@ -228,7 +228,8 @@
 				                         <tbody>
 				                            <tr ng-repeat="log in videoLogs" ng-click="showLogVideo($index)" ng-class="{rowHighlight : {{$index}} === log.index}">
 				                            	<td>
-				                            		<span style="background-color:undefined" class="hotkeyl" title="">{{log.hotKeyChar}}</span>
+				                            		<span ng-if="hotKeyCharStyle($index) === ''">{{log.action}}</span>
+				                            		<span style="background-color:{{hotKeyCharStyle($index)}}" class="hotkeyl" title="" ng-if="hotKeyCharStyle($index) != ''">{{log.hotKeyChar}}</span>
 				                            	</td>
 				                            	<td>{{log.startTime}}</td>
 				                            	<td>{{log.endTime}}</td>

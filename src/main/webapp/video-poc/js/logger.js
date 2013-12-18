@@ -320,7 +320,6 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	
 	$scope.addLog = function () {
 		videoObj.play();
-		console.log($scope.currentLog);
 		$scope.videoLogs.push($scope.currentLog);
 		$scope.currentLog = new VideoLog();
 		$('.actions li').removeClass('selected');
@@ -345,11 +344,22 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		}		
 	}
 	
+	$scope.hotKeyCharStyle = function(index) {
+		if ($scope.videoLogs != null) {				
+			var logObj = $scope.videoLogs[index];
+			var action = actionsMap[logObj.action];
+			//console.log(action.style);
+			if (action != null && action.style != null) {
+				return action.style.backgroundColor;
+			}
+		}
+		return "";
+	}
+	
 	$scope.logCurrentTime = function (param) {
 		currentTime = videoObj.currentTime();
 		if(currentTime > 0 && currentTime < duration) {
-			videoObj.pause();
-			console.log(param);
+			videoObj.pause();			
 			param = formatTime(currentTime);
 		} else if(currentTime > duration) {
 			alert("The video playing is over. You can't log time now. To log time, replay the video");
@@ -379,12 +389,17 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	
 	//Helper function to synchronize video with log record table
 	$scope.syncVideoWidLog = function () {
-		var inTime;
+		var inTime;		
 		for(clipIndex in $scope.videoLogs) {
+			var outTime = $scope.videoLogs[clipIndex].endTime;
 			inTime = $scope.videoLogs[clipIndex].startTime;
 			console.log("CUE OBJECT");
-			videoObj.cue(inTime, $scope.cueCallback(clipIndex, $scope.videoLogs[clipIndex]));			
-			if ($scope.videoLogs[clipIndex].eventType == "Subtitle") {			
+			videoObj.cue(inTime, $scope.cueCallback(clipIndex, $scope.videoLogs[clipIndex], "IN"));
+			if (outTime != null && outTime.lengnth > 0) {
+				videoObj.cue(outTime, $scope.cueCallback(clipIndex, $scope.videoLogs[clipIndex], "OUT"));				
+			}
+			if ($scope.videoLogs[clipIndex].eventType == "Subtitle") {
+				console.log("Subtitle :: " + clipIndex);				
 				videoObj.subtitle({
 	    	         start: $scope.videoLogs[clipIndex].startTime,
 	    	          end: $scope.videoLogs[clipIndex].endTime,
