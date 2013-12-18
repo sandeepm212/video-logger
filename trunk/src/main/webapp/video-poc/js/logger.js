@@ -320,8 +320,9 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	
 	$scope.addLog = function () {
 		videoObj.play();
-		$scope.videoLogs.push(currentLog);
-		currentLog = new VideoLog();
+		console.log($scope.currentLog);
+		$scope.videoLogs.push($scope.currentLog);
+		$scope.currentLog = new VideoLog();
 	}
 	
 	$scope.showSavedVideo = function(videoInfo) {
