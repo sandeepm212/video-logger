@@ -77,65 +77,7 @@ $('#eventSelect').on('change', function (e) {
 //			showSavedVideo(exisitngDataMap[videoId]);			
 //		}
 	});
-	
-	//Step 2 button handler
-	// REMOVE DELETE
-	$('#to-step-3-btn11').live('click', function() {
-		//goToNextPage('.step-3');
-		var isPassed = false;
-			
-		if($('#custom-actions').is(':checked')) {
-			if($('.step-2 .added-action-list').children().length > 0) {
-				isPassed = true;
-			} else {
-				isPassed = false;
-				alert("Please set up at least 1 custom action in Step 2 to proceed to next step");
-			}
-		} else {
-			if($('.step-2 .added-action-list').children().length > 0) {
-				isPassed = true;
-			} else {
-				isPassed = false;
-				alert("Please select from available action profile in Step 2 to proceed to next step");
-			}
-		}
 		
-		if (isPassed) {
-			actionArray = [];
-			$('.step-2 .added-action-list li').each(function() {
-				var eachAction = new Object();
-				eachAction.action = $(this).data('action');
-				eachAction.hotKeyChar = $(this).data('hotKeyChar');
-				eachAction.hotKeyCode = $(this).data('hotKeyCode');
-				actionArray.push(eachAction);
-				//$('.step-3 .added-action-list1').append(this);
-			});
-			//renderActionButtons();
-//			var actionClone = $('.step-2 .added-action-list').clone(true).removeClass('rounded-holder');
-//			$('.actions').html(actionClone).find('.delete-action').remove();
-			goToNextPage('.step-3');
-			highlightCurrentTab(2);
-			
-			if (!videoObj) {
-				loadVideo();				
-			}
-			for(actionIndex in currentProfile) {
-				var liStr = '<li>' + currentProfile[actionIndex].action + '</li>',
-				liObj = $(liStr);
-				if(currentProfile[actionIndex].hotKeyChar != '') {
-					var spanObj = '<span class="hotkey" style="background-color:'+currentProfile[actionIndex].legend+'" title="Key board shortcut for this action is ' + currentProfile[actionIndex].hotKeyChar + '">' + 
-									currentProfile[actionIndex].hotKeyChar + '</span>';
-					liObj.append(spanObj).addClass('has-hot-key');
-				}
-				liObj.data({'action' : currentProfile[actionIndex].action, 
-							'hotKeyChar' : currentProfile[actionIndex].hotKeyChar, 
-							'hotKeyCode' : currentProfile[actionIndex].keyCode});		
-				$('.step-3 .added-action-list1').append(liObj);
-				
-			}
-		}
-	});
-	
 	//Load button click handler
 	$('#play-btn').on('click', function() {
 		var videoPath = ($('#video-location').val() == 'local-video') ? getLocalFileNameArr($('#local-video-list').val()) : $('#url-input').val();
@@ -154,34 +96,11 @@ $('#eventSelect').on('change', function (e) {
 			$('.loading-wrap').addClass('hide');
 		});
 	});
-	
-	//Play the video
-	$('.play-video').live('click', function() {
-		videoObj.play();
-	});
-	
+		
 	//Enter log button click handler - make entry of a row in the log table in UI, push new item in clipDataArray with new values
 	$('#enter-log-btn,#enter-log2').on('click', function() {
 		//addLog();
 		$('#image').css('display','none');
-	});
-	
-		
-	//Delete an action in step 2
-	$('.delete-action').live('click', function()
-	{
-		if($(this).parent('li').data('action') == clipAction.data('action-value'))
-		{
-			if(confirm("This is the current selected action for clip logging. Are you sure to delete this action?"))
-			{
-				removeAction($(this).parent('li'));
-				clipAction.text('').data('action-value','').css('display', 'none');
-			}
-		}
-		else
-		{
-			removeAction($(this).parent('li'));
-		}
 	});
 	
 	
