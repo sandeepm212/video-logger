@@ -311,9 +311,9 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	
 	$scope.setActions = function (actions) {
 		$scope.actions = actions;
-		for (var i = 0; i < $scope.actions.length; i++) {
-			actionsMap[$scope.actions[i].name] = $scope.actions[i];
-		}
+		angular.forEach($scope.actions, function(action, index) {
+			actionsMap[action.name] = action;
+		});
 	}
 	
 	$scope.hasHotKey = function (action) {
@@ -456,47 +456,47 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	
 	//Helper function to synchronize video with log record table
 	$scope.syncVideoWidLog = function () {
-		var inTime;
 		
 		videoObj.highlightrow({
 			start:1,
 			end:10,
 			index:0
 		});
-						
-		for(clipIndex in $scope.videoLogs) {
-			var outTime = $scope.videoLogs[clipIndex].endTime;
-			inTime = $scope.videoLogs[clipIndex].startTime;
+			
+		angular.forEach($scope.videoLogs, function(log, index) {
+			var outTime = log.endTime;
+			var inTime = log.startTime;
 			videoObj.highlightrow({
 				start:inTime,
 				end:outTime,
-				index:clipIndex
+				index:index
 			});			
-			if ($scope.videoLogs[clipIndex].eventType == "Subtitle") {
+			if (log.eventType == "Subtitle") {
 				videoObj.subtitle({
-	    	         start: $scope.videoLogs[clipIndex].startTime,
-	    	          end: $scope.videoLogs[clipIndex].endTime,
-	    	          text: $scope.videoLogs[clipIndex].note
+	    	         start: log.startTime,
+	    	          end: log.endTime,
+	    	          text: log.note
 	    	       });
-			} else if($scope.videoLogs[clipIndex].eventType == "Footnote") {
+			} else if(log.eventType == "Footnote") {
 				videoObj.footnote({
-					  start: $scope.videoLogs[clipIndex].startTime,
-		   	          end: $scope.videoLogs[clipIndex].endTime,
-		   	          text: $scope.videoLogs[clipIndex].note,
+					  start: log.startTime,
+		   	          end: log.endTime,
+		   	          text: log.note,
 		   	          target:"previewData"  
 		           });
-			} else if($scope.videoLogs[clipIndex].eventType == "Pop") {
+			} else if(log.eventType == "Pop") {
 				videoObj.pop({
-					start: $scope.videoLogs[clipIndex].startTime,
-	   	            end: $scope.videoLogs[clipIndex].endTime,
-	   	            text: $scope.videoLogs[clipIndex].note,
+					start: log.startTime,
+	   	            end: log.endTime,
+	   	            text: log.note,
 			        target:"video-holder-div",
-			        top: ($("#video-holder-div").offset().top +  parseInt($scope.videoLogs[clipIndex].relativeY)) + "px",
-			        left: ($("#video-holder-div").offset().top +  parseInt($scope.videoLogs[clipIndex].relativeX - 120)) + "px",
+			        top: ($("#video-holder-div").offset().top +  parseInt(log.relativeY)) + "px",
+			        left: ($("#video-holder-div").offset().top +  parseInt(log.relativeX - 120)) + "px",
 			        icon:"../css/images/pointer.png"
 				});
 			}
-		}		
+		
+		});	
 	}
 	
 	$scope.backToLogger = function () {
