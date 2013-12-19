@@ -1,39 +1,3 @@
-// Sample data format
-var videoLogObject = [
-    {
-        "id": 6,
-        "videoLogs": [
-            {
-                "action": "Boundary",
-                "startTime": "00:00:03.04",
-                "endTime": "00:00:13.06",
-                "eventType": "Subtitle"
-            },
-            {
-                "action": "Out",
-                "startTime": "00:00:21.14",
-                "endTime": "00:00:21.13",
-                "eventType": "Pop"
-            }
-        ],
-        "actions": [
-            {
-                "name": "Over boundary",
-                "shortCutKey": "6",
-                "description": "",
-                "style": {
-                    "backgroundColor": "",
-                    "fontColor": "",
-                    "fontStyle": "",
-                    "fontWeight": "",
-                    "fontSize": ""
-                }
-            }
-        ]
-    }
-];
-
-
 $(document).ready(function() {
 	
 	urlInput = $('#url-input'),
@@ -114,45 +78,9 @@ $('#eventSelect').on('change', function (e) {
 //		}
 	});
 	
-	//Step 1 button handler
-	$('#to-step-2-btn').live('click', function() {
-		var isPassed = false;
-		if($('#exsting-video').is(':checked')) {
-			if($('#video-carousel li a').hasClass('active')) {
-				videoPath = $('#video-carousel li a.active').parent('li').data('video-path');
-				videoType = 'stored';
-				isPassed = true;
-			} else {
-				alert("Please select any video from the existing list to proceed");
-				isPassed = false;
-			}
-		} else if($('#web-video').is(':checked')) {
-			if($.trim(urlInput.val()) != '') {
-				videoPath = urlInput.val();
-				videoType = 'web-video';
-				isPassed = true;
-			} else {
-				alert("Please type a URL of a video in the input box to proceed");
-				isPassed = false;
-			}
-		} else {
-			alert("You should either select from existing video or type a URL to proceed to next step");
-			isPassed = false;
-		}
-		
-		if (isPassed) {
-			goToNextPage('.step-2');
-			if (videoObj) {
-				videoObj.pause();
-			}
-			$('#video-name').text(videoPath);
-			$('#action-name').focus();
-			highlightCurrentTab(1);
-		}
-	});
-	
 	//Step 2 button handler
-	$('#to-step-3-btn').live('click', function() {
+	// REMOVE DELETE
+	$('#to-step-3-btn11').live('click', function() {
 		//goToNextPage('.step-3');
 		var isPassed = false;
 			
@@ -410,20 +338,6 @@ $('#eventSelect').on('change', function (e) {
 		finalVO = null;
 	}
 	
-	//Helper function to highlight current tab
-	function highlightCurrentTab(liIndex)
-	{
-		$('ul.logging-nav li').removeClass('selected').eq(liIndex).addClass('selected');
-	}
-		
-	//Helper function to show error
-	function showMessage(msg)
-	{
-		alert(msg);
-	}
-	
-	
-	
 	
 });
 
@@ -475,13 +389,6 @@ function populateSelectedActions(actionProfile)
 		
 	}
 	$('.step-2 .added-action-list').slideDown(slideTime);
-}
-
-//Helper function for navigating from one step to another
-function goToNextPage(panelName)
-{
-	$('.panels > .panel-wrap').addClass('hide');
-	$('.panels').children(panelName).removeClass('hide');
 }
 
 //Helper function to return an array containing different filename versions of the media element
