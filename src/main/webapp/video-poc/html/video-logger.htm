@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="videoLoggerApp">
+<html data-ng-app="videoLoggerApp">
 <head>
 <title>Video logger</title>
 <link type="text/css" rel="stylesheet" media="all" href="../css/jquery-ui-1.9.2.custom.min.css" />
@@ -66,7 +66,7 @@
         </section>
         <section class="right">
         	<div class="panels">
-                <div class="panel-wrap step-1" ng-controller="step1Controller">
+                <div class="panel-wrap step-1" data-ng-controller="step1Controller">
                     <h3>Step 1: Select video</h3>
                     <div class="panel-body clearfix">
                     
@@ -75,7 +75,7 @@
                         <input type="radio" value="existing" checked id="exsting-video" name="video-type-rdo">Select from existing video files (Click on any thumbnail to select the video)</h2>
                         <div class="rounded-holder">
                         <ul id="video-carousel" class="jcarousel-skin-tango">
-                            <li ng-repeat="video in videos" ng-click="selectVideo($index, $event)" data-video-path='{{video.url}}' data-video-id='{{video.id}}'>
+                            <li data-ng-repeat="video in videos" data-ng-click="selectVideo($index, $event)" data-video-path='{{video.url}}' data-video-id='{{video.id}}'>
                             	<a href="javascript:void(0);"><img src="{{video.thumbnailUrl}}"  alt="" /></a>
                             </li>
                         </ul>
@@ -85,49 +85,49 @@
                             <input type="text" class="video-logger-input" id="url-input" />
                             <!--<input type="button" class="video-logger-btn" id="play-btn" value="Load" />-->
                         </div>
-                        <input type="button" class="video-logger-btn f-right top-gap" id="to-step-2-btn" ng-click="showStep2()" value="Go to step 2" />
+                        <input type="button" class="video-logger-btn f-right top-gap" id="to-step-2-btn" data-ng-click="showStep2()" value="Go to step 2" />
                     </div>
                 </div>
                 <!-- -------------------------------------- -->
                 <!-- Step 2 Start-->
                 <!-- -------------------------------------- -->
-                <div class="panel-wrap step-2 hide" ng-controller="step2Controller">
+                <div class="panel-wrap step-2 hide" data-ng-controller="step2Controller">
                     <h3>Step 2: Configure actions</h3>
                     <div class="panel-body clearfix">
                     	<p class="instruction">Configure your own custom actions which you can use to tag a clip. For example, 'Boundary', 'Over boundary', 'Super catch' are possible logging actions of a cricket video. Alternatively you can select from list of available action profiles. You can also tag an action with a key board shortcut (0-9 and A-Z) for ease of logging.</p>
                         <div class="top-gap">You have selected this video : <span id="video-name"></span></div>
                         <h2>
-                        <input type="radio" value="custom-actions" checked="checked" id="custom-actions" name="action-rdo" ng-click="resetActions()" ng-model="customActions">Configure your own custom actions</h2>
+                        <input type="radio" value="custom-actions" checked="checked" id="custom-actions" name="action-rdo" data-ng-click="resetActions()" data-ng-model="customActions">Configure your own custom actions</h2>
                         <div class="add-action-wrap">
                             <label for="action-name" >Enter action name:</label>
-                            <input type="text" id="action-name" ng-model="action.name">
+                            <input type="text" id="action-name" data-ng-model="action.name">
                             <label for="hot-key" >Enter hot key:</label>
                             <a class="tip-trigger help hideText" href="javascript:void(0)">What is a hot key</a>
                             <p class="tooltip-content hide">A hotkey is a key board shortcut for a particular action. While logging video in the subsequent step, you can use this key board shortcut to log an action.<br> <span class="orange-text">Allowed hot keys are (0-9) and (A-Z)</span></p>
-                            <input type="text" id="hot-key" ng-model="action.hotKeyChar" class="uppercase" maxlength="1">
+                            <input type="text" id="hot-key" data-ng-model="action.hotKeyChar" class="uppercase" maxlength="1">
                             
-                            <input type="button" class="add-action" value="Add action" ng-click="addLogAction(action)">
+                            <input type="button" class="add-action" value="Add action" data-ng-click="addLogAction(action)">
                         </div>
                         
                         <h2>
-                        	<input type="radio" value="popular-actions" id="popular-actions" name="action-rdo" ng-click="resetActions()" ng-model="customActions">Select from existing popular actions
+                        	<input type="radio" value="popular-actions" id="popular-actions" name="action-rdo" data-ng-click="resetActions()" data-ng-model="customActions">Select from existing popular actions
                         </h2>
                         <div class="add-action-wrap hide">
                             <label for="popular-action-list">Available action profiles:</label>
-                            <select id="popular-action-list" ng-model="selectedProfile" ng-options="profile.name for profile in actionProfiles">
+                            <select id="popular-action-list" data-ng-model="selectedProfile" data-ng-options="profile.name for profile in actionProfiles">
                             	<option value="">--Select--</option>
                             </select>
-                            <input type="button" class="add-popular-action" value="Load selected action profile" ng-click="loadSavedProfile()">
+                            <input type="button" class="add-popular-action" value="Load selected action profile" data-ng-click="loadSavedProfile()">
                         </div>
                         <ul class="added-action-list rounded-holder clearfix">
                         	<!-- ngRepeat: action in actions -->
-                     	   	<li ng-class="{'has-hot-key': hasHotKey(action)}" ng-repeat="action in actions">{{action.name}}
-                        	<a href="javascript:void(0)" class="delete-action hideText" title="Delete this action" ng-click="deleteAction($index)">Delete this action</a>
-                        	<span ng-if="hasHotKey(action)" title="Key board shortcut for this action is {{action.hotKeyChar}}" class="hotkey"
+                     	   	<li data-ng-class="{'has-hot-key': hasHotKey(action)}" data-ng-repeat="action in actions">{{action.name}}
+                        	<a href="javascript:void(0)" class="delete-action hideText" title="Delete this action" data-ng-click="deleteAction($index)">Delete this action</a>
+                        	<span data-ng-if="hasHotKey(action)" title="Key board shortcut for this action is {{action.hotKeyChar}}" class="hotkey"
                         	 style="background-color: {{action.style.backgroundColor}}">{{action.hotKeyChar}}</span>
                         	</li>
                         </ul>
-                        <input type="button" class="video-logger-btn f-right top-gap" id="to-step-3-btn" ng-click="showStep3()" value="Save &amp; go to step 3" />
+                        <input type="button" class="video-logger-btn f-right top-gap" id="to-step-3-btn" data-ng-click="showStep3()" value="Save &amp; go to step 3" />
                     </div>
                 </div>
                 <!-- -------------------------------------- -->
@@ -136,15 +136,15 @@
                 <!-- -------------------------------------- -->
                 <!-- Step 3 Start-->
                 <!-- -------------------------------------- -->
-                <div class="panel-wrap step-3 hide" ng-controller="step3Controller">
+                <div class="panel-wrap step-3 hide" data-ng-controller="step3Controller">
                     <h3>Step 3: Capture clip</h3>
                     <div class="panel-body clearfix">
                       <section class="logger-section">
                       <div class="panel-wrap">
 				            	<h3>Legend</h3>
 				            	 <ul class="added-action-list1 rounded-holder clearfix">
-		                     	   	<li ng-class="{'has-hot-key': hasHotKey(action)}" ng-repeat="action in actions" ng-click="applyAction($index, $event)">{{action.name}}		                        	
-		                        	<span ng-if="hasHotKey(action)" title="Key board shortcut for this action is {{action.hotKeyChar}}" class="hotkey"
+		                     	   	<li data-ng-class="{'has-hot-key': hasHotKey(action)}" data-ng-repeat="action in actions" data-ng-click="applyAction($index, $event)">{{action.name}}		                        	
+		                        	<span data-ng-if="hasHotKey(action)" title="Key board shortcut for this action is {{action.hotKeyChar}}" class="hotkey"
 		                        	 style="background-color: {{action.style.backgroundColor}}">{{action.hotKeyChar}}</span>
 		                        	</li>
 				            	 </ul>
@@ -168,8 +168,8 @@
                         
                             <section class="actions">
                             	<ul class="added-action-list1 rounded-holder clearfix">
-		                     	   	<li ng-class="{'has-hot-key': hasHotKey(action)}" ng-repeat="action in actions" ng-click="applyAction($index, $event)">{{action.name}}		                        	
-		                        	<span ng-if="hasHotKey(action)" title="Key board shortcut for this action is {{action.hotKeyChar}}" class="hotkey"
+		                     	   	<li data-ng-class="{'has-hot-key': hasHotKey(action)}" data-ng-repeat="action in actions" data-ng-click="applyAction($index, $event)">{{action.name}}		                        	
+		                        	<span data-ng-if="hasHotKey(action)" title="Key board shortcut for this action is {{action.hotKeyChar}}" class="hotkey"
 		                        	 style="background-color: {{action.style.backgroundColor}}">{{action.hotKeyChar}}</span>
 		                        	</li>
 				            	 </ul>
@@ -179,18 +179,18 @@
                                     <div class="row"><label>Action:</label><span>{{currentLog.action}}</span></div>
                                     <div class="row">
                                         <label>In time:</label>
-                                        <input type="text" disabled="disabled" id="in-time-input" ng-model="currentLog.startTime" value="{{currentLog.startTime}}" />
-                                        <a href="javascript:void(0)" class="intime-btn hideText" title="Click to log clip start time" ng-click="logCurrentTime('IN')"></a>
+                                        <input type="text" disabled="disabled" id="in-time-input" data-ng-model="currentLog.startTime" value="{{currentLog.startTime}}" />
+                                        <a href="javascript:void(0)" class="intime-btn hideText" title="Click to log clip start time" data-ng-click="logCurrentTime('IN')"></a>
                                     </div>
                                     <div class="row">
                                         <label>Out time:</label> 
-                                        <input type="button" value="Out Time" id="enter-out-time" ng-click="logOutTime()" class="enter-log" title="Out Time" > 
-                                        <input type="text" id="out-time-input" style="display:none;" ng-model="currentLog.endTime" value="{{currentLog.endTime}}"/>
-                                        <a href="javascript:void(0)" class="outtime-btn hideText" title="Click to log clip end time" ng-click="logCurrentTime('OUT')">Click to log clip end time</a>
+                                        <input type="button" value="Out Time" id="enter-out-time" data-ng-click="logOutTime()" class="enter-log" title="Out Time" > 
+                                        <input type="text" id="out-time-input" style="display:none;" data-ng-model="currentLog.endTime" value="{{currentLog.endTime}}"/>
+                                        <a href="javascript:void(0)" class="outtime-btn hideText" title="Click to log clip end time" data-ng-click="logCurrentTime('OUT')">Click to log clip end time</a>
                                     </div>
                                     <div class="row">
                                         <label>Event:</label> 
-                                        <select id="eventSelect" ng-model="currentLog.eventType">
+                                        <select id="eventSelect" data-ng-model="currentLog.eventType">
                                           <option value="Subtitle">Subtitle</option>
 										  <option value="Pop">Note</option>										  
 										  <option value="Footnote">Footnote</option>
@@ -198,9 +198,9 @@
                                     </div>
                                 </section>
                                 <section class="logger-note">
-                                    <label>Note:</label><a class="play-video f-right" title="Keep on playing the video" href="javascript:void(0)" ng-click="playVideo()">Play video</a>
-                                    <textarea class="notes-textarea" id="clip-notes" ng-model="currentLog.note"></textarea>
-                                    <input type="button" value="Log entry" id="enter-log-btn" class="enter-log" title="Log entry" ng-click=addLog()>
+                                    <label>Note:</label><a class="play-video f-right" title="Keep on playing the video" href="javascript:void(0)" data-ng-click="playVideo()">Play video</a>
+                                    <textarea class="notes-textarea" id="clip-notes" data-ng-model="currentLog.note"></textarea>
+                                    <input type="button" value="Log entry" id="enter-log-btn" class="enter-log" title="Log entry" data-ng-click=addLog()>
                                 </section>
                             </div>
                         </div>
@@ -209,10 +209,10 @@
                       		<div class="panel-wrap">
 				            	<h3>Captured moments
 				                	<div class="f-right">
-				                        <a title="Preview logged video" id="preview" class="log-action" href="javascript:void(0)" ng-click="preview()">Preview</a>
-				                        <a title="Go back to logger screen" id="back-to-logger" class="log-action hide" href="javascript:void(0)" ng-click="backToLogger()">Back to logger</a>
-				                        <a title="View generated log" id="view-log" class="log-action" ng-click="viewLog()" href="javascript:void(0)">View log</a>
-				                        <a title="Submit the log to server" id="submit-log" class="log-action" href="javascript:void(0)" ng-click="saveVideoLog()">Submit log</a>
+				                        <a title="Preview logged video" id="preview" class="log-action" href="javascript:void(0)" data-ng-click="preview()">Preview</a>
+				                        <a title="Go back to logger screen" id="back-to-logger" class="log-action hide" href="javascript:void(0)" data-ng-click="backToLogger()">Back to logger</a>
+				                        <a title="View generated log" id="view-log" class="log-action" data-ng-click="viewLog()" href="javascript:void(0)">View log</a>
+				                        <a title="Submit the log to server" id="submit-log" class="log-action" href="javascript:void(0)" data-ng-click="saveVideoLog()">Submit log</a>
 				                    </div>
 				                </h3>
 				                <div class="panel-body">
@@ -227,15 +227,15 @@
 				                            </tr>
 				                         </thead>
 				                         <tbody>
-				                            <tr ng-repeat="log in videoLogs" id="logRow{{$index}}" ng-click="showLogVideo($index)">
+				                            <tr data-ng-repeat="log in videoLogs" id="logRow{{$index}}" data-ng-click="showLogVideo($index)">
 				                            	<td>
-				                            		<span ng-if="hotKeyCharStyle($index) === ''">{{log.action}}</span>
-				                            		<span style="background-color:{{hotKeyCharStyle($index)}}" class="hotkeyl" title="" ng-if="hotKeyCharStyle($index) != ''">{{log.hotKeyChar}}</span>
+				                            		<span data-ng-if="hotKeyCharStyle($index) === ''">{{log.action}}</span>
+				                            		<span style="background-color:{{hotKeyCharStyle($index)}}" class="hotkeyl" title="" data-ng-if="hotKeyCharStyle($index) != ''">{{log.hotKeyChar}}</span>
 				                            	</td>
 				                            	<td>{{log.startTime}}</td>
 				                            	<td>{{log.endTime}}</td>
 				                            	<td>{{log.note}}</td>
-				                            	<td><a href="javascript:void(0)" ng-click="deleteLog()" class="delete-cue hideText" title="Delete this log entry">Delete this log entry</a></td>
+				                            	<td><a href="javascript:void(0)" data-ng-click="deleteLog()" class="delete-cue hideText" title="Delete this log entry">Delete this log entry</a></td>
 				                            </tr>
 				                        </tbody>
 				                        <tbody></tbody>
