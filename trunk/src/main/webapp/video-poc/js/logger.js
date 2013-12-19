@@ -544,14 +544,6 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	}
 });
 
-function cueVideo (videoLogs) {
-	for(clipIndex in videoLogs) {
-		var outTime = videoLogs[clipIndex].endTime;
-		inTime = videoLogs[clipIndex].startTime;
-		videoObj.cue(inTime, cueCallback(clipIndex, videoLogs[clipIndex], CUE_IN));
-	}
-}
-
 angular.module('exceptionOverride', []).factory('$exceptionHandler', function () {
 	  return function (exception, cause) {
 	    exception.message += ' (caused by "' + cause + '")';
