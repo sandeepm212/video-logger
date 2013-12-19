@@ -247,17 +247,6 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		videoObj.play($scope.videoLogs[index].startTime);
 	}
 	
-	$scope.safeApply = function(fn) {
-		  var phase = this.$root.$$phase;
-		  if(phase == '$apply' || phase == '$digest') {
-		    if(fn && (typeof(fn) === 'function')) {
-		      fn();
-		    }
-		  } else {
-		    this.$apply(fn);
-		  }
-	};
-	
 	$scope.$on('ACTIONS', function(value) {
 		$scope.setActions(sharedService.getActions());		
 	})
