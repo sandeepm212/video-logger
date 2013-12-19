@@ -84,9 +84,10 @@ function VideoLog (action, eventType, startTime, endTime, eventType, note, relat
 	this.relativeY = relativeY;
 }
 
-function Video (id, url, thumbnailUrl) {
+function Video (id, url, thumbnailUrl, type) {
 	this.id = id;
 	this.url = url;
+	this.type = type;
 	this.thumbnailUrl = thumbnailUrl;
 	this.videoLogs = [];
 	this.actions = [];
@@ -226,6 +227,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	$scope.selectedVideoInfo = null;
 	$scope.currentLog = new VideoLog();
 	var actionsMap = [];
+	$scope.vObject = new Video();
 	
 	$scope.deleteLog = function(logToRemove) {
 		if(confirm("Are you sure to delete this log entry?")) {
@@ -292,17 +294,17 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	});
 	
 	$scope.saveVideoLog = function () {
-		var vObject = new Object();
-		vObject.id = videoId;
-		vObject.url = videoPath;
-		vObject.videoType = videoType; 
+		$scope.vObject = new Video();
+		$scope.vObject.id = videoId;
+		$scope.vObject.url = videoPath;
+		$scope.vObject.type = videoType; 
 		
-		var videoData = [vObject];
+		var videoData = [$scope.vObject];
 		var videoLog = [];
-		vObject.videoLogs = $scope.videoLogs;
+		$scope.vObject.videoLogs = $scope.videoLogs;
 		
 		var videoActions = [];
-		vObject.actions = $scope.actions;
+		$scope.vObject.actions = $scope.actions;
 							
 		//SaveDATA		
 		$.ajax({
@@ -397,18 +399,22 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	//Helper function to synchronize video with log record table
 	$scope.syncVideoWidLog = function () {
 		var inTime;
+		
+		videoObj.highlightrow({
+			start:1,
+			end:10,
+			index:0
+		});
 						
 		for(clipIndex in $scope.videoLogs) {
 			var outTime = $scope.videoLogs[clipIndex].endTime;
 			inTime = $scope.videoLogs[clipIndex].startTime;
-			videoObj.cue(inTime, $scope.cueCallback(clipIndex, $scope.videoLogs[clipIndex], CUE_IN));
-			if (outTime != null && outTime.length > 0) {
-				console.log("OUT TIME" + outTime);
-				videoObj.cue(outTime, $scope.cueCallback(clipIndex, $scope.videoLogs[clipIndex], CUE_OUT));
-			}
+			videoObj.highlightrow({
+				start:inTime,
+				end:outTime,
+				index:clipIndex
+			});			
 			if ($scope.videoLogs[clipIndex].eventType == "Subtitle") {
-//				console.log("Subtitle :: " + clipIndex);
-//				console.log($scope.videoLogs[clipIndex]);
 				videoObj.subtitle({
 	    	         start: $scope.videoLogs[clipIndex].startTime,
 	    	          end: $scope.videoLogs[clipIndex].endTime,
@@ -422,8 +428,6 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		   	          target:"previewData"  
 		           });
 			} else if($scope.videoLogs[clipIndex].eventType == "Pop") {
-//				console.log("POP :: " + clipIndex);
-//				console.log($scope.videoLogs[clipIndex]);
 				videoObj.pop({
 					start: $scope.videoLogs[clipIndex].startTime,
 	   	            end: $scope.videoLogs[clipIndex].endTime,
@@ -437,17 +441,6 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		}		
 	}
 	
-	//Cue event callback function
-	$scope.cueCallback = function (index, logObject, action) {
-		return function () {			
-			if (CUE_IN === action) {
-				$('#logRow'+index).addClass('rowHighlight');				
-			} else {
-				$('#logRow'+index).removeClass('rowHighlight');				
-			}
-		}				
-	}
-	
 	$scope.backToLogger = function () {
 		//videoObj.pause().currentTime(timeStore);
 		$('.logger-holder, section.left, #preview, #view-log, #submit-log').show();
@@ -456,6 +449,41 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		$('th:last-child, tr td:last-child', logTable).removeClass('hide');
 		$('tbody tr', logTable).removeClass('row-highlight');
 	}
+	
+	$scope.viewLog = function () {
+		//View log button handler
+		if(videoData) {
+			$('#log-preview-popup .video-meta-data').html(JSON.stringify($scope.vObject));
+		} else {
+			$('#log-preview-popup .video-meta-data').html("Video meta data unavailable");
+		}
+			
+		if ($scope.videoLogs.length > 0) {
+				$('#log-preview-popup .clip-data').html(JSON.stringify($scope.videoLogs));
+		} else {
+			$('#log-preview-popup .clip-data').html("Clip data unavailable");
+		}
+			
+		if ($scope.actions.length > 0) {
+			$('#log-preview-popup .action-data').html(JSON.stringify($scope.actions));
+		} else {
+			$('#log-preview-popup .action-data').html("Action data unavailable");
+		}
+			
+		$('#log-preview-popup').dialog({
+		  title: 'Preview generated log',
+		  resizable: false,
+		  dialogClass: 'video-log-modal',
+		  autoOpen: false,
+		  width: 600,
+		  minHeight: 300,
+		  maxHeight: 600,
+		  modal: true
+		});
+		
+		$('#log-preview-popup').dialog('open');
+		
+	}
 });
 
 function cueVideo (videoLogs) {
@@ -463,36 +491,6 @@ function cueVideo (videoLogs) {
 		var outTime = videoLogs[clipIndex].endTime;
 		inTime = videoLogs[clipIndex].startTime;
 		videoObj.cue(inTime, cueCallback(clipIndex, videoLogs[clipIndex], CUE_IN));
-	}
-}
-
-function addLog() {
-	if(validateFields()) {
-		
-		var eventTypeSelect = $( "#eventSelect" ).val();
-		var relativeY = - $("#video-holder-div").offset().top + $("#image").offset().top;
-		var relativeX = - $("#video-holder-div").offset().left + $("#image").offset().left;
-		
-		var log = new VideoLog (clipAction.data('action-value'), eventTypeSelect, startInput.val(), endInput.val(), notesTextarea.val(), relativeX, relativeY);
-		addVideoLog(log);
-		
-		
-//		clearFields();
-		//alert("Clip entry successfully logged");
-		$('section.right').removeClass('hide');
-		videoObj.play();
-		logTable.trigger("update");
-		
-		$('#enter-out-time').css('display','-moz-stack');
-		$('#out-time-input').css('display','none');		
-	}
-}
-
-function addVideoLog (logDetails) {
-	if (logDetails != null) {
-		ngVideoLogInfoScope.safeApply(function() {
-			ngVideoLogInfoScope.addVideoLog(logDetails);
-	    });
 	}
 }
 

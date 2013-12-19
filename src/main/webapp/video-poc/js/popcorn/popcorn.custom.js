@@ -41,12 +41,12 @@
    
   },
 
-  start: function( event, options ){
-    $( options._container ).fadeIn(); 
+  start: function( event, options ){	  
+			$('#logRow'+options.index).addClass('rowHighlight');				
   },
 
   end: function( event, options ){
-    $( options._container ).fadeOut(); 
+		$('#logRow'+options.index).removeClass('rowHighlight'); 
   },
   _teardown: function( options ) {
    
