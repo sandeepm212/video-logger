@@ -272,10 +272,11 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	$scope.hasHotKey = function (action) {
 		return (action.hotKeyChar != '' && action.hotKeyChar != null);
 	}
+	
+	// Handle the action selection during video playback
 	$scope.applyAction = function (index, event) {
 		var selectedAction = $scope.actions[index];
 		$scope.currentLog.action = selectedAction.name;
-//		console.log($scope.currentLog);
 		currentTime = videoObj.currentTime();
 		if(currentTime > 0 && currentTime < duration) {
 			$scope.currentLog.startTime = formatTime(currentTime);
@@ -293,6 +294,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		$scope.showSavedVideo(data);
 	});
 	
+	// Save the video logs
 	$scope.saveVideoLog = function () {
 		$scope.vObject = new Video();
 		$scope.vObject.id = videoId;
@@ -322,6 +324,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		return (action.hotKeyChar != '' && action.hotKeyChar != null);
 	}
 	
+	// Add the log to the table.
 	$scope.addLog = function () {
 		var relativeY = - $("#video-holder-div").offset().top + $("#image").offset().top;
 		var relativeX = - $("#video-holder-div").offset().left + $("#image").offset().left;
@@ -334,6 +337,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		$('.actions li').removeClass('selected');
 	}
 	
+	// Populate the out time in the input field
 	$scope.logOutTime = function () {
 		endTime = videoObj.currentTime();
 		$scope.currentLog.endTime = formatTime(endTime);
@@ -342,6 +346,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		videoObj.pause();
 	}	
 	
+	// Show the saved video data.
 	$scope.showSavedVideo = function(videoInfo) {
 		if (videoInfo != null) {				
 			if (videoPath != null && videoType != null) {
@@ -353,11 +358,11 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		}		
 	}
 	
+	// 
 	$scope.hotKeyCharStyle = function(index) {
 		if ($scope.videoLogs != null) {				
 			var logObj = $scope.videoLogs[index];
 			var action = actionsMap[logObj.action];
-			//console.log(action.style);
 			if (action != null && action.style != null) {
 				return action.style.backgroundColor;
 			}
@@ -365,11 +370,17 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		return "";
 	}
 	
+	// 
 	$scope.logCurrentTime = function (param) {
 		currentTime = videoObj.currentTime();
 		if(currentTime > 0 && currentTime < duration) {
-			videoObj.pause();			
-			param = formatTime(currentTime);
+			videoObj.pause();
+			var time = formatTime(currentTime);
+			if (CUE_IN == param) {
+				$scope.currentLog.startTime = time;				
+			} else {
+				$scope.currentLog.endTime = time;
+			}
 		} else if(currentTime > duration) {
 			alert("The video playing is over. You can't log time now. To log time, replay the video");
 		} else {
