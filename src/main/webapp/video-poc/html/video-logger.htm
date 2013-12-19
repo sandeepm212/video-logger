@@ -6,6 +6,7 @@
 <link type="text/css" rel="stylesheet" media="all" href="../css/video-logger.css" />
 <link rel="stylesheet" type="text/css" href="../css/slider-style.css" />
 <script type="text/javascript" src="../js/popcorn/popcorn-complete.min.js"></script>
+
 <!--<script src="../js/popcorn/popcorn.js"></script>
 <script src="../js/popcorn/popcorn.player.js"></script>
 <script src="../js/popcorn/popcorn.youtube.js"></script>-->
@@ -226,7 +227,7 @@
 				                            </tr>
 				                         </thead>
 				                         <tbody>
-				                            <tr ng-repeat="log in videoLogs" ng-click="showLogVideo($index)" ng-class="{rowHighlight : {{$index}} === log.index}">
+				                            <tr ng-repeat="log in videoLogs" id="logRow{{$index}}" ng-click="showLogVideo($index)">
 				                            	<td>
 				                            		<span ng-if="hotKeyCharStyle($index) === ''">{{log.action}}</span>
 				                            		<span style="background-color:{{hotKeyCharStyle($index)}}" class="hotkeyl" title="" ng-if="hotKeyCharStyle($index) != ''">{{log.hotKeyChar}}</span>
