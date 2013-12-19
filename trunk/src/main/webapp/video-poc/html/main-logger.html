@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html data-ng-app="videoLoggerApp">
+<head>
+<title>Video logger</title>
+<link type="text/css" rel="stylesheet" media="all" href="../css/jquery-ui-1.9.2.custom.min.css" />
+<link type="text/css" rel="stylesheet" media="all" href="../css/video-logger.css" />
+<link rel="stylesheet" type="text/css" href="../css/slider-style.css" />
+<script type="text/javascript" src="../js/popcorn/popcorn-complete.min.js"></script>
+
+<!--<script src="../js/popcorn/popcorn.js"></script>
+<script src="../js/popcorn/popcorn.player.js"></script>
+<script src="../js/popcorn/popcorn.youtube.js"></script>-->
+<script src="../js/jquery-1.8.3.js"></script>
+<script src="../js/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="../js/angularjs/angular.js"></script>
+<script type="text/javascript" src="../js/angularjs/angular-route.js"></script>
+<script type="text/javascript" src="../js/utils.js"></script>
+<script type="text/javascript" src="../js/main-logger.js"></script>
+
+
+<script type="text/javascript" src="../js/jquery.jcarousel.min.js"></script>
+<script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="../js/popcorn/popcorn.pop.js"></script>
+<script type="text/javascript" src="../js/popcorn/popcorn.custom.js"></script>
+<!--[if gte IE 9]>
+  <style type="text/css">
+    .gradient {
+       filter: none;
+    }
+  </style>
+<![endif]-->	
+</head>
+<body>
+<div class="page-wrap">
+	<header>
+    	<nav class="top-nav gradient clearfix">
+        	<a href="javascript:void(0)" title="Cognizant" class="logo">
+            	<img alt="logo" src="../images/cognizant-logo-1.png" width="197" height="61"/>
+            </a>
+            <ul>
+            	<li class="welcome-user">Welcome <a href="javascript:void(0)" title="Go to your profile page">John Smith</a></li>
+                <li class="logout last"><a href="javascript:void(0)" title="Logout from the site">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="main-body clearfix">
+    	<section class="left">
+        	<div class="panel-wrap">
+            	<h3>Navigation</h3>
+                <nav class="panel-body">
+                	<ul class="logging-nav">
+                    	<li class="step-1-nav selected">
+                        	<a class="tip-trigger" href="javascript:void(0)">Step 1: Select video</a>
+                            <p class="tooltip-content hide">Select video from existing list or provide a video URL</p>
+                        </li>
+                        <li class="step-2-nav">
+                        	<a class="tip-trigger" href="javascript:void(0)">Step 2: Configure actions</a>
+                            <p class="tooltip-content hide">Set up your custom actions or select from list of existing action profiles for which you want to log the selected video</p>
+                        </li>
+                        <li class="step-3-nav">
+                        	<a class="tip-trigger" href="javascript:void(0)">Step 3: Capture &amp; save</a>
+                            <p class="tooltip-content hide">Capture specific moments of the selected video, log the data and save the logged data to server.</p>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+        <section class="right">
+        	<div data-ng-view=""></div>        	
+        </section>
+    </div>
+    </div>
+    <footer>
+    	&copy; 2013 Cognizant. All rights reserved.
+    </footer>
+    
+    
+    <section class="modal-popup" id="log-preview-popup">
+    	<h2>Video metadata :</h2>
+        <div class="video-meta-data"></div>
+        <h2>Action data :</h2>
+        <div class="action-data"></div>
+        <h2>Clip data :</h2>
+        <div class="clip-data"></div>
+    </section>
+
+
+<script type="text/javascript" src="../js/video-logger.js"></script>
+<script type="text/javascript" src="../js/tooltip.js"></script>
+<!-- <script type="text/javascript" src="../js/hotkey-dictionary.js"></script> -->
+</body>
+</html>
