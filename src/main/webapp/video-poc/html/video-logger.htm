@@ -180,13 +180,13 @@
                                     <div class="row">
                                         <label>In time:</label>
                                         <input type="text" disabled="disabled" id="in-time-input" ng-model="currentLog.startTime" value="{{currentLog.startTime}}" />
-                                        <a href="javascript:void(0)" class="intime-btn hideText" title="Click to log clip start time" ng-click="logCurrentTime(currentLog.startTime)"></a>
+                                        <a href="javascript:void(0)" class="intime-btn hideText" title="Click to log clip start time" ng-click="logCurrentTime('IN')"></a>
                                     </div>
                                     <div class="row">
                                         <label>Out time:</label> 
                                         <input type="button" value="Out Time" id="enter-out-time" ng-click="logOutTime()" class="enter-log" title="Out Time" > 
                                         <input type="text" id="out-time-input" style="display:none;" ng-model="currentLog.endTime" value="{{currentLog.endTime}}"/>
-                                        <a href="javascript:void(0)" class="outtime-btn hideText" title="Click to log clip end time" ng-click="logCurrentTime(currentLog.endTime)">Click to log clip end time</a>
+                                        <a href="javascript:void(0)" class="outtime-btn hideText" title="Click to log clip end time" ng-click="logCurrentTime('OUT')">Click to log clip end time</a>
                                     </div>
                                     <div class="row">
                                         <label>Event:</label> 

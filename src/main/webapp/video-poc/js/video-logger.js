@@ -452,48 +452,6 @@ function loadVideo(videoURL) {
 }
 
 
-function showSavedVideo1 (videoInfo) {
-	if (videoInfo != null) {
-		actionArray = [];
-		var videoActions = videoInfo.actions;
-					
-		videoPath = videoInfo.url;
-		videoType = videoInfo.videoType;
-		if (videoPath != null && videoType != null) {
-			loadVideo();
-						
-			$(videoInfo.actions).each(function () {
-				
-				var eachAction = new Object();
-				eachAction.action = this.name;
-				eachAction.hotKeyChar = this.hotKeyChar;
-				eachAction.keyCode = this.hotKeyCode;
-				actionArray.push(eachAction);
-				
-				var liStr = '<li>' + this.name + '</li>',
-				liObj = $(liStr);
-				if(this.hotKeyChar != '') {
-					var spanObj = '<span class="hotkey" style="background-color:'+this.legend+'" title="Key board shortcut for this action is ' + this.hotKeyChar + '">' + 
-					this.hotKeyChar + '</span>';
-					liObj.append(spanObj).addClass('has-hot-key');
-				}
-				liObj.data({'action' : this.action,
-							'hotKeyChar' : this.hotKeyChar, 
-							'hotKeyCode' : this.hotKeyCode});		
-				$('.step-3 .added-action-list1').append(liObj);
-				//$('.step-2 .added-action-list').append(liObj);			
-								
-			});
-			
-			populateSelectedActions(actionArray);					
-			var actionClone = $('.step-2 .added-action-list').clone(true).removeClass('rounded-holder hide').attr("style", "display: block;");
-			var ss = $(actionClone).html();
-			$('.actions').html(actionClone).find('.delete-action').remove();
-			goToNextPage('.step-3');
-			
-		}
-	}		
-}
 
 //Helper function to render the action list in step 2 with pre existing action profiles
 function populateSelectedActions(actionProfile)
