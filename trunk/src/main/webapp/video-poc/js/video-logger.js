@@ -189,8 +189,7 @@ $('#eventSelect').on('change', function (e) {
 			highlightCurrentTab(2);
 			
 			if (!videoObj) {
-				loadVideo();
-				showExistingLog();
+				loadVideo();				
 			}
 			for(actionIndex in currentProfile) {
 				var liStr = '<li>' + currentProfile[actionIndex].action + '</li>',
@@ -238,51 +237,7 @@ $('#eventSelect').on('change', function (e) {
 		//addLog();
 		$('#image').css('display','none');
 	});
-		
 	
-	//View log button handler
-	$('#view-log').live('click', function()
-	{
-		if(videoData)
-		{
-			$('#log-preview-popup .video-meta-data').html(JSON.stringify(videoData));
-		}
-		else
-		{
-			$('#log-preview-popup .video-meta-data').html("Video meta data unavailable");
-		}
-		
-		if(clipDataArray.length > 0)
-		{
-			$('#log-preview-popup .clip-data').html(JSON.stringify(clipDataArray));
-		}
-		else
-		{
-			$('#log-preview-popup .clip-data').html("Clip data unavailable");
-		}
-		
-		if(actionArray.length > 0)
-		{
-			$('#log-preview-popup .action-data').html(JSON.stringify(actionArray));
-		}
-		else
-		{
-			$('#log-preview-popup .action-data').html("Action data unavailable");
-		}
-		
-		$('#log-preview-popup').dialog({
-		  title: 'Preview generated log',
-		  resizable: false,
-		  dialogClass: 'video-log-modal',
-		  autoOpen: false,
-		  width: 600,
-		  minHeight: 300,
-		  maxHeight: 600,
-		  modal: true
-		});
-		
-		$('#log-preview-popup').dialog('open');
-	});
 		
 	//Delete an action in step 2
 	$('.delete-action').live('click', function()
@@ -506,7 +461,7 @@ function showSavedVideo1 (videoInfo) {
 		videoType = videoInfo.videoType;
 		if (videoPath != null && videoType != null) {
 			loadVideo();
-			showExistingLog();			
+						
 			$(videoInfo.actions).each(function () {
 				
 				var eachAction = new Object();
