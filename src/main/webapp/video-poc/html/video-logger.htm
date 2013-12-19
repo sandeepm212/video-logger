@@ -85,7 +85,7 @@
                             <input type="text" class="video-logger-input" id="url-input" />
                             <!--<input type="button" class="video-logger-btn" id="play-btn" value="Load" />-->
                         </div>
-                        <input type="button" class="video-logger-btn f-right top-gap" id="to-step-2-btn" value="Go to step 2" />
+                        <input type="button" class="video-logger-btn f-right top-gap" id="to-step-2-btn" ng-click="showStep2()" value="Go to step 2" />
                     </div>
                 </div>
                 <!-- -------------------------------------- -->
@@ -97,7 +97,7 @@
                     	<p class="instruction">Configure your own custom actions which you can use to tag a clip. For example, 'Boundary', 'Over boundary', 'Super catch' are possible logging actions of a cricket video. Alternatively you can select from list of available action profiles. You can also tag an action with a key board shortcut (0-9 and A-Z) for ease of logging.</p>
                         <div class="top-gap">You have selected this video : <span id="video-name"></span></div>
                         <h2>
-                        <input type="radio" value="custom-actions" checked id="custom-actions" name="action-rdo">Configure your own custom actions</h2>
+                        <input type="radio" value="custom-actions" checked="checked" id="custom-actions" name="action-rdo" ng-model="customActions">Configure your own custom actions</h2>
                         <div class="add-action-wrap">
                             <label for="action-name" >Enter action name:</label>
                             <input type="text" id="action-name" ng-model="action.name">
@@ -110,7 +110,7 @@
                         </div>
                         
                         <h2>
-                        	<input type="radio" value="popular-actions" id="popular-actions" name="action-rdo">Select from existing popular actions
+                        	<input type="radio" value="popular-actions" id="popular-actions" name="action-rdo" ng-model="customActions">Select from existing popular actions
                         </h2>
                         <div class="add-action-wrap hide">
                             <label for="popular-action-list">Available action profiles:</label>
@@ -127,7 +127,7 @@
                         	 style="background-color: {{action.style.backgroundColor}}">{{action.hotKeyChar}}</span>
                         	</li>
                         </ul>
-                        <input type="button" class="video-logger-btn f-right top-gap" id="to-step-3-btn" ng-click="showSte3()" value="Save &amp; go to step 3" />
+                        <input type="button" class="video-logger-btn f-right top-gap" id="to-step-3-btn" ng-click="showStep3()" value="Save &amp; go to step 3" />
                     </div>
                 </div>
                 <!-- -------------------------------------- -->

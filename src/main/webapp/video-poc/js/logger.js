@@ -162,12 +162,48 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, sharedSer
 		
 		$('a', event.currentTarget).addClass('active');
 	}
+	
+	$scope.showStep2 = function () {
+		var isPassed = false;
+		if($('#exsting-video').is(':checked')) {
+			if($('#video-carousel li a').hasClass('active')) {
+				videoType = 'stored';
+				isPassed = true;
+			} else {
+				alert("Please select any video from the existing list to proceed");
+				isPassed = false;
+			}
+		} else if($('#web-video').is(':checked')) {
+			if($.trim(urlInput.val()) != '') {
+				videoPath = urlInput.val();
+				videoType = 'web-video';
+				isPassed = true;
+			} else {
+				alert("Please type a URL of a video in the input box to proceed");
+				isPassed = false;
+			}
+		} else {
+			alert("You should either select from existing video or type a URL to proceed to next step");
+			isPassed = false;
+		}
+		
+		if (isPassed) {
+			goToNextPage('.step-2');
+			if (videoObj) {
+				videoObj.pause();
+			}
+			$('#video-name').text(videoPath);
+			$('#action-name').focus();
+			highlightCurrentTab(1);
+		}
+	}
 });
 
 myAppModule.controller('step2Controller', function($rootScope, $scope, sharedService) {
 	$scope.actions = [];
 	$scope.actionProfiles = actionProfiles;
 	$scope.selectedProfile = null;
+	$scope.customActions = 'custom-actions';
 	
 	$scope.addLogAction = function (action) {
 		if (action.name != '') {
@@ -207,14 +243,23 @@ myAppModule.controller('step2Controller', function($rootScope, $scope, sharedSer
 		}
 		sharedService.setActions($scope.actions);
 	}
-	
-	$scope.showSte3 = function () {
-		if($scope.actions.length == 0) {		
-			alert("Please set up at least 1 action in Step 2 to proceed to next step");
+		
+	$scope.showStep3 = function () {
+		if($scope.actions.length == 0) {	
+			if($scope.customActions === 'custom-actions') {
+				alert("Please set up at least 1 custom action in Step 2 to proceed to next step");
+			} else {
+				alert("Please select from available action profile in Step 2 to proceed to next step");
+			}
 		} else {
+			goToNextPage('.step-3');
+			highlightCurrentTab(2);
+			if (!videoObj) {
+				loadVideo();				
+			}
 			$rootScope.$broadcast('ACTIONS', "");
 		}
-	}
+	}	
 });
 
 myAppModule.controller('step3Controller', function($scope, sharedService) {
@@ -527,9 +572,18 @@ function validateFields() {
 	return isValid;
 }
 
-//Pause the video if something notes textarea gets focus
-//notesTextarea.focus(function() {
-//	if (videoObj) {
-//		videoObj.pause();
-//	}
-//});
+//Helper function for navigating from one step to another
+function goToNextPage(panelName) {
+	$('.panels > .panel-wrap').addClass('hide');
+	$('.panels').children(panelName).removeClass('hide');
+}
+
+//Helper function to highlight current tab
+function highlightCurrentTab(liIndex) {
+	$('ul.logging-nav li').removeClass('selected').eq(liIndex).addClass('selected');
+}
+	
+//Helper function to show error
+function showMessage(msg) {
+	alert(msg);
+}
