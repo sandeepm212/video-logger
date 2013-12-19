@@ -1,5 +1,7 @@
 //variable declaration
-	var videoPath = '',
+var CUE_IN = "IN";
+var CUE_OUT = "OUT";
+var videoPath = '',
 		videoType = '',
 		duration = 0,
 		frameRate = 0,
@@ -148,7 +150,7 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, sharedSer
 		videoPath = videoInfo.url;
 		videoId = videoInfo.id;
 		if (exisitngDataMap[videoId] != null) {
-			console.log("SHOWING.....");
+//			console.log("SHOWING.....");
 			$rootScope.$broadcast('SHOW_SAVED_VIDEO', exisitngDataMap[videoId]);
 			this.$emit('SHOW_SAVED_VIDEO', exisitngDataMap[videoId]);
 			//showSavedVideo(exisitngDataMap[videoId]);			
@@ -271,7 +273,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	$scope.applyAction = function (index, event) {
 		var selectedAction = $scope.actions[index];
 		$scope.currentLog.action = selectedAction.name;
-		console.log($scope.currentLog);
+//		console.log($scope.currentLog);
 		currentTime = videoObj.currentTime();
 		if(currentTime > 0 && currentTime < duration) {
 			$scope.currentLog.startTime = formatTime(currentTime);
@@ -394,18 +396,19 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	
 	//Helper function to synchronize video with log record table
 	$scope.syncVideoWidLog = function () {
-		var inTime;		
+		var inTime;
+						
 		for(clipIndex in $scope.videoLogs) {
 			var outTime = $scope.videoLogs[clipIndex].endTime;
 			inTime = $scope.videoLogs[clipIndex].startTime;
-			console.log("CUE OBJECT");
-			videoObj.cue(inTime, $scope.cueCallback(clipIndex, $scope.videoLogs[clipIndex], "IN"));
-			if (outTime != null && outTime.lengnth > 0) {
-				videoObj.cue(outTime, $scope.cueCallback(clipIndex, $scope.videoLogs[clipIndex], "OUT"));				
+			videoObj.cue(inTime, $scope.cueCallback(clipIndex, $scope.videoLogs[clipIndex], CUE_IN));
+			if (outTime != null && outTime.length > 0) {
+				console.log("OUT TIME" + outTime);
+				videoObj.cue(outTime, $scope.cueCallback(clipIndex, $scope.videoLogs[clipIndex], CUE_OUT));
 			}
 			if ($scope.videoLogs[clipIndex].eventType == "Subtitle") {
-				console.log("Subtitle :: " + clipIndex);
-				console.log($scope.videoLogs[clipIndex]);
+//				console.log("Subtitle :: " + clipIndex);
+//				console.log($scope.videoLogs[clipIndex]);
 				videoObj.subtitle({
 	    	         start: $scope.videoLogs[clipIndex].startTime,
 	    	          end: $scope.videoLogs[clipIndex].endTime,
@@ -419,8 +422,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		   	          target:"previewData"  
 		           });
 			} else if($scope.videoLogs[clipIndex].eventType == "Pop") {
-				console.log("POP :: " + clipIndex);
-				console.log($scope.videoLogs[clipIndex]);
+//				console.log("POP :: " + clipIndex);
+//				console.log($scope.videoLogs[clipIndex]);
 				videoObj.pop({
 					start: $scope.videoLogs[clipIndex].startTime,
 	   	            end: $scope.videoLogs[clipIndex].endTime,
@@ -431,14 +434,18 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 			        icon:"../css/images/pointer.png"
 				});
 			}
-		}
+		}		
 	}
 	
 	//Cue event callback function
-	$scope.cueCallback = function (index, logObject) {
-		console.log(index);
-		console.log(logObject);
-		logObject.index = index;
+	$scope.cueCallback = function (index, logObject, action) {
+		return function () {			
+			if (CUE_IN === action) {
+				$('#logRow'+index).addClass('rowHighlight');				
+			} else {
+				$('#logRow'+index).removeClass('rowHighlight');				
+			}
+		}				
 	}
 	
 	$scope.backToLogger = function () {
@@ -450,6 +457,14 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		$('tbody tr', logTable).removeClass('row-highlight');
 	}
 });
+
+function cueVideo (videoLogs) {
+	for(clipIndex in videoLogs) {
+		var outTime = videoLogs[clipIndex].endTime;
+		inTime = videoLogs[clipIndex].startTime;
+		videoObj.cue(inTime, cueCallback(clipIndex, videoLogs[clipIndex], CUE_IN));
+	}
+}
 
 function addLog() {
 	if(validateFields()) {

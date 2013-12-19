@@ -31,3 +31,26 @@
 });
 
 })( Popcorn );
+
+
+
+
+(function ( Popcorn ) {
+  Popcorn.plugin( "highlightrow", { 
+  _setup: function( options ) {
+   
+  },
+
+  start: function( event, options ){
+    $( options._container ).fadeIn(); 
+  },
+
+  end: function( event, options ){
+    $( options._container ).fadeOut(); 
+  },
+  _teardown: function( options ) {
+   
+  }
+});
+
+})( Popcorn );
