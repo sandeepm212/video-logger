@@ -164,9 +164,8 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, sharedSer
 	}
 });
 
-var actions = [];
 myAppModule.controller('step2Controller', function($rootScope, $scope, sharedService) {
-	$scope.actions = actions;
+	$scope.actions = [];
 	$scope.actionProfiles = actionProfiles;
 	$scope.selectedProfile = null;
 	
