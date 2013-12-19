@@ -7,7 +7,7 @@
             <input type="radio" value="existing" checked id="exsting-video" name="video-type-rdo">Select from existing video files (Click on any thumbnail to select the video)</h2>
             <div class="rounded-holder">
             <ul id="video-carousel" class="jcarousel-skin-tango">
-                <li data-ng-repeat="video in videos" data-ng-click="selectVideo($index, $event)" data-video-path='{{video.url}}' data-video-id='{{video.id}}'>
+                <li data-ng-repeat="video in videos" data-ng-click="selectVideo($index, $event)" data-video-path='{{video.url}}' data-video-id='{{video.id}}' data-repeat-done="">
                 	<a href="javascript:void(0);"><img src="{{video.thumbnailUrl}}"  alt="" /></a>
                 </li>
             </ul>
@@ -20,3 +20,6 @@
          <input type="button" class="video-logger-btn f-right top-gap" id="to-step-2-btn" data-ng-click="showStep2()" value="Go to step 2" />
      </div>
 </div>
+<script type="text/javascript">
+	
+</script>

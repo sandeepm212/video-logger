@@ -144,11 +144,21 @@ myAppModule.config(function($routeProvider, $locationProvider) {
    		   		templateUrl: "/video-logger/video-poc/html/template/logActions.html"
           });
           $routeProvider.otherwise({
-        	  templateUrl: "/video-logger/video-poc/html/template/selectVideo.html",
-        	  controller: "step1Controller"
+        	  redirectTo: '/'
           });
           // configure html5 to get links working on jsfiddle
           //$locationProvider.html5Mode(true);
+});
+
+myAppModule.directive('repeatDone', function () {
+	  return function (scope, element, iAttrs) {
+          var parentScope = element.parent().scope();
+          if (scope.$last){
+        	  if ("video-carousel" === element.parent()[0].id) {
+        		  $('#video-carousel').jcarousel();
+        	  }
+          }
+	  };
 });
 
 
@@ -171,8 +181,6 @@ var selectedVideo = null;
 myAppModule.controller('step1Controller', function($rootScope, $scope, $location, sharedService) {
 	
 	console.log("------ step1Controller ---------");
-	
-	$scope.videos = videos;
 	
 	$scope.selectVideo = function  (index, event) {
 		var videoInfo = $scope.videos[index];
@@ -224,6 +232,12 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 			highlightCurrentTab(1);
 		}
 	}
+	
+	$scope.init = function () {
+		$scope.videos = videos;
+	}
+	
+	$scope.init();
 });
 
 myAppModule.controller('step2Controller', function($rootScope, $scope, sharedService) {
