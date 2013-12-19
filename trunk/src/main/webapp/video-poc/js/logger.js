@@ -259,7 +259,17 @@ myAppModule.controller('step2Controller', function($rootScope, $scope, sharedSer
 			}
 			$rootScope.$broadcast('ACTIONS', "");
 		}
-	}	
+	}
+	
+	$scope.resetActions = function () {
+		$scope.actions = [];
+	}
+	
+	$scope.deleteAction = function(index) {
+		if(confirm("This is the current selected action for clip logging. Are you sure to delete this action?")) {
+			$scope.actions.splice(index, 1);
+		}
+	}
 });
 
 myAppModule.controller('step3Controller', function($scope, sharedService) {
@@ -285,6 +295,10 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		if (logDetails != null) {
 			$scope.videoLogs.push(logDetails);
 		}
+	}
+	
+	$scope.playVideo = function () {
+		videoObj.play();
 	}
 	
 	$scope.showLogVideo = function  (index) {

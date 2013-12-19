@@ -97,7 +97,7 @@
                     	<p class="instruction">Configure your own custom actions which you can use to tag a clip. For example, 'Boundary', 'Over boundary', 'Super catch' are possible logging actions of a cricket video. Alternatively you can select from list of available action profiles. You can also tag an action with a key board shortcut (0-9 and A-Z) for ease of logging.</p>
                         <div class="top-gap">You have selected this video : <span id="video-name"></span></div>
                         <h2>
-                        <input type="radio" value="custom-actions" checked="checked" id="custom-actions" name="action-rdo" ng-model="customActions">Configure your own custom actions</h2>
+                        <input type="radio" value="custom-actions" checked="checked" id="custom-actions" name="action-rdo" ng-click="resetActions()" ng-model="customActions">Configure your own custom actions</h2>
                         <div class="add-action-wrap">
                             <label for="action-name" >Enter action name:</label>
                             <input type="text" id="action-name" ng-model="action.name">
@@ -110,7 +110,7 @@
                         </div>
                         
                         <h2>
-                        	<input type="radio" value="popular-actions" id="popular-actions" name="action-rdo" ng-model="customActions">Select from existing popular actions
+                        	<input type="radio" value="popular-actions" id="popular-actions" name="action-rdo" ng-click="resetActions()" ng-model="customActions">Select from existing popular actions
                         </h2>
                         <div class="add-action-wrap hide">
                             <label for="popular-action-list">Available action profiles:</label>
@@ -122,7 +122,7 @@
                         <ul class="added-action-list rounded-holder clearfix">
                         	<!-- ngRepeat: action in actions -->
                      	   	<li ng-class="{'has-hot-key': hasHotKey(action)}" ng-repeat="action in actions">{{action.name}}
-                        	<a href="javascript:void(0)" class="delete-action hideText" title="Delete this action">Delete this action</a>
+                        	<a href="javascript:void(0)" class="delete-action hideText" title="Delete this action" ng-click="deleteAction($index)">Delete this action</a>
                         	<span ng-if="hasHotKey(action)" title="Key board shortcut for this action is {{action.hotKeyChar}}" class="hotkey"
                         	 style="background-color: {{action.style.backgroundColor}}">{{action.hotKeyChar}}</span>
                         	</li>
@@ -198,7 +198,7 @@
                                     </div>
                                 </section>
                                 <section class="logger-note">
-                                    <label>Note:</label><a class="play-video f-right" title="Keep on playing the video" href="javascript:void(0)">Play video</a>
+                                    <label>Note:</label><a class="play-video f-right" title="Keep on playing the video" href="javascript:void(0)" ng-click="playVideo()">Play video</a>
                                     <textarea class="notes-textarea" id="clip-notes" ng-model="currentLog.note"></textarea>
                                     <input type="button" value="Log entry" id="enter-log-btn" class="enter-log" title="Log entry" ng-click=addLog()>
                                 </section>
