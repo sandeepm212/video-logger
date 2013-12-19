@@ -231,6 +231,8 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 			$('#action-name').focus();
 			highlightCurrentTab(1);
 		}
+		
+		$location.path("step2");
 	}
 	
 	$scope.init = function () {
@@ -240,7 +242,7 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 	$scope.init();
 });
 
-myAppModule.controller('step2Controller', function($rootScope, $scope, sharedService) {
+myAppModule.controller('step2Controller', function($rootScope, $scope, sharedService, $location) {
 	console.log("------ step2Controller ---------");
 	$scope.actions = [];
 	$scope.actionProfiles = actionProfiles;
@@ -301,6 +303,8 @@ myAppModule.controller('step2Controller', function($rootScope, $scope, sharedSer
 			}
 			$rootScope.$broadcast('ACTIONS', "");
 		}
+		
+		$location.path("step3");
 	}
 	
 	$scope.resetActions = function () {
@@ -644,4 +648,26 @@ function highlightCurrentTab(liIndex) {
 //Helper function to show error
 function showMessage(msg) {
 	alert(msg);
+}
+
+//Helper function to load a video either from local resource or from web
+function loadVideo(videoURL) {
+	url = videoURL;
+	if (url == null) {
+		url = $('#exsting-video').is(':checked') ? getLocalFileNameArr(videoPath) : videoPath;			
+	}
+	videoObj = Popcorn.smart('#video-holder-div', url);
+	$('#video-holder-div').slideDown(slideTime);
+	//Caching media properties once the media metadata are loaded
+	videoObj.on('loadedmetadata', function()
+	{
+		duration = videoObj.duration();
+		frameRate = videoObj.options.framerate ? videoObj.options.framerate : 30;// TBD : Calculation of framerate needs to be accurate
+		$('.loading-wrap').addClass('hide');
+		videoData = new Object();
+		videoData.type = videoType;
+		videoData.url = videoPath;
+		videoData.duration = duration;
+		videoObj.controls(true);
+	});
 }
