@@ -1,6 +1,7 @@
 //variable declaration
 var CUE_IN = "IN";
 var CUE_OUT = "OUT";
+
 var videoPath = '',
 		videoType = '',
 		duration = 0,
@@ -255,6 +256,7 @@ myAppModule.controller('step2Controller', function($rootScope, $scope, sharedSer
 			goToNextPage('.step-3');
 			highlightCurrentTab(2);
 			if (!videoObj) {
+				// Play Selected Video
 				loadVideo();				
 			}
 			$rootScope.$broadcast('ACTIONS', "");
