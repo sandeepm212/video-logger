@@ -21,23 +21,6 @@ $('#eventSelect').on('change', function (e) {
     }
 });
 	
-	
-	$.get( "/video-logger/getVideoLog", function( data ) {
-		exisitngData = eval(data);
-		$(exisitngData).each(function( i ) {
-			exisitngDataMap[this.id] = this;
-		});
-		$('#video-carousel li').each(function ( i ) {
-				var liObj = $(this);
-				var savedId = liObj.data('video-id');
-				if (exisitngDataMap[savedId] != null) {
-					$('a', liObj).addClass('saved-video');
-					$('a', liObj).attr('saved', 'true');
-				}
-		});
-	});
-	
-	
 	//loading the existing video carousel
 	$('#video-carousel').jcarousel();
 	

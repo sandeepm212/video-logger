@@ -3,6 +3,10 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
+	<listener>
+		<listener-class>com.cognizant.videologger.web.ApplicationContextListener</listener-class>
+	</listener>
+	
 	<servlet>
 		<servlet-name>SaveVideoLog</servlet-name>
 		<servlet-class>com.cognizant.videologger.web.SaveVideoLog</servlet-class>
@@ -20,6 +24,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>GetVideoLog</servlet-name>
 		<url-pattern>/getVideoLog</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>Validater</servlet-name>
+		<servlet-class>com.cognizant.videologger.web.Validater</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Validater</servlet-name>
+		<url-pattern>/validater</url-pattern>
+	</servlet-mapping>
+	
 	<welcome-file-list>
 		<welcome-file>/video-poc/html/video-logger.htm</welcome-file>
 	</welcome-file-list>
