@@ -405,7 +405,7 @@ myAppModule.controller('step2Controller', function($rootScope, $scope, sharedSer
 	}
 });
 
-myAppModule.controller('step3Controller', function($scope, sharedService, $location) {
+myAppModule.controller('step3Controller', function($scope, sharedService, $location, $http) {
 	console.log("------ step3Controller ---------");
 	$scope.selectedVideo = null;
 	$scope.currentLog = new VideoLog();
@@ -470,25 +470,35 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	// Save the video logs
 	$scope.saveVideoLog = function (type) {
 		if (type === 'save') {
-			$scope.vObject = new Video();
-			$scope.vObject.id = videoId;
-			$scope.vObject.url = videoPath;			
 			var videoData = [$scope.selectedVideo];
 			
-			var videoActions = [];
-			$scope.vObject.actions = $scope.selectedVideo.actions;
-								
-			//SaveDATA		
-			$.ajax({
-				  type: "POST",
-				  url: "/video-logger/saveVideoLog",
-				  data: JSON.stringify(videoData),
-				  success: function (data) {
-					  alert("Saved Successfully...");
-					  $('#project-name-popup').dialog('close');
-				  },
-				  dataType: "json"
-			});
+			if ($scope.selectedVideo.projectName.length === 0) {
+				alert("Please enter project name.");
+			} else {
+				$.ajax({
+					  type: "POST",
+					  url: "/video-logger/validater",
+					  data: {FILTER_TYPE:'PROJECT_NAME', FILTER_VALUE: $scope.selectedVideo.projectName, OBJECT_ID: $scope.selectedVideo.projectId},
+					  success: function (data) {
+						  if (data.valid == true) {
+					    		//SaveDATA		
+								$.ajax({
+									  type: "POST",
+									  url: "/video-logger/saveVideoLog",
+									  data: JSON.stringify(videoData),
+									  success: function (data) {
+										  alert("Saved Successfully...");
+										  $('#project-name-popup').dialog('close');
+									  },
+									  dataType: "json"
+								});
+					    	} else {
+					    		alert("Project name already exists.");
+					    	}
+					  },
+					  dataType: "json"
+				});
+			}			
 		} else {
 			$('#project-name-popup').dialog({
 				title: 'Project Name',
@@ -638,7 +648,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	$scope.viewLog = function () {
 		//View log button handler
 		if(videoData) {
-			$('#log-preview-popup .video-meta-data').html(JSON.stringify($scope.vObject));
+			$('#log-preview-popup .video-meta-data').html(JSON.stringify($scope.selectedVideo));
 		} else {
 			$('#log-preview-popup .video-meta-data').html("Video meta data unavailable");
 		}
