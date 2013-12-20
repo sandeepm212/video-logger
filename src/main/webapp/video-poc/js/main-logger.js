@@ -116,18 +116,6 @@ var myAppModule = angular.module('videoLoggerApp', ['ngRoute']);
 myAppModule.service('sharedService', function ($http) {
 
 	var exisitngDataMap = [];
-	$http({method: 'GET', url: '/video-logger/getVideoLog'}).
-	  success(function(data, status, headers, config) {
-		  if (data != null) {
-			  angular.forEach(data, function(video) {
-				  exisitngDataMap[video.projectName] = video;
-			  });
-			  console.log(exisitngDataMap);
-		  }
-	  }).
-	  error(function(data, status, headers, config) {
-		  	
-	  });
 	
 	var actions = [];    
     var video = null;
@@ -162,7 +150,20 @@ myAppModule.service('sharedService', function ($http) {
     };
     
     this.getSavedData = function () {
-    	return exisitngDataMap;
+    	var promise = $http({method: 'GET', url: '/video-logger/getVideoLog'}).
+				  	  	success(function(data, status, headers, config) {
+				  		  if (data != null) {
+				  			  angular.forEach(data, function(video) {
+				  				  exisitngDataMap[video.projectName] = video;
+				  			  });
+				  			  console.log(exisitngDataMap);
+				  		  	}
+				  		  	return data;
+				  	  		}).
+				  	  error(function(data, status, headers, config) {
+				  		  	
+				  	  });
+        return promise; 
     };
     
     
@@ -219,6 +220,7 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 	
 	console.log("------ step1Controller ---------");
 	$scope.videoType = VIDEO_TYPE_WEB;
+	$scope.savedData = [];
 	$scope.selectVideo = function  (index, event) {
 		var videoInfo = $scope.videos[index];
 		videoPath = videoInfo.url;
@@ -237,6 +239,11 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 		sharedService.setVideoType($scope.videoType);		
 		$('a', event.currentTarget).addClass('active');
 	}
+	
+	sharedService.getSavedData().then(function(response){
+		$scope.savedData = response;
+		console.log(response);
+    });
 	
 	$scope.showStep2 = function () {
 		var isPassed = false;
