@@ -25,7 +25,7 @@
 		<div class="rounded-holder">
 			<ul id="saved-video-carousel" class="jcarousel-skin-tango">
 				<li data-ng-repeat="video in savedData"
-					data-ng-click="selectVideo($index, $event, '{{video.projectName}}')"
+					data-ng-click="selectVideo($index, $event, video.projectName)"
 					data-video-path='{{video.url}}' data-video-id='{{video.id}}'
 					data-repeat-done=""><a href="javascript:void(0);"><img
 						src="{{video.thumbnailUrl}}" alt="" /></a></li>
