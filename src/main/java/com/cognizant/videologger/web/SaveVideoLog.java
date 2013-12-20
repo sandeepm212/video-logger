@@ -28,19 +28,6 @@ public class SaveVideoLog extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String existingData = Utils.readFromFile(new File("videolog.data"));
-		Gson gsonLoad = new Gson();
-		Type collectionType = new com.google.gson.reflect.TypeToken<List<Video>>() {
-		}.getType();
-		List<Video> savedLogs = gsonLoad.fromJson(existingData, collectionType);
-
-		Map<Integer, Video> mapData = new HashMap<Integer, Video>();
-		if (savedLogs != null) {
-			for (Video videoLog : savedLogs) {
-				mapData.put(videoLog.getId(), videoLog);
-			}
-		}
-
 		StringBuilder jsonBody = new StringBuilder();
 		BufferedReader bufferedReader = null;
 		try {
@@ -68,11 +55,13 @@ public class SaveVideoLog extends HttpServlet {
 		}
 		System.out.println("jsonBody:: " + jsonBody);
 		Gson gson = new Gson();
+		Type collectionType = new com.google.gson.reflect.TypeToken<List<Video>>() {
+		}.getType();
 		List<Video> logs = gson.fromJson(jsonBody.toString(), collectionType);
 		for (Video videoLog : logs) {
-			mapData.put(videoLog.getId(), videoLog);
+			ApplicationContextListener.VIDEO_LOG_PROJECTS.put(videoLog.getProjectName(), videoLog);
 		}
-		String gsonData = gson.toJson(mapData.values());
+		String gsonData = gson.toJson(ApplicationContextListener.VIDEO_LOG_PROJECTS.values());
 		System.out.println("-------" + gson.toJson(logs));
 
 		Utils.writeToFile(gsonData, new File("videolog.data"));

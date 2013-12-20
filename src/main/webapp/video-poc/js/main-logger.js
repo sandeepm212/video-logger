@@ -88,13 +88,14 @@ function VideoLog (action, eventType, startTime, endTime, eventType, note, relat
 	this.relativeY = relativeY;
 }
 
-function Video (id, url, thumbnailUrl, videoType) {
+function Video (id, url, thumbnailUrl, videoType, projectName) {
 	this.id = id;
 	this.url = url;
 	this.videoType = videoType;
 	this.thumbnailUrl = thumbnailUrl;
 	this.videoLogs = [];
 	this.actions = [];
+	this.projectName = projectName;
 }
 
 var videos = [new Video(1, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
@@ -112,11 +113,26 @@ var videos = [new Video(1, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
 
 var myAppModule = angular.module('videoLoggerApp', ['ngRoute']);
 
-myAppModule.service('sharedService', function () {
-    var actions = [];    
+myAppModule.service('sharedService', function ($http) {
+
+	var exisitngDataMap = [];
+	$http({method: 'GET', url: '/video-logger/getVideoLog'}).
+	  success(function(data, status, headers, config) {
+		  if (data != null) {
+			  angular.forEach(data, function(video) {
+				  exisitngDataMap[video.projectName] = video;
+			  });
+			  console.log(exisitngDataMap);
+		  }
+	  }).
+	  error(function(data, status, headers, config) {
+		  	
+	  });
+	
+	var actions = [];    
     var video = null;
     var videoType = VIDEO_TYPE_WEB;
-	this.addAction = function (action) {
+    this.addAction = function (action) {
 		actions.push(action);
 	};
     this.getActions = function () {
@@ -141,9 +157,15 @@ myAppModule.service('sharedService', function () {
         this.videoType = videoType;
     };
     
-    this.getvideoType = function () {
+    this.getVideoType = function () {
         return this.videoType;
     };
+    
+    this.getSavedData = function () {
+    	return exisitngDataMap;
+    };
+    
+    
 });
 
 myAppModule.config(function($routeProvider, $locationProvider) {
@@ -191,7 +213,6 @@ var localFilePath = '../assets/';
 var MP4 = '.mp4',
 	OGV = '.ogv',
 	WEBM = '.webm';
-
 
 var selectedVideo = null;
 myAppModule.controller('step1Controller', function($rootScope, $scope, $location, sharedService) {
@@ -340,26 +361,27 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	$scope.currentLog = new VideoLog();
 	var actionsMap = [];
 	$scope.vObject = new Video();
-	
+	$scope.projectName = null;
 	
 	$scope.init = function () {
 		console.log("intializing step3Controller...");
 		var video = sharedService.getVideo();
-		console.log("Video.....");
-		console.log(video);
+		$scope.projectName = video.projectName;
+//		console.log("Video.....");
+//		console.log(video);
 		
 		$scope.actions = sharedService.getVideo().actions;
 		$scope.videoLogs = sharedService.getVideo().videoLogs;
 		
-		console.log("ACTIONS:::");
-		console.log($scope.actions);
+//		console.log("ACTIONS:::");
+//		console.log($scope.actions);
 		if (!videoObj) {
 			// Play Selected Video
 			var video = sharedService.getVideo();
 			if (video != null) {
 				var videoURL = getLocalFileNameArr(video.url);
-				console.log("videoURL:::");
-				console.log(videoURL);
+//				console.log("videoURL:::");
+//				console.log(videoURL);
 				loadVideo(videoURL);
 			}
 		}
@@ -419,29 +441,45 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	}
 		
 	// Save the video logs
-	$scope.saveVideoLog = function () {
-		$scope.vObject = new Video();
-		$scope.vObject.id = videoId;
-		$scope.vObject.url = videoPath;
-		$scope.vObject.type = sharedService.getVideoType(); 
-		
-		var videoData = [$scope.vObject];
-		var videoLog = [];
-		$scope.vObject.videoLogs = $scope.videoLogs;
-		
-		var videoActions = [];
-		$scope.vObject.actions = $scope.actions;
-							
-		//SaveDATA		
-		$.ajax({
-			  type: "POST",
-			  url: "/video-logger/saveVideoLog",
-			  data: JSON.stringify(videoData),
-			  success: function (data) {
-				  
-			  },
-			  dataType: "json"
-		});
+	$scope.saveVideoLog = function (type) {
+		if (type === 'save') {
+			$scope.vObject = new Video();
+			$scope.vObject.id = videoId;
+			$scope.vObject.url = videoPath;
+			$scope.vObject.type = sharedService.getVideoType(); 
+			$scope.vObject.projectName = $scope.projectName; 
+			var videoData = [$scope.vObject];
+			var videoLog = [];
+			$scope.vObject.videoLogs = $scope.videoLogs;
+			
+			var videoActions = [];
+			$scope.vObject.actions = $scope.actions;
+								
+			//SaveDATA		
+			$.ajax({
+				  type: "POST",
+				  url: "/video-logger/saveVideoLog",
+				  data: JSON.stringify(videoData),
+				  success: function (data) {
+					  alert("Saved Successfully...");
+					  $('#project-name-popup').dialog('close');
+				  },
+				  dataType: "json"
+			});
+		} else {
+			$('#project-name-popup').dialog({
+				title: 'Project Name',
+				resizable: false,
+				dialogClass: 'video-log-modal',
+				autoOpen: false,
+				width: 600,
+				minHeight: 300,
+				maxHeight: 600,
+				modal: true
+			});
+			
+			$('#project-name-popup').dialog('open');
+		}
 	}
 		
 	$scope.getLogHotKey = function (action) {
@@ -665,7 +703,7 @@ function showMessage(msg) {
 //Helper function to load a video either from local resource or from web
 function loadVideo(videoURL, isLocal) {
 	url = videoURL;
-	console.log(videoURL);
+//	console.log(videoURL);
 	if (url == null) {
 		// TODO
 		url = true ? getLocalFileNameArr(videoPath) : videoPath;			

@@ -109,8 +109,14 @@ var videos = [new Video(1, "trailer", "../images/slider.png"),
 
 var myAppModule = angular.module('videoLoggerApp', []);
 
+var VIDEO_TYPE_LOCAL = "LOCAL";
+var VIDEO_TYPE_WEB = "WEB";
+
+
 myAppModule.service('sharedService', function () {
-    var actions = [];    
+	var actions = [];
+    var video = null;
+    var videoType = VIDEO_TYPE_LOCAL;
 	this.addAction = function (action) {
 		actions.push(action);
 	};
@@ -118,7 +124,26 @@ myAppModule.service('sharedService', function () {
         return this.actions;
     };
     this.setActions = function(actions) {
+    	if (this.video != null) {
+    		this.video.actions = actions;
+    	}
         this.actions = actions;
+    };
+    
+    this.setVideo = function(video) {
+        this.video = video;
+    };
+    
+    this.getVideo = function () {
+        return this.video;
+    };
+    
+    this.setVideoType = function(videoType) {
+        this.videoType = videoType;
+    };
+    
+    this.getvideoType = function () {
+        return this.videoType;
     };
 
 });
