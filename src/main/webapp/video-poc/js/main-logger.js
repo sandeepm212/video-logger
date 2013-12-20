@@ -21,8 +21,7 @@ var videoPath = '',
 		submitBtn = '',
 		eachRowData,
 		actionArray,
-		existingHotkeys = [],
-		videoData,
+		existingHotkeys = [],		
 		finalVO,
 		allowedKeysRegex = /[a-z0-9]/i,
 		//localFilePath = 'http://localhost/projects/video-logger/assets/',
@@ -427,9 +426,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	
 	$scope.deleteLog = function(logToRemove) {
 		if(confirm("Are you sure to delete this log entry?")) {
-			var index = this.videoLogs.indexOf(logToRemove);
-			this.videoLogs.splice(index, 1);
-			clipDataArray.splice(rowIndex, 1);
+			var index = $scope.selectedVideo.indexOf(logToRemove);
+			$scope.selectedVideo.splice(index, 1);			
 		}
 	}
 	
@@ -470,8 +468,6 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	// Save the video logs
 	$scope.saveVideoLog = function (type) {
 		if (type === 'save') {
-			var videoData = [$scope.selectedVideo];
-			
 			if ($scope.selectedVideo.projectName.length === 0) {
 				alert("Please enter project name.");
 			} else {
@@ -481,17 +477,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 					  data: {FILTER_TYPE:'PROJECT_NAME', FILTER_VALUE: $scope.selectedVideo.projectName, OBJECT_ID: $scope.selectedVideo.projectId},
 					  success: function (data) {
 						  if (data.valid == true) {
-					    		//SaveDATA		
-								$.ajax({
-									  type: "POST",
-									  url: "/video-logger/saveVideoLog",
-									  data: JSON.stringify(videoData),
-									  success: function (data) {
-										  alert("Saved Successfully...");
-										  $('#project-name-popup').dialog('close');
-									  },
-									  dataType: "json"
-								});
+							  $scope.saveValidatedVideoLog();
 					    	} else {
 					    		alert("Project name already exists.");
 					    	}
@@ -514,6 +500,28 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			$('#project-name-popup').dialog('open');
 		}
 	}
+	
+	
+	$scope.saveValidatedVideoLog = function () {
+		//SaveDATA		
+		$.ajax({
+			  type: "POST",
+			  url: "/video-logger/saveVideoLog",
+			  data: JSON.stringify($scope.selectedVideo),
+			  success: function (savedStatus) {
+				  alert(savedStatus);
+				  if (savedStatus != null && savedStatus.projectId != null && savedStatus.projectId.length > 0) {
+					  alert("Saved Successfully.");
+					  $scope.selectedVideo.projectId = savedStatus.projectId;
+					  $('#project-name-popup').dialog('close');
+				  } else {
+					  alert("Failed to Save.");
+				  }
+			  },
+			  dataType: "json"
+		});
+	}
+	
 		
 	$scope.getLogHotKey = function (action) {
 		return (action.hotKeyChar != '' && action.hotKeyChar != null);
@@ -647,7 +655,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	
 	$scope.viewLog = function () {
 		//View log button handler
-		if(videoData) {
+		if($scope.selectedVideo) {
 			$('#log-preview-popup .video-meta-data').html(JSON.stringify($scope.selectedVideo));
 		} else {
 			$('#log-preview-popup .video-meta-data').html("Video meta data unavailable");
@@ -744,15 +752,10 @@ function loadVideo(videoURL, isLocal) {
 	videoObj = Popcorn.smart('#video-holder-div', url);
 	$('#video-holder-div').slideDown(slideTime);
 	//Caching media properties once the media metadata are loaded
-	videoObj.on('loadedmetadata', function()
-	{
+	videoObj.on('loadedmetadata', function() {
 		duration = videoObj.duration();
 		frameRate = videoObj.options.framerate ? videoObj.options.framerate : 30;// TBD : Calculation of framerate needs to be accurate
 		$('.loading-wrap').addClass('hide');
-		videoData = new Object();
-		videoData.type = videoType;
-		videoData.url = videoPath;
-		videoData.duration = duration;
 		videoObj.controls(true);
 	});
 }

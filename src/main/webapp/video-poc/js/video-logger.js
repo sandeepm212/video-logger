@@ -86,49 +86,6 @@ $('#eventSelect').on('change', function (e) {
 		$('#image').css('display','none');
 	});
 	
-	
-	//Submit log button handler - Generate final JSON data with all logged clip items
-	submitBtn.on('click11', function()
-	{
-		var clipData = clipDataArray;
-		var vObject = new Object();
-		vObject.id = videoId;
-		vObject.url = videoPath;
-		vObject.videoType = videoType; 
-		
-		var videoData = [vObject];
-		var videoLog = [];
-		vObject.videoLogs = videoLog;
-		
-		var videoActions = [];
-		vObject.actions = videoActions;
-		
-		$(clipDataArray).each(function () {
-			var logObject = new Object();
-			logObject = new VideoLog (this.action, this.eventType, this.startTime, this.endTime, this.notes);			
-			videoLog.push(logObject);
-		});
-		
-		$(actionArray).each(function () {
-			var action = new Action (this.action, this.hotKeyChar, this.hotKeyCode);
-			var style = new Style();
-			style.backgroundColor = this.legend;
-			action.style = style;
-			videoActions.push(action);
-		});
-		
-		//SaveDATA
-		//clipDataArray
-		$.ajax({
-			  type: "POST",
-			  url: "/video-logger/saveVideoLog",
-			  data: JSON.stringify(videoData),
-			  success: function (data) {
-				  
-			  },
-			  dataType: "json"
-		});
-	});
 		
 	//navigation menu click handler
 	$('ul.logging-nav li').live('click', function()
@@ -235,8 +192,7 @@ $('#eventSelect').on('change', function (e) {
 		clearFields();
 		clipAction.text('').data('action-value','').css('display', 'none');
 		actionArray = [],
-		clipDataArray = [],
-		videoData = null;	
+		clipDataArray = [],			
 		finalVO = null;
 	}
 	
