@@ -156,7 +156,7 @@ myAppModule.service('sharedService', function ($http) {
 				  			  angular.forEach(data, function(video) {
 				  				  exisitngDataMap[video.projectName] = video;
 				  			  });
-				  			  console.log(exisitngDataMap);
+				  			  //console.log(exisitngDataMap);
 				  		  	}
 				  		  	return data;
 				  	  		}).
@@ -193,8 +193,8 @@ myAppModule.directive('repeatDone', function () {
 	  return function (scope, element, iAttrs) {
           var parentScope = element.parent().scope();
           if (scope.$last){
-        	  if ("video-carousel" === element.parent()[0].id) {
-        		  $('#video-carousel').jcarousel();
+        	  if (("saved-video-carousel" === element.parent()[0].id) || ("video-carousel" === element.parent()[0].id)) {
+        		  $('#' + element.parent()[0].id).jcarousel();
         	  }
           }
 	  };
@@ -234,11 +234,11 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 	console.log("------ step1Controller ---------");
 	$scope.videoType = VIDEO_TYPE_WEB;
 	$scope.savedData = [];
-	$scope.selectVideo = function  (index, event) {
+	$scope.selectVideo = function  (index, event, projectName) {
 		var videoInfo = $scope.videos[index];
 		videoPath = videoInfo.url;
 		videoId = videoInfo.id;
-		if (exisitngDataMap[videoId] != null) {
+		if (exisitngDataMap[projectName] != null) {
 			console.log("SAVED VIDEO SELECTED");
 			sharedService.setVideo(exisitngDataMap[videoId]);
 			$location.path("step3");
@@ -253,9 +253,23 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 		$('a', event.currentTarget).addClass('active');
 	}
 	
+	$scope.safeApply = function(fn) {
+		  var phase = this.$root.$$phase;
+		  if(phase == '$apply' || phase == '$digest') {
+		    if(fn && (typeof(fn) === 'function')) {
+		      fn();
+		    }
+		  } else {
+		    this.$apply(fn);
+		  }
+	};
+	
 	sharedService.getSavedData().then(function(response){
-		$scope.savedData = response;
-		console.log(response);
+		//console.log(response);
+		 $scope.safeApply(function () {
+			 $scope.savedData = response.data;
+			 console.log($scope.savedData);
+	     });
     });
 	
 	$scope.showStep2 = function () {
@@ -466,6 +480,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 			$scope.vObject = new Video();
 			$scope.vObject.id = videoId;
 			$scope.vObject.url = videoPath;
+			$scope.vObject.thumbnailUrl = "../images/slider.png"; //videoPath;
 			$scope.vObject.type = sharedService.getVideoType(); 
 			$scope.vObject.projectName = $scope.projectName; 
 			var videoData = [$scope.vObject];
