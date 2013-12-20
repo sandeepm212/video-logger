@@ -1,12 +1,12 @@
 <div class="panel-wrap step-3" data-ng-controller="step3Controller">
-	<h3>Step 3: Capture clip <span>{{projectName}}</span></h3>
+	<h3>Step 3: Capture clip <span>{{selectedVideo.projectName}}</span></h3>
 	<div class="panel-body clearfix">
 		<section class="logger-section">
 			<div class="panel-wrap">
 				<h3>Legend</h3>
 				<ul class="added-action-list1 rounded-holder clearfix">
 					<li data-ng-class="{'has-hot-key': hasHotKey(action)}"
-						data-ng-repeat="action in actions"
+						data-ng-repeat="action in selectedVideo.actions"
 						data-ng-click="applyAction($index, $event)">{{action.name}} <span
 						data-ng-if="hasHotKey(action)"
 						title="Key board shortcut for this action is {{action.hotKeyChar}}"
@@ -38,7 +38,7 @@
 				<section class="actions">
 					<ul class="added-action-list1 rounded-holder clearfix">
 						<li data-ng-class="{'has-hot-key': hasHotKey(action)}"
-							data-ng-repeat="action in actions"
+							data-ng-repeat="action in selectedVideo.actions"
 							data-ng-click="applyAction($index, $event)">{{action.name}}
 							<span data-ng-if="hasHotKey(action)"
 							title="Key board shortcut for this action is {{action.hotKeyChar}}"
@@ -121,7 +121,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr data-ng-repeat="log in videoLogs" id="logRow{{$index}}"
+							<tr data-ng-repeat="log in selectedVideo.videoLogs" id="logRow{{$index}}"
 								data-ng-click="showLogVideo($index)">
 								<td><span data-ng-if="hotKeyCharStyle($index) === ''">{{log.action}}</span>
 									<span style="background-color: {{hotKeyCharStyle($ index)"
@@ -151,7 +151,7 @@
 	
 	<section class="modal-popup" id="project-name-popup">
 		<h2>Project Name :</h2>
-		<input type="text" data-ng-model="projectName" value="{{projectName}}">
+		<input type="text" data-ng-model="selectedVideo.projectName" value="{{selectedVideo.projectName}}">
 		<input type="button" value="Save Project"
 			data-ng-click="saveVideoLog('save')">
 	</section>

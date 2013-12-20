@@ -88,7 +88,7 @@ function VideoLog (action, eventType, startTime, endTime, eventType, note, relat
 	this.relativeY = relativeY;
 }
 
-function Video (id, url, thumbnailUrl, videoType, projectName) {
+function Video (id, url, thumbnailUrl, videoType, projectName, projectId) {
 	this.id = id;
 	this.url = url;
 	this.videoType = videoType;
@@ -96,6 +96,7 @@ function Video (id, url, thumbnailUrl, videoType, projectName) {
 	this.videoLogs = [];
 	this.actions = [];
 	this.projectName = projectName;
+	this.projectId = projectId;
 }
 
 var videos = [new Video(1, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
@@ -133,7 +134,8 @@ myAppModule.service('sharedService', function ($http) {
     };
     
     this.setVideo = function(video) {
-        this.video = video;
+    	this.video = video;
+    	this.video.thumbnailUrl = "../images/slider.png"; //videoPath;
     };
     
     this.getVideo = function () {
@@ -141,6 +143,9 @@ myAppModule.service('sharedService', function ($http) {
     };
     
     this.setVideoType = function(videoType) {
+    	if (this.video != null) {
+    		this.video.videoType = videoType;
+    	}
         this.videoType = videoType;
     };
     
@@ -283,8 +288,7 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 	sharedService.getSavedData().then(function(response){
 		//console.log(response);
 		 $scope.safeApply(function () {
-			 $scope.savedData = response.data;
-			 console.log($scope.savedData);
+			 $scope.savedData = response.data;			 
 	     });
     });
 	
@@ -386,7 +390,6 @@ myAppModule.controller('step2Controller', function($rootScope, $scope, sharedSer
 		} else {
 			goToNextPage('.step-3');
 			highlightCurrentTab(2);
-			$rootScope.$broadcast('ACTIONS', "");
 		}		
 		$location.path("step3");
 	}
@@ -404,10 +407,7 @@ myAppModule.controller('step2Controller', function($rootScope, $scope, sharedSer
 
 myAppModule.controller('step3Controller', function($scope, sharedService, $location) {
 	console.log("------ step3Controller ---------");
-	$scope.videoLogs = videoLogs;	 
-	$scope.actions = [];
-	$scope.videoLogs = [];
-	$scope.selectedVideoInfo = null;
+	$scope.selectedVideo = null;
 	$scope.currentLog = new VideoLog();
 	var actionsMap = [];
 	$scope.vObject = new Video();
@@ -415,30 +415,14 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	
 	$scope.init = function () {
 		console.log("intializing step3Controller...");
-		var video = sharedService.getVideo();
-		
-		$scope.actions = sharedService.getVideo().actions;
-		$scope.projectName = video.projectName;
-//		console.log("Video.....");
-//		console.log(video);
-					
-		$scope.videoLogs = sharedService.getVideo().videoLogs;
-		
-//		console.log("ACTIONS:::");
-//		console.log($scope.actions);
+		$scope.selectedVideo = sharedService.getVideo();		
 		if (!videoObj) {
 			// Play Selected Video
-			var video = sharedService.getVideo();
-			if (video != null) {
-				var videoURL = getLocalFileNameArr(video.url);
-//				console.log("videoURL:::");
-//				console.log(videoURL);
+			if ($scope.selectedVideo != null) {
+				var videoURL = getLocalFileNameArr($scope.selectedVideo.url);
 				loadVideo(videoURL);
 			}
 		}
-	
-		
-		
 	}
 	
 	$scope.deleteLog = function(logToRemove) {
@@ -451,7 +435,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	
 	$scope.addVideoLog = function  (logDetails) {
 		if (logDetails != null) {
-			$scope.videoLogs.push(logDetails);
+			$scope.selectedVideo.videoLogs.push(logDetails);
 		}
 	}
 	
@@ -460,27 +444,16 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	}
 	
 	$scope.showLogVideo = function  (index) {
-		videoObj.play($scope.videoLogs[index].startTime);
+		videoObj.play($scope.selectedVideo.videoLogs[index].startTime);
 	}
-	
-	$scope.$on('ACTIONS', function(value) {
-		$scope.setActions(sharedService.getActions());		
-	})
-	
-	$scope.setActions = function (actions) {
-		$scope.actions = actions;
-		angular.forEach($scope.actions, function(action, index) {
-			actionsMap[action.name] = action;
-		});
-	}
-	
+		
 	$scope.hasHotKey = function (action) {
 		return (action.hotKeyChar != '' && action.hotKeyChar != null);
 	}
 	
 	// Handle the action selection during video playback
 	$scope.applyAction = function (index, event) {
-		var selectedAction = $scope.actions[index];
+		var selectedAction = $scope.selectedVideo.actions[index];
 		$scope.currentLog.action = selectedAction.name;
 		currentTime = videoObj.currentTime();
 		if(currentTime > 0 && currentTime < duration) {
@@ -499,16 +472,11 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		if (type === 'save') {
 			$scope.vObject = new Video();
 			$scope.vObject.id = videoId;
-			$scope.vObject.url = videoPath;
-			$scope.vObject.thumbnailUrl = "../images/slider.png"; //videoPath;
-			$scope.vObject.type = sharedService.getVideoType(); 
-			$scope.vObject.projectName = $scope.projectName; 
-			var videoData = [$scope.vObject];
-			var videoLog = [];
-			$scope.vObject.videoLogs = $scope.videoLogs;
+			$scope.vObject.url = videoPath;			
+			var videoData = [$scope.selectedVideo];
 			
 			var videoActions = [];
-			$scope.vObject.actions = $scope.actions;
+			$scope.vObject.actions = $scope.selectedVideo.actions;
 								
 			//SaveDATA		
 			$.ajax({
@@ -549,7 +517,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		videoObj.play();
 		$scope.currentLog.relativeX = relativeX;
 		$scope.currentLog.relativeY = relativeY;
-		$scope.videoLogs.push($scope.currentLog);
+		$scope.selectedVideo.videoLogs.push($scope.currentLog);
 		$scope.currentLog = new VideoLog();
 		$('.actions li').removeClass('selected');
 	}
@@ -565,8 +533,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	
 	// 
 	$scope.hotKeyCharStyle = function(index) {
-		if ($scope.videoLogs != null) {				
-			var logObj = $scope.videoLogs[index];
+		if ($scope.selectedVideo.videoLogs != null) {				
+			var logObj = $scope.selectedVideo.videoLogs[index];
 			var action = actionsMap[logObj.action];
 			if (action != null && action.style != null) {
 				return action.style.backgroundColor;
@@ -597,7 +565,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		//Preview button handler
 		var timeStore; 
 		
-		if($scope.videoLogs.length > 0) {
+		if($scope.selectedVideo.videoLogs.length > 0) {
 			$('.logger-holder, section.left, #preview, #view-log, #submit-log').hide();
 			$('section.right').css('width', '100%');
 			$('#back-to-logger').show();
@@ -621,7 +589,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			index:0
 		});
 			
-		angular.forEach($scope.videoLogs, function(log, index) {
+		angular.forEach($scope.selectedVideo.videoLogs, function(log, index) {
 			var outTime = log.endTime;
 			var inTime = log.startTime;
 			videoObj.highlightrow({
@@ -675,14 +643,14 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			$('#log-preview-popup .video-meta-data').html("Video meta data unavailable");
 		}
 			
-		if ($scope.videoLogs.length > 0) {
-				$('#log-preview-popup .clip-data').html(JSON.stringify($scope.videoLogs));
+		if ($scope.selectedVideo.videoLogs.length > 0) {
+				$('#log-preview-popup .clip-data').html(JSON.stringify($scope.selectedVideo.videoLogs));
 		} else {
 			$('#log-preview-popup .clip-data').html("Clip data unavailable");
 		}
 			
-		if ($scope.actions.length > 0) {
-			$('#log-preview-popup .action-data').html(JSON.stringify($scope.actions));
+		if ($scope.selectedVideo.actions.length > 0) {
+			$('#log-preview-popup .action-data').html(JSON.stringify($scope.selectedVideo.actions));
 		} else {
 			$('#log-preview-popup .action-data').html("Action data unavailable");
 		}
