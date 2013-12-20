@@ -5,10 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -54,16 +53,25 @@ public class SaveVideoLog extends HttpServlet {
 			}
 		}
 		System.out.println("jsonBody:: " + jsonBody);
-		Gson gson = new Gson();
-		Type collectionType = new com.google.gson.reflect.TypeToken<List<Video>>() {
-		}.getType();
-		List<Video> logs = gson.fromJson(jsonBody.toString(), collectionType);
-		for (Video videoLog : logs) {
+		Gson gson = new Gson();		
+		String newProjId = null;
+		Video videoLog = gson.fromJson(jsonBody.toString(), Video.class);
+		if (videoLog != null) {
+			if (videoLog.getProjectId() == null || videoLog.getProjectId().trim().length() == 0) {
+				newProjId = System.currentTimeMillis() + "" + videoLog.getUserId();
+				videoLog.setProjectId(newProjId);
+			}
 			ApplicationContextListener.VIDEO_LOG_PROJECTS.put(videoLog.getProjectId() + "" + videoLog.getUserId(), videoLog);
 		}
 		String gsonData = gson.toJson(ApplicationContextListener.VIDEO_LOG_PROJECTS.values());
-		System.out.println("-------" + gson.toJson(logs));
+		System.out.println("-------" + gson.toJson(videoLog));
 
 		Utils.writeToFile(gsonData, new File("videolog.data"));
+		
+		
+		resp.setContentType("text/json");
+		PrintWriter out = resp.getWriter();
+		
+		out.println("{projectId:'" + newProjId + "'}");
 	}
 }
