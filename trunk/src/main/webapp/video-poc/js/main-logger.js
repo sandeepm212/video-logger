@@ -1,6 +1,10 @@
 //variable declaration
 var CUE_IN = "IN";
 var CUE_OUT = "OUT";
+
+var VIDEO_TYPE_LOCAL = "LOCAL";
+var VIDEO_TYPE_WEB = "WEB";
+
 var videoPath = '',
 		videoType = '',
 		duration = 0,
@@ -84,33 +88,34 @@ function VideoLog (action, eventType, startTime, endTime, eventType, note, relat
 	this.relativeY = relativeY;
 }
 
-function Video (id, url, thumbnailUrl, type) {
+function Video (id, url, thumbnailUrl, videoType) {
 	this.id = id;
 	this.url = url;
-	this.type = type;
+	this.videoType = videoType;
 	this.thumbnailUrl = thumbnailUrl;
 	this.videoLogs = [];
 	this.actions = [];
 }
 
-var videos = [new Video(1, "trailer", "../images/slider.png"),
-              new Video(2, "trailer", "../images/slider.png"),
-              new Video(3, "trailer", "../images/slider.png"),
-              new Video(4, "trailer", "../images/slider.png"),
-              new Video(5, "trailer", "../images/slider.png"),
-              new Video(6, "trailer", "../images/slider.png"),
-              new Video(7, "trailer", "../images/slider.png"),
-              new Video(8, "trailer", "../images/slider.png"),
-              new Video(9, "trailer", "../images/slider.png"),
-              new Video(10, "trailer", "../images/slider.png"),
-              new Video(11, "trailer", "../images/slider.png"),
-              new Video(12, "trailer", "../images/slider.png")];
+var videos = [new Video(1, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
+              new Video(2, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
+              new Video(3, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
+              new Video(4, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
+              new Video(5, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
+              new Video(6, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
+              new Video(7, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
+              new Video(8, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
+              new Video(9, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
+              new Video(10, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
+              new Video(11, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
+              new Video(12, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL)];
 
 var myAppModule = angular.module('videoLoggerApp', ['ngRoute']);
 
 myAppModule.service('sharedService', function () {
     var actions = [];    
     var video = null;
+    var videoType = VIDEO_TYPE_WEB;
 	this.addAction = function (action) {
 		actions.push(action);
 	};
@@ -118,6 +123,9 @@ myAppModule.service('sharedService', function () {
         return this.actions;
     };
     this.setActions = function(actions) {
+    	if (this.video != null) {
+    		this.video.actions = actions;
+    	}
         this.actions = actions;
     };
     
@@ -127,6 +135,14 @@ myAppModule.service('sharedService', function () {
     
     this.getVideo = function () {
         return this.video;
+    };
+    
+    this.setVideoType = function(videoType) {
+        this.videoType = videoType;
+    };
+    
+    this.getvideoType = function () {
+        return this.videoType;
     };
 });
 
@@ -181,7 +197,7 @@ var selectedVideo = null;
 myAppModule.controller('step1Controller', function($rootScope, $scope, $location, sharedService) {
 	
 	console.log("------ step1Controller ---------");
-	
+	$scope.videoType = VIDEO_TYPE_WEB;
 	$scope.selectVideo = function  (index, event) {
 		var videoInfo = $scope.videos[index];
 		videoPath = videoInfo.url;
@@ -190,11 +206,14 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 			console.log("SAVED VIDEO SELECTED");
 			sharedService.setVideo(exisitngDataMap[videoId]);
 			$location.path("step3");
+		} else {
+			sharedService.setVideo(videoInfo);
 		}
 		$('#video-carousel li').each(function () {
 			$('a', this).removeClass('active');				
 		});
-		
+		$scope.videoType = VIDEO_TYPE_LOCAL;
+		sharedService.setVideoType($scope.videoType);		
 		$('a', event.currentTarget).addClass('active');
 	}
 	
@@ -202,7 +221,6 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 		var isPassed = false;
 		if($('#exsting-video').is(':checked')) {
 			if($('#video-carousel li a').hasClass('active')) {
-				videoType = 'stored';
 				isPassed = true;
 			} else {
 				alert("Please select any video from the existing list to proceed");
@@ -211,7 +229,6 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 		} else if($('#web-video').is(':checked')) {
 			if($.trim(urlInput.val()) != '') {
 				videoPath = urlInput.val();
-				videoType = 'web-video';
 				isPassed = true;
 			} else {
 				alert("Please type a URL of a video in the input box to proceed");
@@ -298,12 +315,8 @@ myAppModule.controller('step2Controller', function($rootScope, $scope, sharedSer
 		} else {
 			goToNextPage('.step-3');
 			highlightCurrentTab(2);
-			if (!videoObj) {
-				loadVideo();				
-			}
 			$rootScope.$broadcast('ACTIONS', "");
-		}
-		
+		}		
 		$location.path("step3");
 	}
 	
@@ -331,13 +344,24 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	
 	$scope.init = function () {
 		console.log("intializing step3Controller...");
-		console.log(sharedService.getActions());
 		var video = sharedService.getVideo();
-		if (video == null) {
-			$scope.setActions(sharedService.getActions());			
-		} else {
-			$scope.selectedVideoInfo = video;
-			$scope.showSavedVideo(video);
+		console.log("Video.....");
+		console.log(video);
+		
+		$scope.actions = sharedService.getVideo().actions;
+		$scope.videoLogs = sharedService.getVideo().videoLogs;
+		
+		console.log("ACTIONS:::");
+		console.log($scope.actions);
+		if (!videoObj) {
+			// Play Selected Video
+			var video = sharedService.getVideo();
+			if (video != null) {
+				var videoURL = getLocalFileNameArr(video.url);
+				console.log("videoURL:::");
+				console.log(videoURL);
+				loadVideo(videoURL);
+			}
 		}
 	}
 	
@@ -399,7 +423,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		$scope.vObject = new Video();
 		$scope.vObject.id = videoId;
 		$scope.vObject.url = videoPath;
-		$scope.vObject.type = videoType; 
+		$scope.vObject.type = sharedService.getVideoType(); 
 		
 		var videoData = [$scope.vObject];
 		var videoLog = [];
@@ -445,18 +469,6 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 		$('#out-time-input').css('display','-moz-stack');
 		videoObj.pause();
 	}	
-	
-	// Show the saved video data.
-	$scope.showSavedVideo = function(videoInfo) {
-		if (videoInfo != null) {				
-			if (videoPath != null && videoType != null) {
-				loadVideo();
-				$scope.setActions(videoInfo.actions);
-				$scope.videoLogs = videoInfo.videoLogs;
-				goToNextPage('.step-3');
-			}
-		}		
-	}
 	
 	// 
 	$scope.hotKeyCharStyle = function(index) {
@@ -651,10 +663,12 @@ function showMessage(msg) {
 }
 
 //Helper function to load a video either from local resource or from web
-function loadVideo(videoURL) {
+function loadVideo(videoURL, isLocal) {
 	url = videoURL;
+	console.log(videoURL);
 	if (url == null) {
-		url = $('#exsting-video').is(':checked') ? getLocalFileNameArr(videoPath) : videoPath;			
+		// TODO
+		url = true ? getLocalFileNameArr(videoPath) : videoPath;			
 	}
 	videoObj = Popcorn.smart('#video-holder-div', url);
 	$('#video-holder-div').slideDown(slideTime);
