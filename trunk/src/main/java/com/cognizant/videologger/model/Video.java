@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Video {
 	private String projectName;
+	private String projectId;
+
 	private int id;
 	private int userId;
 	private String url;
@@ -74,6 +76,14 @@ public class Video {
 
 	public void setVideoType(String videoType) {
 		this.videoType = videoType;
+	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
 
 }

@@ -187,6 +187,19 @@ myAppModule.config(function($routeProvider, $locationProvider) {
           // configure html5 to get links working on jsfiddle
           //$locationProvider.html5Mode(true);
 });
+myAppModule.run( function($rootScope, $location, sharedService) {
+    // register listener to watch route changes
+    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+    	var video = sharedService.getVideo();
+		if (video == null) {
+			// no logged user, we should be going to #login
+	        if ( next.templateUrl == "/video-logger/video-poc/html/template/logActions.html" || next.templateUrl == "/video-logger/video-poc/html/template/videoActions.html" ) {
+	        		// not going to #step3, we should redirect now
+		          $location.path( "step1" );
+	        }
+	    }     
+    });
+ })
 
 myAppModule.directive('repeatDone', function () {
 	  return function (scope, element, iAttrs) {
@@ -230,7 +243,7 @@ var selectedVideo = null;
 myAppModule.controller('step1Controller', function($rootScope, $scope, $location, sharedService) {
 	
 	console.log("------ step1Controller ---------");
-	$scope.videoType = VIDEO_TYPE_WEB;
+	$scope.videoType = VIDEO_TYPE_LOCAL;
 	$scope.savedData = [];
 	$scope.selectVideo = function  (index, event, projectName) {
 		var videoInfo = null;
@@ -389,7 +402,7 @@ myAppModule.controller('step2Controller', function($rootScope, $scope, sharedSer
 	}
 });
 
-myAppModule.controller('step3Controller', function($scope, sharedService) {
+myAppModule.controller('step3Controller', function($scope, sharedService, $location) {
 	console.log("------ step3Controller ---------");
 	$scope.videoLogs = videoLogs;	 
 	$scope.actions = [];
@@ -403,11 +416,12 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 	$scope.init = function () {
 		console.log("intializing step3Controller...");
 		var video = sharedService.getVideo();
+		
+		$scope.actions = sharedService.getVideo().actions;
 		$scope.projectName = video.projectName;
 //		console.log("Video.....");
 //		console.log(video);
-		
-		$scope.actions = sharedService.getVideo().actions;
+					
 		$scope.videoLogs = sharedService.getVideo().videoLogs;
 		
 //		console.log("ACTIONS:::");
@@ -422,6 +436,9 @@ myAppModule.controller('step3Controller', function($scope, sharedService) {
 				loadVideo(videoURL);
 			}
 		}
+	
+		
+		
 	}
 	
 	$scope.deleteLog = function(logToRemove) {

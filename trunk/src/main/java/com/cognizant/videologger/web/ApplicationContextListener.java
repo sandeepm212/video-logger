@@ -27,7 +27,7 @@ public class ApplicationContextListener implements ServletContextListener {
 
 		if (savedProjects != null) {
 			for (Video videoLog : savedProjects) {
-				VIDEO_LOG_PROJECTS.put(videoLog.getProjectName() + "-" + videoLog.getUserId(), videoLog);
+				VIDEO_LOG_PROJECTS.put(videoLog.getProjectId() + "" + videoLog.getUserId(), videoLog);
 			}
 		}
 	}
