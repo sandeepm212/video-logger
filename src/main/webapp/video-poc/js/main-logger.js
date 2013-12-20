@@ -200,6 +200,18 @@ myAppModule.directive('repeatDone', function () {
 	  };
 });
 
+/*
+ * $rootScope.safeApply = function(fn) {
+    var phase = this.$root.$$phase;
+    if(phase == '$apply' || phase == '$digest') {
+        if(fn && (typeof(fn) === 'function')) {
+            fn();
+        }
+    } else {
+        this.$apply(fn);
+    }
+};
+ */
 
 var videoLogs = [];
 var exisitngData = [];
@@ -216,6 +228,7 @@ var MP4 = '.mp4',
 	WEBM = '.webm';
 
 var selectedVideo = null;
+
 myAppModule.controller('step1Controller', function($rootScope, $scope, $location, sharedService) {
 	
 	console.log("------ step1Controller ---------");
