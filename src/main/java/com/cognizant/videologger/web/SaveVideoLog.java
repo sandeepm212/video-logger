@@ -59,7 +59,7 @@ public class SaveVideoLog extends HttpServlet {
 		}.getType();
 		List<Video> logs = gson.fromJson(jsonBody.toString(), collectionType);
 		for (Video videoLog : logs) {
-			ApplicationContextListener.VIDEO_LOG_PROJECTS.put(videoLog.getProjectName(), videoLog);
+			ApplicationContextListener.VIDEO_LOG_PROJECTS.put(videoLog.getProjectId() + "" + videoLog.getUserId(), videoLog);
 		}
 		String gsonData = gson.toJson(ApplicationContextListener.VIDEO_LOG_PROJECTS.values());
 		System.out.println("-------" + gson.toJson(logs));
