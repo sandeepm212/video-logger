@@ -52,7 +52,7 @@ public class SaveVideoLog extends HttpServlet {
 				}
 			}
 		}
-		System.out.println("jsonBody:: " + jsonBody);
+		
 		Gson gson = new Gson();		
 		String newProjId = null;
 		Video videoLog = gson.fromJson(jsonBody.toString(), Video.class);
@@ -64,14 +64,12 @@ public class SaveVideoLog extends HttpServlet {
 			ApplicationContextListener.VIDEO_LOG_PROJECTS.put(videoLog.getProjectId() + "" + videoLog.getUserId(), videoLog);
 		}
 		String gsonData = gson.toJson(ApplicationContextListener.VIDEO_LOG_PROJECTS.values());
-		System.out.println("-------" + gson.toJson(videoLog));
-
 		Utils.writeToFile(gsonData, new File("videolog.data"));
-		
 		
 		resp.setContentType("text/json");
 		PrintWriter out = resp.getWriter();
-		
-		out.println("{projectId:'" + newProjId + "'}");
+		String response = "{\"projectId\":\"" + newProjId + "\"}";
+		System.out.println("response::[" + response + "]");
+		out.println(response);
 	}
 }

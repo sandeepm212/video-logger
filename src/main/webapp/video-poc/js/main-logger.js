@@ -482,6 +482,9 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 					    		alert("Project name already exists.");
 					    	}
 					  },
+					  error: function (data) {
+						  console.log(data);
+					  },
 					  dataType: "json"
 				});
 			}			
@@ -509,7 +512,6 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			  url: "/video-logger/saveVideoLog",
 			  data: JSON.stringify($scope.selectedVideo),
 			  success: function (savedStatus) {
-				  alert(savedStatus);
 				  if (savedStatus != null && savedStatus.projectId != null && savedStatus.projectId.length > 0) {
 					  alert("Saved Successfully.");
 					  $scope.selectedVideo.projectId = savedStatus.projectId;
@@ -517,6 +519,9 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				  } else {
 					  alert("Failed to Save.");
 				  }
+			  },
+			  error: function (data) {
+				  console.log(data);
 			  },
 			  dataType: "json"
 		});
