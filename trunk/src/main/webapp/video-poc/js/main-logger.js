@@ -113,9 +113,8 @@ var videos = [new Video(1, "trailer", "../images/slider.png", VIDEO_TYPE_LOCAL),
 
 var myAppModule = angular.module('videoLoggerApp', ['ngRoute']);
 
+var exisitngDataMap = [];
 myAppModule.service('sharedService', function ($http) {
-
-	var exisitngDataMap = [];
 	
 	var actions = [];    
     var video = null;
@@ -215,7 +214,6 @@ myAppModule.directive('repeatDone', function () {
 
 var videoLogs = [];
 var exisitngData = [];
-var exisitngDataMap = [];
 var videoId = null;
 var clipDataArray = [];
 var videoObj = null;
@@ -235,12 +233,17 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 	$scope.videoType = VIDEO_TYPE_WEB;
 	$scope.savedData = [];
 	$scope.selectVideo = function  (index, event, projectName) {
-		var videoInfo = $scope.videos[index];
+		var videoInfo = null;
+		if (projectName != null && projectName.length > 0) {
+			videoInfo = exisitngDataMap[projectName];
+		} else {
+			videoInfo = $scope.videos[index];
+		}
 		videoPath = videoInfo.url;
 		videoId = videoInfo.id;
 		if (exisitngDataMap[projectName] != null) {
 			console.log("SAVED VIDEO SELECTED");
-			sharedService.setVideo(exisitngDataMap[videoId]);
+			sharedService.setVideo(exisitngDataMap[projectName]);
 			$location.path("step3");
 		} else {
 			sharedService.setVideo(videoInfo);
