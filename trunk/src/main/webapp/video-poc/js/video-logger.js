@@ -8,18 +8,8 @@ $(document).ready(function() {
 	clipAction = $('#action-value'),
 	submitBtn = $('#submit-log'),
 	
-	$('#helper').draggable({
-        containment: "#video-holder-div",
-        scroll: false
-});
 	
-$('#eventSelect').on('change', function (e) {
-    var optionSelected = $("option:selected", this);
-    var valueSelected = this.value;
-    if (valueSelected == "Pop") {
-    	$('#image').css('display','block');
-    }
-});
+	
 	
 	//loading the existing video carousel
 	$('#video-carousel').jcarousel();

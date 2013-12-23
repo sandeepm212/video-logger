@@ -1,8 +1,40 @@
 <div class="panel-wrap step-3" data-ng-controller="step3Controller">
-	<h3>Step 3: Capture clip <span style="float:right;margin-right:50px"><label style="font-weight: bold;margin-right: 10px;">Project Name:</label>{{selectedVideo.projectName}}</span></h3>
+	<h3>Step 3: Capture clip 
+	
+	<span style="float:right;margin-right:20px">
+	 <a title="Misc" class="misc" id="navi-menu" href="#navi">
+      	<img width="18" height="21" src="../images/toggle.png" alt="logo">
+      </a>
+	</span>
+	<span style="float:right;margin-right:30px"><label style="margin-right: 10px;">Project Name:</label>{{selectedVideo.projectName}}</span>
+	</h3>
+            
+            <div id="navi">
+            <div class="added-action-list1">
+            <div class="navHeader">Legend</div>
+            <div style="padding:10px;">
+					<table data-ng-class="{'has-hot-key': hasHotKey(action)}"
+						data-ng-repeat="action in selectedVideo.actions" width="100%">
+						<tr style="height: 30px;">
+						<td  width="40px"><span data-ng-if="hasHotKey(action)"
+						title="Key board shortcut for this action is {{action.hotKeyChar}}"
+						class="hotkeyNav"	style="background-color: {{action.style.backgroundColor">{{action.hotKeyChar}}</span>
+						</td>
+						<td style="text-align: left;">
+						{{action.name}} 
+						</td>
+						</tr>
+						
+						
+						
+					</table>
+			</div>
+				</div>
+            </div>
+	
 	<div class="panel-body clearfix">
 		<section class="logger-section">
-			<div class="panel-wrap">
+			<!-- <div class="panel-wrap">
 				<h3>Legend</h3>
 				<ul class="added-action-list1 rounded-holder clearfix">
 					<li data-ng-class="{'has-hot-key': hasHotKey(action)}"
@@ -14,7 +46,7 @@
 						style="background-color: {{action.style.backgroundColor">{{action.hotKeyChar}}</span>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 			<div class="video-holder" id="video-holder-div">
 				<div id="helper"
 					style="width: 50px; height: 50px; z-index: 9999; position: absolute !important;">
@@ -28,11 +60,7 @@
 			</div>
 			<div class="logger-holder rounded-holder">
 				<h3>
-					Logger <a class="tip-trigger" href="javascript:void(0)"> <img
-						style="position: relative; top: 6px;" src="../images/info.png">
-					</a>
-					<p class="tooltip-content hide">Click on any action button or
-						press the key board shortcut key to start logging activity</p>
+					Logger
 				</h3>
 
 				<section class="actions">
@@ -81,9 +109,9 @@
 						</div>
 					</section>
 					<section class="logger-note">
-						<label>Note:</label><a class="play-video f-right"
+						<label>Note:</label><!-- <a class="play-video f-right"
 							title="Keep on playing the video" href="javascript:void(0)"
-							data-ng-click="playVideo()">Play video</a>
+							data-ng-click="playVideo()">Play video</a> -->
 						<textarea class="notes-textarea" id="clip-notes"
 							data-ng-model="currentLog.note"></textarea>
 						<input type="button" value="Log entry" id="enter-log-btn"
@@ -107,6 +135,7 @@
 						<a title="Submit the log to server" id="submit-log"
 							class="log-action" href="javascript:void(0)"
 							data-ng-click="saveVideoLog()">Submit log</a>
+							
 					</div>
 				</h3>
 				<div class="panel-body">
@@ -155,5 +184,7 @@
 		<input type="button" value="Save Project"
 			data-ng-click="saveVideoLog('save')">
 	</section>
+	
+	
 
 </div>

@@ -429,6 +429,22 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			if ($scope.selectedVideo != null) {
 				var videoURL = getLocalFileNameArr($scope.selectedVideo.url);
 				loadVideo(videoURL);
+				//js actions
+				$('#navi-menu').sidr({side: 'right',name: 'navi'});
+				$('#eventSelect').on('change', function (e) {
+				    var optionSelected = $("option:selected", this);
+				    var valueSelected = this.value;
+				    if (valueSelected == "Pop") {
+				    	$('#image').css('display','block');
+				    }
+				});
+				$('#helper').draggable({
+			        containment: "#video-holder-div",
+			        scroll: false
+				});
+				
+				
+				
 			}
 		}
 	}
@@ -552,6 +568,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		$scope.selectedVideo.videoLogs.push($scope.currentLog);
 		$scope.currentLog = new VideoLog();
 		$('.actions li').removeClass('selected');
+		$('#image').css('display','block');
 	}
 	
 	// Populate the out time in the input field
