@@ -6,7 +6,7 @@
 <link type="text/css" rel="stylesheet" media="all" href="../css/video-logger.css" />
 <link rel="stylesheet" type="text/css" href="../css/slider-style.css" />
 <script type="text/javascript" src="../js/popcorn/popcorn-complete.min.js"></script>
-
+<link rel="stylesheet" type="text/css" href="../css/jquery.sidr.light.css" />
 <!--<script src="../js/popcorn/popcorn.js"></script>
 <script src="../js/popcorn/popcorn.player.js"></script>
 <script src="../js/popcorn/popcorn.youtube.js"></script>-->
@@ -22,6 +22,7 @@
 <script type="text/javascript" src="../js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript" src="../js/popcorn/popcorn.pop.js"></script>
 <script type="text/javascript" src="../js/popcorn/popcorn.custom.js"></script>
+<script type="text/javascript" src="../js/jquery.sidr.min.js"></script>
 <!--[if gte IE 9]>
   <style type="text/css">
     .gradient {
@@ -34,8 +35,11 @@
 <div class="page-wrap">
 	<header>
     	<nav class="top-nav gradient clearfix">
+    	<a href="javascript:void(0)" title="Menu" class="logo" id="simple-menu" href="#sidr">
+            	<img width="18" height="21" src="../images/toggle.png" alt="logo">
+            </a>
         	<a href="javascript:void(0)" title="Cognizant" class="logo">
-            	<img alt="logo" src="../images/cognizant-logo-1.png" width="197" height="61"/>
+            	<img width="88" height="26" src="../images/cognizant-logo.png" alt="logo">
             </a>
             <ul>
             	<li class="welcome-user">Welcome <a href="javascript:void(0)" title="Go to your profile page">John Smith</a></li>
@@ -44,7 +48,7 @@
         </nav>
     </header>
     <div class="main-body clearfix">
-    	<section class="left">
+    	<!-- <section class="left">
         	<div class="panel-wrap">
             	<h3>Navigation</h3>
                 <nav class="panel-body">
@@ -64,7 +68,7 @@
                     </ul>
                 </nav>
             </div>
-        </section>
+        </section> -->
         <section class="right">
         	<div data-ng-view=""></div>        	
         </section>
@@ -84,8 +88,30 @@
         <div class="clip-data"></div>
     </section>
 
+<div id="sidr">
+            	<div class="navHeader">Navigation</div>
+                	<ul class="logging-nav">
+                    	<li class="step-1-nav selected">
+                        	<a href="javascript:void(0)">Step 1: Select video</a>
+                        </li>
+                        <li class="step-2-nav">
+                        	<a href="javascript:void(0)">Step 2: Configure actions</a>
+                          </li>
+                        <li class="step-3-nav">
+                        	<a href="javascript:void(0)">Step 3: Capture &amp; save</a>
+                         </li>
+                    </ul>
+</div>
+
+
 <script type="text/javascript" src="../js/video-logger.js"></script>
 <script type="text/javascript" src="../js/tooltip.js"></script>
 <!-- <script type="text/javascript" src="../js/hotkey-dictionary.js"></script> -->
+<script>
+$(document).ready(function() {
+  $('#simple-menu').sidr();
+});
+</script>
+
 </body>
 </html>
