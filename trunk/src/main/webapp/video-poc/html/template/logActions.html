@@ -58,7 +58,7 @@
 					<div>Loading video. Please wait</div>
 				</div>
 			</div>
-			<div class="logger-holder rounded-holder">
+			<!-- <div class="logger-holder rounded-holder">
 				<h3>
 					Logger
 				</h3>
@@ -109,16 +109,16 @@
 						</div>
 					</section>
 					<section class="logger-note">
-						<label>Note:</label><!-- <a class="play-video f-right"
+						<label>Note:</label><a class="play-video f-right"
 							title="Keep on playing the video" href="javascript:void(0)"
-							data-ng-click="playVideo()">Play video</a> -->
+							data-ng-click="playVideo()">Play video</a>
 						<textarea class="notes-textarea" id="clip-notes"
 							data-ng-model="currentLog.note"></textarea>
 						<input type="button" value="Log entry" id="enter-log-btn"
 							class="enter-log" title="Log entry" data-ng-click=addLog()>
 					</section>
 				</div>
-			</div>
+			</div> -->
 		</section>
 		<section class="data-section">
 			<div class="panel-wrap">
@@ -187,14 +187,78 @@
 </div>
 
 <div id="content-box">
-	Hello World!
+	
+	
+	<div class="logger-holder rounded-holder">
+				<h3>
+					Logger
+				</h3>
+
+				<section class="actions">
+					<ul class="added-action-list1 rounded-holder clearfix">
+						<li data-ng-class="{'has-hot-key': hasHotKey(action)}"
+							data-ng-repeat="action in selectedVideo.actions"
+							data-ng-click="applyAction($index, $event)">{{action.name}}
+							<span data-ng-if="hasHotKey(action)"
+							title="Key board shortcut for this action is {{action.hotKeyChar}}"
+							class="hotkey"
+							style="background-color: {{action.style.backgroundColor">{{action.hotKeyChar}}</span>
+						</li>
+					</ul>
+				</section>
+				<div class="time-logger clearfix">
+					<section class="time-inputs">
+						<div class="row">
+							<label>Action:</label><span>{{currentLog.action}}</span>
+						</div>
+						<div class="row">
+							<label>In time:</label> <input type="text" disabled="disabled"
+								id="in-time-input" data-ng-model="currentLog.startTime"
+								value="{{currentLog.startTime}}" /> <a
+								href="javascript:void(0)" class="intime-btn hideText"
+								title="Click to log clip start time"
+								data-ng-click="logCurrentTime('IN')"></a>
+						</div>
+						<div class="row">
+							<label>Out time:</label> <input type="button" value="Out Time"
+								id="enter-out-time" data-ng-click="logOutTime()"
+								class="enter-log" title="Out Time"> <input type="text"
+								id="out-time-input" style="display: none;"
+								data-ng-model="currentLog.endTime"
+								value="{{currentLog.endTime}}" /> <a href="javascript:void(0)"
+								class="outtime-btn hideText" title="Click to log clip end time"
+								data-ng-click="logCurrentTime('OUT')">Click to log clip end
+								time</a>
+						</div>
+						<div class="row">
+							<label>Event:</label> <select id="eventSelect"
+								data-ng-model="currentLog.eventType">
+								<option value="Subtitle">Subtitle</option>
+								<option value="Pop">Note</option>
+								<option value="Footnote">Footnote</option>
+							</select>
+						</div>
+					</section>
+					<section class="logger-note">
+						<label>Note:</label><!-- <a class="play-video f-right"
+							title="Keep on playing the video" href="javascript:void(0)"
+							data-ng-click="playVideo()">Play video</a> -->
+						<textarea class="notes-textarea" id="clip-notes"
+							data-ng-model="currentLog.note"></textarea>
+						<input type="button" value="Log entry" id="enter-log-btn"
+							class="enter-log" title="Log entry" data-ng-click=addLog()>
+					</section>
+				</div>
+			</div>
+	
+	
 	<div id="CloseButton"><a id="ClosePanel" href="javascript:void(0);">X</a></div>
 </div>
 
 <script>
  
 function openLog(){
-    $("#content-box").css('display','block').animate({'width': 400},500);
+    $("#content-box").css('display','block').animate({'width': '49%'},500);
 }
 	
  

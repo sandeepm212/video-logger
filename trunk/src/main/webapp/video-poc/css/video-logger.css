@@ -879,23 +879,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#88bfe8', end
 
 
 
-
-
-
-
-
-
 #content-box {
-	background-color: #90EE90;
+	background-color: white;
     float: right;
     font-size: 14px;
-    height: 200px;
+    height: 330px;
     padding: 10px;
     position: absolute;
     right: 24px;
     top: 139px;
     display:none;
-    width:400px;
+    width:49%;
+    min-width:600px;
 }
 
 #CloseButton {
