@@ -165,9 +165,7 @@ section.right {
 }
 .video-holder {
 	background-color: #D1D1D1;
-	border: 1px solid #B0B0B0;
-	box-shadow: 0 7px 10px #8F8C8C;
-	margin: 0 10px 20px;
+	border: 1px solid #B0B0B0;	
 	padding: 20px;
 	text-align: center;
 	min-height: 200px;
@@ -511,7 +509,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', end
 }
 .video-holder video
 {
-	width:720px;
+	width:887px;
 }
 ul.logging-nav {
     padding: 20px 0;
@@ -637,6 +635,24 @@ ul.added-action-list1 li.has-hot-key
 	color:#fff;
 }
 
+.hotkeyNav{
+    background-color: #FF3321;
+    border-radius: 16px 16px 16px 16px;
+    box-shadow: 0 3px 2px #3F3F3F;
+    display: inline-block;
+    font-size: 0.8em;
+    height: 16px;
+    
+    padding: 2px;
+  
+    text-align: center;
+    text-shadow: 1px 1px 1px #000000;
+    top: 2px;
+    width: 16px;
+	cursor:help;
+	color:#fff;
+}
+
 .hotkeyl{
     background-color: #FF3321;
     border-radius: 16px 16px 16px 16px;
@@ -751,11 +767,10 @@ ul.added-action-list1 li.has-hot-key
 }
 #accordion .ui-accordion-header a {
 	color: #fff;
-	line-height: 42px;
+	line-height:27px;
 	display: block;
 	font-size: 12pt;
 	width: 100%;
-	text-indent: 10px;
 }
 
 #accordion .ui-icon { display: none; }
@@ -851,4 +866,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#88bfe8', end
 
 .ng-binding {
     text-align: center;
+}
+
+.misc {
+    float: left;
 }
