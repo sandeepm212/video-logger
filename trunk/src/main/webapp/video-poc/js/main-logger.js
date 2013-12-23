@@ -684,7 +684,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	$scope.backToLogger = function () {
 		//videoObj.pause().currentTime(timeStore);
 		$('.logger-holder, section.left, #preview, #view-log, #submit-log').show();
-		$('section.right').css('width', '85%');
+		//$('section.right').css('width', '85%');
 		$('#back-to-logger').hide();
 		$('th:last-child, tr td:last-child', logTable).removeClass('hide');
 		$('tbody tr', logTable).removeClass('row-highlight');
