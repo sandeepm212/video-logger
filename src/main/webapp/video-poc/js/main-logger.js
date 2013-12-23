@@ -444,7 +444,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				});
 				
 				$("#ClosePanel").click(function () {
-			        $("#content-box").animate({'width': 0},500,function(){
+			        $("#content-box").animate({'width': 0},1,function(){
 			           $("#content-box").css('display','none')
 			        });
 				});
