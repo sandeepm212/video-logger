@@ -7,6 +7,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	font: inherit;
 	vertical-align: baseline;
 }
+html{
+	
+}
 /***** HTML5 display-role reset for older browsers *****/
 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
@@ -70,7 +73,7 @@ body {
 	font:normal 62.5% Arial, Helvetica, sans-serif;
 	color:#000;
 	margin: 0 auto;
-	min-width:1000px;
+	min-width:1350px;
 }
 .page-wrap {
 	font-size:1.5em;
@@ -509,7 +512,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', end
 }
 .video-holder video
 {
-	width:887px;
+	width:100%;
 }
 ul.logging-nav {
     padding: 20px 0;
@@ -571,11 +574,11 @@ ul.logging-nav li.selected a
 }
 section.logger-section
 {
-	width:60%;
+	width:48%;
 }
 section.data-section
 {
-	width:40%;
+	width:52%;
 }
 .logger-holder
 {
@@ -871,3 +874,46 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#88bfe8', end
 .misc {
     float: left;
 }
+
+
+
+
+
+
+
+
+
+
+
+#content-box {
+	background-color: #90EE90;
+    float: right;
+    font-size: 14px;
+    height: 200px;
+    padding: 10px;
+    position: absolute;
+    right: 24px;
+    top: 139px;
+    display:none;
+    width:400px;
+}
+
+#CloseButton {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 10px;
+	height: 10px;
+	padding: 10px 10px 15px;
+	color: #fff;
+	background-color: #036;
+    border-radius: 0 0 0 10px;
+}
+
+#CloseButton a {
+	color: #fff;
+	text-decoration: none;
+}
+
+
+

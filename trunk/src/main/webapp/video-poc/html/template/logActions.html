@@ -134,8 +134,7 @@
 							data-ng-click="viewLog()" href="javascript:void(0)">View log</a>
 						<a title="Submit the log to server" id="submit-log"
 							class="log-action" href="javascript:void(0)"
-							data-ng-click="saveVideoLog()">Submit log</a>
-							
+							data-ng-click="saveVideoLog()">Submit log</a>	
 					</div>
 				</h3>
 				<div class="panel-body">
@@ -184,7 +183,20 @@
 		<input type="button" value="Save Project"
 			data-ng-click="saveVideoLog('save')">
 	</section>
-	
-	
 
 </div>
+
+<div id="content-box">
+	Hello World!
+	<div id="CloseButton"><a id="ClosePanel" href="javascript:void(0);">X</a></div>
+</div>
+
+<script>
+ 
+function openLog(){
+    $("#content-box").css('display','block').animate({'width': 400},500);
+}
+	
+ 
+ 
+</script>
