@@ -36,6 +36,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	</servlet-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>/video-poc/html/video-logger.htm</welcome-file>
+		<welcome-file>/video-poc/html/main-logger.html</welcome-file>
 	</welcome-file-list>
 </web-app>
