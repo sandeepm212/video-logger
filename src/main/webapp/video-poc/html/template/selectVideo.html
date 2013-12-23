@@ -1,17 +1,11 @@
-<div class="panel-wrap step-1" data-ng-controller="step1Controller">
+ <div class="panel-wrap step-1" data-ng-controller="step1Controller">
 	<h3>Step 1: Select video</h3>
 	<div class="panel-body clearfix">
 
-		<p class="instruction">You can select any existing video from the
-			below thumbnail menu or can type the URL of a video in the provided
-			text input box.</p>
-		
-		<h2>
-			<input type="radio" value="LOCAL" data-ng-model="videoType" checked
-				id="exsting-video" name="video-type-rdo">Select from
-			existing video files (Click on any thumbnail to select the video)
-		</h2>
-		<div class="rounded-holder">
+		<div id="accordion">
+	<h3><a href="#">Select from	existing video files</a></h3>
+	<div>
+
 			<ul id="video-carousel" class="jcarousel-skin-tango">
 				<li data-ng-repeat="video in videos"
 					data-ng-click="selectVideo($index, $event)"
@@ -19,10 +13,10 @@
 					data-repeat-done=""><a href="javascript:void(0);"><img
 						src="{{video.thumbnailUrl}}" alt="" /></a></li>
 			</ul>
-		</div>
 		
-		<h2>Saved Videos</h2>
-		<div class="rounded-holder">
+	</div>
+	<h3><a href="#">Saved videos</a></h3>
+	<div>
 			<ul id="saved-video-carousel" class="jcarousel-skin-tango">
 				<li data-ng-repeat="video in savedData"
 					data-ng-click="selectVideo($index, $event, video.projectName)"
@@ -31,21 +25,23 @@
 						src="{{video.thumbnailUrl}}" alt="" /></a>
 						<div>{{video.projectName}}</div></li>
 			</ul>
-		</div>
-		
-		<h2>
-			<input type="radio" value="WEB" data-ng-model="videoType"
-				id="web-video" name="video-type-rdo">Type URL of a video in
-			the below input box
-		</h2>
-		<div class="video-options hide clearfix">
-			<input type="text" class="video-logger-input" id="url-input" />
-			<!--<input type="button" class="video-logger-btn" id="play-btn" value="Load" />-->
-		</div>
-		<input type="button" class="video-logger-btn f-right top-gap"
-			id="to-step-2-btn" data-ng-click="showStep2()" value="Go to step 2" />
+			
 	</div>
-</div>
-<script type="text/javascript">
+	<h3><a href="#">Custom video URL</a></h3>
+	<div>
+			<div class="video-options clearfix">
+			<input type="text" class="simple-input" id="url-input" />
+			<!-- <input type="button" class="video-logger-btn" id="play-btn" value="Load" /> -->
+		</div>
+	</div>
 	
+	</div>
+	<a href="javascript:void(0);" class="myButton" id="to-step-2-btn" data-ng-click="showStep2()">Go to Step 2</a>
+		
+	</div>
+</div> 
+
+
+<script type="text/javascript">
+
 </script>

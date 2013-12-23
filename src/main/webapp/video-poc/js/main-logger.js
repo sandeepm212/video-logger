@@ -293,14 +293,18 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 	
 	$scope.showStep2 = function () {
 		var isPassed = false;
-		if($('#exsting-video').is(':checked')) {
+		var active = $( "#accordion" ).accordion( "option", "active" );
+		var text= $("#accordion h3").eq(active).text();
+		
+		if(active=='0') {
 			if($('#video-carousel li a').hasClass('active')) {
 				isPassed = true;
 			} else {
 				alert("Please select any video from the existing list to proceed");
 				isPassed = false;
 			}
-		} else if($('#web-video').is(':checked')) {
+		} else if(active=='2') {
+			urlInput = $('#url-input');
 			if($.trim(urlInput.val()) != '') {
 				videoPath = urlInput.val();
 				isPassed = true;
@@ -312,6 +316,7 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 			alert("You should either select from existing video or type a URL to proceed to next step");
 			isPassed = false;
 		}
+		
 		
 		if (isPassed) {
 			goToNextPage('.step-2');
@@ -328,6 +333,10 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 	
 	$scope.init = function () {
 		$scope.videos = videos;
+		$( "#accordion" ).accordion({
+			autoHeight: false,
+			navigation: true
+		});
 	}
 	
 	$scope.init();
@@ -764,3 +773,5 @@ function loadVideo(videoURL, isLocal) {
 		videoObj.controls(true);
 	});
 }
+
+
