@@ -443,6 +443,12 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			        scroll: false
 				});
 				
+				$("#ClosePanel").click(function () {
+			        $("#content-box").animate({'width': 0},500,function(){
+			           $("#content-box").css('display','none')
+			        });
+				});
+				
 				
 				
 			}

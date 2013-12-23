@@ -122,6 +122,8 @@ $(document).ready(function() {
 		if(allowedKeysRegex.test(pressedKey) && $('.actions .added-action-list').children().length > 0)
 		{
 			$('.actions .added-action-list li').filter(function() { return $.data(this, 'hotKeyChar') == pressedKey; }).click();
+		}else if(pressedKey=='L'){
+			openLog();
 		}
 		}
 	});
