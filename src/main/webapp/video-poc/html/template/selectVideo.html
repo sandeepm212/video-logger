@@ -28,11 +28,27 @@
 			
 	</div>
 	<h3><a href="#">Custom video URL</a></h3>
-	<div>
+	<div data-ng-controller="publicVideosController">
 			<div class="video-options clearfix">
 			<span style="height: 15px; position: relative; float: left; margin-top: 6px; font-size: 17px;">URL &nbsp;</span> 
-			<input type="text" class="simple-input" id="url-input" />
+			<input type="text" class="simple-input" id="url-input" ng-model="videoUrl"/>
+			<input type="button" value="Load Details" ng-click="loadVideoDetails()">
 			<!-- <input type="button" class="video-logger-btn" id="play-btn" value="Load" /> -->
+			<ul>
+				<!-- This is added to media-gallery for each new media item -->
+				<li class="media-gallery-item gallery-video" data-ng-repeat="video in publicVideos">
+				  <div class="mg-thumbnail"><span class="icon-plus hidden"></span></div>
+				  <div class="mg-meta-data">
+				    <div class="mg-title">{{video.title}}</div>
+				    <div class="mg-type media-icon">{{video.icon}}</div>
+				    <span class="mg-type-text media">{{video.text}}</span>
+				    <div class="mg-duration">{{video.duration}}</div>
+				  </div>
+				  <span class="mg-delete-btn icon icon-trash"></span>
+				</li>
+			</ul>
+			
+			
 		</div>
 	</div>
 	
