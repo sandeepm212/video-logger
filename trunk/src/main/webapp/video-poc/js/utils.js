@@ -47,7 +47,6 @@ function checkUrl(url) {
 }
 
 var URI = {
-
 	    // Allow overriding the initial seed (mostly for testing).
 	    set seed( value ){
 	      seed = value|0;

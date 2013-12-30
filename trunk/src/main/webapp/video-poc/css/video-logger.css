@@ -912,3 +912,31 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#88bfe8', end
 
 
 
+/*********************************************************
+* Media Icons
+*/
+
+.media-icon {
+  position: relative;
+  display: block;
+  float: left;
+  margin-right: 5px;
+  background: url( "images/media-icons.png" ) no-repeat;
+  height: 16px;
+  width: 16px;
+  &.html5-icon {
+    background-position: 0 0;
+  }
+  &.youtube-icon {
+    background-position: -16px 0;
+  }
+  &.vimeo-icon {
+    background-position: -32px 0;
+  }
+  &.soundcloud-icon {
+    background-position: -48px 0;
+  }
+  &.archive-icon {
+    background-position: -64px 0;
+  }
+}
