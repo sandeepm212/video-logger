@@ -2,18 +2,21 @@ myAppModule.controller('publicVideosController', function($scope, $http, sharedS
 	$scope.videoUrl = null;
 	$scope.publicVideos = [];
 	$scope.publicVideosSources = [];
-	
+	var Time = new time();
 	
 	function onSuccess( data ) {
 		var source = data.source;
 	    if ( !$scope.publicVideosSources[source] ) {
 	    	$scope.publicVideosSources[ source ] = data;
+	    	
+	    	data.formattedDuration = Time.toTimecode(data.duration, 0 )
+			data.mediaIcon = data.type.toLowerCase() +  "-icon";
+	    	
 	    	if ( data.type === "image" ) {
 	    		//TODO
 	    	} else {
 	    		$scope.$apply(function(){
 	    			$scope.publicVideos.push(data);
-	    			data.mediaIcon = data.type.toLowerCase() +  "-icon";
 	    		});
 	    		console.log(data);
 	    	}
