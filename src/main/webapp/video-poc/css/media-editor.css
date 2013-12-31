@@ -163,7 +163,10 @@
     width: 80px;
     height: 60px;
 }
-.media-editor .media-gallery-item .mg-thumbnail:hover { border-color: #3fb58e }
+.media-editor .media-gallery-item .mg-thumbnail:hover { 
+	border-color: #3fb58e;
+	cursor: pointer; 
+}
 .media-editor .media-gallery-item .mg-thumbnail:hover .icon-plus { display: block }
 .media-editor .media-gallery-item .mg-thumbnail:hover:before {
     content: "";
