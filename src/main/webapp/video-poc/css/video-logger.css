@@ -849,7 +849,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#88bfe8', end
 
 
 .simple-input {
-    display: block;
     padding: 5px;
     border: 4px solid #F1B720;
     border-radius: 5px;

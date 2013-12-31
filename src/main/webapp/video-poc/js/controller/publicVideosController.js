@@ -6,16 +6,17 @@ myAppModule.controller('publicVideosController', function($scope, $http, sharedS
 	
 	function onSuccess( data ) {
 		var source = data.source;
-	    if ( !$scope.publicVideosSources[ source ] ) {
-	      if ( data.type === "image" ) {
-	        //TODO
-	      } else {
-	    	  $scope.$apply(function(){
-	    		  $scope.publicVideos.push(data);
-	    		  data.mediaIcon = data.type.toLowerCase() +  "-icon";
-	    	  });
-	    	  console.log(data);
-	      }
+	    if ( !$scope.publicVideosSources[source] ) {
+	    	$scope.publicVideosSources[ source ] = data;
+	    	if ( data.type === "image" ) {
+	    		//TODO
+	    	} else {
+	    		$scope.$apply(function(){
+	    			$scope.publicVideos.push(data);
+	    			data.mediaIcon = data.type.toLowerCase() +  "-icon";
+	    		});
+	    		console.log(data);
+	    	}
 	    } else {
 	      onDenied("Your gallery already has that media added to it");
 	    }
