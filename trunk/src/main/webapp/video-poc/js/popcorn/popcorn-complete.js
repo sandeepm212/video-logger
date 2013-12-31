@@ -1892,7 +1892,7 @@
       var node = null;
 
       //  Trim leading/trailing whitespace to avoid false negatives
-      selector = selector.trim();
+      //selector = selector.trim();
 
       //  Default context is the `document`
       context = context || document;

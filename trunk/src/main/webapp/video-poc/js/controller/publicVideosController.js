@@ -10,7 +10,11 @@ myAppModule.controller('publicVideosController', function($scope, $http, sharedS
 	      if ( data.type === "image" ) {
 	        //TODO
 	      } else {
-	    	  $scope.publicVideos.push(data);
+	    	  $scope.$apply(function(){
+	    		  $scope.publicVideos.push(data);
+	    		  data.mediaIcon = data.type.toLowerCase() +  "-icon";
+	    	  });
+	    	  console.log(data);
 	      }
 	    } else {
 	      onDenied("Your gallery already has that media added to it");
