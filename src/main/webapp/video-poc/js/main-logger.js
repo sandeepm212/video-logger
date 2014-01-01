@@ -788,7 +788,9 @@ function showMessage(msg) {
 function loadVideo(videoURL, isPublic) {
 	url = videoURL;
 	videoObj = Popcorn.smart('#video-holder-div', url);
+	
 	$('#video-holder-div').slideDown(slideTime);
+	setVideoParentDimentions();
 	//Caching media properties once the media metadata are loaded
 	if (isPublic) {
 		$('.loading-wrap').addClass('hide');
@@ -802,4 +804,16 @@ function loadVideo(videoURL, isPublic) {
 	}
 }
 
+$( window ).resize(function() {
+	setVideoParentDimentions();
+});
+
+function setVideoParentDimentions () {
+	var width = $(".logger-section").width() - 10;
+	var height = $(".logger-section").height() - 10;
+	$("#video-holder-div").height(height);
+	$("#video-holder-div").width(width);
+	console.log(width + " ---- " + height);
+	console.log($("#video-holder-div").width() + " ---- " + $("#video-holder-div").height());
+}
 
