@@ -49,10 +49,10 @@ function mediaTypes() {
       media.removeEventListener( "error", errorEvent, false );
       document.body.removeChild( div );
       successCallback({
-        source: options.source,
+        url: options.source,
         title: options.title || options.source,
-        type: options.type,
-        thumbnail: options.thumbnail || "",
+        sourceType: options.type,
+        thumbnailUrl: options.thumbnail || "",
         linkback: options.linkback,
         duration: media.duration
       });
@@ -136,10 +136,10 @@ function mediaTypes() {
 
           source = "http://www.youtube.com/watch?v=" + id;
           successCallback({
-              source: source,
+        	  url: source,
               title: respData.title,
-              type: type,
-              thumbnail: respData.thumbnail.hqDefault,
+              sourceType: type,
+              thumbnailUrl: respData.thumbnail.hqDefault,
               author: respData.uploader,
               duration: respData.duration,
               from: from
@@ -161,9 +161,9 @@ function mediaTypes() {
             return;
           }
           successCallback({
-            source: baseUrl,
-            type: type,
-            thumbnail: respData.artwork_url || "../../resources/icons/soundcloud-small.png",
+        	  url: baseUrl,
+            sourceType: type,
+            thumbnailUrl: respData.artwork_url || "../../resources/icons/soundcloud-small.png",
             duration: respData.duration / 1000,
             title: respData.title,
             hidden: true
@@ -180,9 +180,9 @@ function mediaTypes() {
             return;
           }
           successCallback({
-            source: baseUrl,
-            type: type,
-            thumbnail: respData.thumbnail_small,
+        	  url: baseUrl,
+            sourceType: type,
+            thumbnailUrl: respData.thumbnail_small,
             duration: respData.duration,
             title: respData.title
           });
@@ -207,20 +207,20 @@ function mediaTypes() {
           videoElem = document.createElement( "video" );
           videoElem.addEventListener( "error", function() {
             var options = {
-              source: respData.media,
-              type: type,
+            		url: respData.media,
+              sourceType: type,
               title: respData.title,
-              thumbnail: respData.thumb,
+              thumbnailUrl: respData.thumb,
               linkback: respData.linkback
             };
             jwPlayerFallback( options, successCallback, errorCallback );
           }, false );
           videoElem.addEventListener( "loadedmetadata", function() {
             successCallback({
-              source: respData.media,
-              type: type,
+            	url: respData.media,
+              sourceType: type,
               title: respData.title,
-              thumbnail: respData.thumb,
+              thumbnailUrl: respData.thumb,
               linkback: respData.linkback,
               duration: videoElem.duration
             });
@@ -229,8 +229,8 @@ function mediaTypes() {
         });
       } else if ( type === "null" ) {
         successCallback({
-          source: baseUrl,
-          type: type,
+        	url: baseUrl,
+          sourceType: type,
           title: baseUrl,
           duration: +REGEX_MAP[ "null" ].exec( baseUrl )[ 1 ]
         });
@@ -238,17 +238,17 @@ function mediaTypes() {
         videoElem = document.createElement( "video" );
         videoElem.addEventListener( "loadedmetadata", function() {
           successCallback ({
-            source: baseUrl,
-            type: type,
+        	  url: baseUrl,
+            sourceType: type,
             title: baseUrl.substring( baseUrl.lastIndexOf( "/" ) + 1 ),
-            thumbnail: URI.makeUnique( baseUrl ).toString(),
+            thumbnailUrl: URI.makeUnique( baseUrl ).toString(),
             duration: videoElem.duration
           });
         }, false );
         videoElem.addEventListener( "error", function() {
           var options = {
-            source: baseUrl,
-            type: type,
+        		  url: baseUrl,
+            sourceType: type,
             title: baseUrl
           };
           jwPlayerFallback( options, successCallback, errorCallback );
