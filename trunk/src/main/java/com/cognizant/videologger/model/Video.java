@@ -13,6 +13,34 @@ public class Video {
 	private String videoType;
 	private List<VideoLog> videoLogs;
 	private List<Action> actions;
+	
+	private String duration;
+	private String title;
+	private String sourceType;
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getSourceType() {
+		return sourceType;
+	}
+
+	public void setSourceType(String sourceType) {
+		this.sourceType = sourceType;
+	}
 
 	public int getUserId() {
 		return userId;

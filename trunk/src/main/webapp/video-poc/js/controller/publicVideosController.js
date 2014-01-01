@@ -10,7 +10,7 @@ myAppModule.controller('publicVideosController', function($scope, $http, sharedS
 	    	$scope.publicVideosSources[ source ] = data;
 	    	
 	    	data.formattedDuration = Time.toTimecode(data.duration, 0 )
-			data.mediaIcon = data.type.toLowerCase() +  "-icon";
+			data.mediaIcon = data.sourceType.toLowerCase() +  "-icon";
 	    	
 	    	if ( data.type === "image" ) {
 	    		//TODO

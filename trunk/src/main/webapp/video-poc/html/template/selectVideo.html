@@ -37,14 +37,14 @@
 			<ul style="padding-top: 10px;">
 				<!-- This is added to media-gallery for each new media item -->
 				<li class="media-gallery-item gallery-video" data-ng-repeat="video in publicVideos">
-				  <div class="mg-thumbnail">
+				  <div class="mg-thumbnail" data-ng-click="selectVideo()">
 				  	<span class="icon-plus hidden"></span>
-				  	<img ng-src="{{video.thumbnail}}"/>
+				  	<img ng-src="{{video.thumbnailUrl}}"/>
 				  </div>
 				  <div class="mg-meta-data">
 				    <div class="mg-title">{{video.title}}</div>
 				    <div class="mg-type media-icon {{video.mediaIcon}}"></div>
-				    <span class="mg-type-text media">{{video.type}}</span>
+				    <span class="mg-type-text media">{{video.sourceType}}</span>
 				    <div class="mg-duration">{{video.formattedDuration}}</div>
 				  </div>
 				  <span class="mg-delete-btn icon icon-trash"></span>

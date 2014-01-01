@@ -87,11 +87,14 @@ function VideoLog (action, eventType, startTime, endTime, eventType, note, relat
 	this.relativeY = relativeY;
 }
 
-function Video (id, url, thumbnailUrl, videoType, projectName, projectId) {
+function Video (id, url, thumbnailUrl, videoType, projectName, projectId, duration, title, sourceType) {
 	this.id = id;
 	this.url = url;
 	this.videoType = videoType;
 	this.thumbnailUrl = thumbnailUrl;
+	this.duration = duration;
+	this.title = title;
+	this.sourceType = sourceType;
 	this.videoLogs = [];
 	this.actions = [];
 	this.projectName = projectName;
