@@ -429,10 +429,12 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			// Play Selected Video
 			if ($scope.selectedVideo != null) {
 				var videoURL = $scope.selectedVideo.url;
+				var isPublic = true;
 				if ($scope.selectedVideo.videoType !== VIDEO_TYPE_WEB) {
 					videoURL = getLocalFileNameArr($scope.selectedVideo.url);
+					isPublic = false;
 				}
-				loadVideo(videoURL);
+				loadVideo(videoURL, isPublic);
 				//js actions
 				$('#navi-menu').sidr({side: 'right',name: 'navi'});
 				$('#eventSelect').on('change', function (e) {
@@ -783,17 +785,21 @@ function showMessage(msg) {
 }
 
 //Helper function to load a video either from local resource or from web
-function loadVideo(videoURL) {
+function loadVideo(videoURL, isPublic) {
 	url = videoURL;
 	videoObj = Popcorn.smart('#video-holder-div', url);
 	$('#video-holder-div').slideDown(slideTime);
 	//Caching media properties once the media metadata are loaded
-	videoObj.on('loadedmetadata', function() {
-		duration = videoObj.duration();
-		frameRate = videoObj.options.framerate ? videoObj.options.framerate : 30;// TBD : Calculation of framerate needs to be accurate
+	if (isPublic) {
 		$('.loading-wrap').addClass('hide');
-		videoObj.controls(true);
-	});
+	} else {
+		videoObj.on('loadedmetadata', function() {
+			duration = videoObj.duration();
+			frameRate = videoObj.options.framerate ? videoObj.options.framerate : 30;// TBD : Calculation of framerate needs to be accurate
+			$('.loading-wrap').addClass('hide');
+			videoObj.controls(true);
+		});
+	}
 }
 
 
