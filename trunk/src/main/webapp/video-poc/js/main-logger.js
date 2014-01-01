@@ -234,11 +234,9 @@ myAppModule.directive('repeatDone', function () {
 
 var videoLogs = [];
 var exisitngData = [];
-var videoId = null;
 var clipDataArray = [];
 var videoObj = null;
 var videoPath = '';
-var videoId = '';
 var localFilePath = '../assets/';
 //Constant declaration
 var MP4 = '.mp4',
@@ -260,7 +258,6 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 			videoInfo = $scope.videos[index];
 		}
 		videoPath = videoInfo.url;
-		videoId = videoInfo.id;
 		if (exisitngDataMap[projectName] != null) {
 			console.log("SAVED VIDEO SELECTED");
 			sharedService.setVideo(exisitngDataMap[projectName]);
@@ -427,10 +424,14 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	$scope.init = function () {
 		console.log("intializing step3Controller...");
 		$scope.selectedVideo = sharedService.getVideo();		
+		console.log($scope.selectedVideo);
 		if (!videoObj) {
 			// Play Selected Video
 			if ($scope.selectedVideo != null) {
-				var videoURL = getLocalFileNameArr($scope.selectedVideo.url);
+				var videoURL = $scope.selectedVideo.url;
+				if ($scope.selectedVideo.videoType !== VIDEO_TYPE_WEB) {
+					videoURL = getLocalFileNameArr($scope.selectedVideo.url);
+				}
 				loadVideo(videoURL);
 				//js actions
 				$('#navi-menu').sidr({side: 'right',name: 'navi'});
@@ -782,13 +783,8 @@ function showMessage(msg) {
 }
 
 //Helper function to load a video either from local resource or from web
-function loadVideo(videoURL, isLocal) {
+function loadVideo(videoURL) {
 	url = videoURL;
-//	console.log(videoURL);
-	if (url == null) {
-		// TODO
-		url = true ? getLocalFileNameArr(videoPath) : videoPath;			
-	}
 	videoObj = Popcorn.smart('#video-holder-div', url);
 	$('#video-holder-div').slideDown(slideTime);
 	//Caching media properties once the media metadata are loaded

@@ -37,7 +37,7 @@
 			<ul style="padding-top: 10px;">
 				<!-- This is added to media-gallery for each new media item -->
 				<li class="media-gallery-item gallery-video" data-ng-repeat="video in publicVideos">
-				  <div class="mg-thumbnail" data-ng-click="selectVideo()">
+				  <div class="mg-thumbnail" data-ng-click="selectVideo($index)">
 				  	<span class="icon-plus hidden"></span>
 				  	<img ng-src="{{video.thumbnailUrl}}"/>
 				  </div>
