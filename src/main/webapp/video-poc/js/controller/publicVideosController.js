@@ -1,4 +1,4 @@
-myAppModule.controller('publicVideosController', function($scope, $http, sharedService) {
+myAppModule.controller('publicVideosController', function($scope, $http, $location, sharedService) {
 	$scope.videoUrl = null;
 	$scope.publicVideos = [];
 	$scope.publicVideosSources = [];
@@ -8,7 +8,7 @@ myAppModule.controller('publicVideosController', function($scope, $http, sharedS
 		var source = data.source;
 	    if ( !$scope.publicVideosSources[source] ) {
 	    	$scope.publicVideosSources[ source ] = data;
-	    	
+	    	data.videoType = VIDEO_TYPE_WEB;
 	    	data.formattedDuration = Time.toTimecode(data.duration, 0 )
 			data.mediaIcon = data.sourceType.toLowerCase() +  "-icon";
 	    	
@@ -32,6 +32,14 @@ myAppModule.controller('publicVideosController', function($scope, $http, sharedS
 	$scope.loadVideoDetails = function  () {
 		var MediaUtils = new mediaTypes();
 		MediaUtils.getMetaData( $scope.videoUrl, onSuccess, onDenied );
+	}
+	
+	$scope.selectVideo = function (index) {
+		var videoInfo = $scope.publicVideos[index];
+		if (videoInfo != null) {
+			sharedService.setVideo(videoInfo);
+			$location.path("step2");
+		}
 	}
 	
 	
