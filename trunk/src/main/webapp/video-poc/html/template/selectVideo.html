@@ -21,9 +21,14 @@
 				<li data-ng-repeat="video in savedData"
 					data-ng-click="selectVideo($index, $event, video.projectName)"
 					data-video-path='{{video.url}}' data-video-id='{{video.id}}'
-					data-repeat-done=""><a href="javascript:void(0);"><img
-						src="{{video.thumbnailUrl}}" alt="" /></a>
-						<div>{{video.projectName}}</div></li>
+					data-repeat-done="">
+					<a href="javascript:void(0);">
+						<img data-ng-src="{{video.thumbnailUrl}}" alt="" />
+					</a>
+					<div>{{video.projectName}}</div>
+					<div class="mg-type media-icon {{video.mediaIcon}}"></div>
+					<span class="mg-type-text media">{{video.sourceType}}</span>
+				</li>
 			</ul>
 			
 	</div>
@@ -39,7 +44,7 @@
 				<li class="media-gallery-item gallery-video" data-ng-repeat="video in publicVideos">
 				  <div class="mg-thumbnail" data-ng-click="selectVideo($index)">
 				  	<span class="icon-plus hidden"></span>
-				  	<img ng-src="{{video.thumbnailUrl}}"/>
+				  	<img data-ng-src="{{video.thumbnailUrl}}"/>
 				  </div>
 				  <div class="mg-meta-data">
 				    <div class="mg-title">{{video.title}}</div>
