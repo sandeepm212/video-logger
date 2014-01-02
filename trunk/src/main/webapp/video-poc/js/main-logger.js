@@ -433,6 +433,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				if ($scope.selectedVideo.videoType !== VIDEO_TYPE_WEB) {
 					videoURL = getLocalFileNameArr($scope.selectedVideo.url);
 					isPublic = false;
+				} else {
+					duration = $scope.selectedVideo.duration;
 				}
 				loadVideo(videoURL, isPublic);
 				//js actions
@@ -491,6 +493,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		var selectedAction = $scope.selectedVideo.actions[index];
 		$scope.currentLog.action = selectedAction.name;
 		currentTime = videoObj.currentTime();
+		console.log("currentTime:: " + currentTime);
 		if(currentTime > 0 && currentTime < duration) {
 			$scope.currentLog.startTime = formatTime(currentTime);
 			$('.actions li').removeClass('selected');
@@ -577,6 +580,9 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		videoObj.play();
 		$scope.currentLog.relativeX = relativeX;
 		$scope.currentLog.relativeY = relativeY;
+		if ($scope.selectedVideo.videoLogs == null) {
+			$scope.selectedVideo.videoLogs = [];
+		}
 		$scope.selectedVideo.videoLogs.push($scope.currentLog);
 		$scope.currentLog = new VideoLog();
 		$('.actions li').removeClass('selected');
@@ -813,7 +819,5 @@ function setVideoParentDimentions () {
 	var height = $(".logger-section").height() - 10;
 	$("#video-holder-div").height(height);
 	$("#video-holder-div").width(width);
-	console.log(width + " ---- " + height);
-	console.log($("#video-holder-div").width() + " ---- " + $("#video-holder-div").height());
 }
 
