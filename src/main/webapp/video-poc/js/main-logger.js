@@ -137,7 +137,9 @@ myAppModule.service('sharedService', function ($http) {
     
     this.setVideo = function(video) {
     	this.video = video;
-    	this.video.thumbnailUrl = "../images/slider.png"; //videoPath;
+    	if (video.videoType == VIDEO_TYPE_LOCAL) {
+    		this.video.thumbnailUrl = "../images/slider.png"; //videoPath;
+    	}
     };
     
     this.getVideo = function () {
