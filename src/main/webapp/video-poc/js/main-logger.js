@@ -162,7 +162,10 @@ myAppModule.service('sharedService', function ($http) {
 				  	  	success(function(data, status, headers, config) {
 				  		  if (data != null) {
 				  			  angular.forEach(data, function(video) {
-				  				  exisitngDataMap[video.projectName] = video;
+			  				  if (video.sourceType != null) {
+			  					  video.mediaIcon = video.sourceType.toLowerCase() +  "-icon";
+			  				  }
+				  			  exisitngDataMap[video.projectName] = video;
 				  			  });
 				  			  //console.log(exisitngDataMap);
 				  		  	}
@@ -256,6 +259,7 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 		var videoInfo = null;
 		if (projectName != null && projectName.length > 0) {
 			videoInfo = exisitngDataMap[projectName];
+			$scope.videoType = videoInfo.videoType;
 		} else {
 			videoInfo = $scope.videos[index];
 		}
@@ -270,7 +274,6 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 		$('#video-carousel li').each(function () {
 			$('a', this).removeClass('active');				
 		});
-		$scope.videoType = VIDEO_TYPE_LOCAL;
 		sharedService.setVideoType($scope.videoType);		
 		$('a', event.currentTarget).addClass('active');
 	}

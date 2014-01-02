@@ -920,7 +920,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#88bfe8', end
   display: block;
   float: left;
   margin-right: 5px;
-  background: url( "images/media-icons.png" ) no-repeat;
+  background-image: url("images/media-icons.png");
+  background-repeat: no-repeat;
+  background-position: -100px -103px;
   height: 16px;
   width: 16px;
 }
