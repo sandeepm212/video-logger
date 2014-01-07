@@ -18,15 +18,12 @@
 						<tr style="height: 30px;">
 						<td  width="40px"><span data-ng-if="hasHotKey(action)"
 						title="Key board shortcut for this action is {{action.hotKeyChar}}"
-						class="hotkeyNav"	style="background-color: {{action.style.backgroundColor">{{action.hotKeyChar}}</span>
+						class="hotkeyNav"	style="background-color: {{action.style.backgroundColor}}">{{action.hotKeyChar}}</span>
 						</td>
 						<td style="text-align: left;">
 						{{action.name}} 
 						</td>
 						</tr>
-						
-						
-						
 					</table>
 			</div>
 				</div>
@@ -202,37 +199,38 @@
 							<span data-ng-if="hasHotKey(action)"
 							title="Key board shortcut for this action is {{action.hotKeyChar}}"
 							class="hotkey"
-							style="background-color: {{action.style.backgroundColor">{{action.hotKeyChar}}</span>
+							style="background-color: {{action.style.backgroundColor}}">{{action.hotKeyChar}}</span>
 						</li>
 					</ul>
 				</section>
 				<div class="time-logger clearfix">
 					<section class="time-inputs">
 						<div class="row">
-							<label>Action:</label><span>{{currentLog.action}}</span>
+							<label>Action:</label><span id="actionSpan">{{currentLog.action}}</span>
 						</div>
 						<div class="row">
-							<label>In time:</label> <input type="text" disabled="disabled"
+							<label>In time:</label> <input type="text" 
 								id="in-time-input" data-ng-model="currentLog.startTime"
-								value="{{currentLog.startTime}}" /> <a
+								value="{{currentLog.startTime}}" style="padding: 5px !important;"/> <a
 								href="javascript:void(0)" class="intime-btn hideText"
 								title="Click to log clip start time"
 								data-ng-click="logCurrentTime('IN')"></a>
 						</div>
 						<div class="row">
-							<label>Out time:</label> <input type="button" value="Out Time"
-								id="enter-out-time" data-ng-click="logOutTime()"
-								class="enter-log" title="Out Time"> <input type="text"
-								id="out-time-input" style="display: none;"
+							<label>Out time:</label> <input type="text"
+								id="out-time-input"
 								data-ng-model="currentLog.endTime"
-								value="{{currentLog.endTime}}" /> <a href="javascript:void(0)"
+								value="{{currentLog.endTime}}" style="padding: 5px !important;" /> <a href="javascript:void(0)"
 								class="outtime-btn hideText" title="Click to log clip end time"
 								data-ng-click="logCurrentTime('OUT')">Click to log clip end
 								time</a>
 						</div>
 						<div class="row">
-							<label>Event:</label> <select id="eventSelect"
-								data-ng-model="currentLog.eventType">
+							<label>Event:</label> 
+							<!-- <select id="eventSelect"
+								data-ng-model="currentLog.eventType"
+								> -->
+								<select id="eventSelect">
 								<option value="Subtitle">Subtitle</option>
 								<option value="Pop">Note</option>
 								<option value="Footnote">Footnote</option>
@@ -240,13 +238,16 @@
 						</div>
 					</section>
 					<section class="logger-note">
-						<label>Note:</label><!-- <a class="play-video f-right"
+						<label>Note:</label><br><!-- <a class="play-video f-right"
 							title="Keep on playing the video" href="javascript:void(0)"
 							data-ng-click="playVideo()">Play video</a> -->
 						<textarea class="notes-textarea" id="clip-notes"
 							data-ng-model="currentLog.note"></textarea>
-						<input type="button" value="Log entry" id="enter-log-btn"
-							class="enter-log" title="Log entry" data-ng-click=addLog()>
+							
+						<a href="javascript:void(0);" class="myButton" id="enter-log-btn" data-ng-click="addLog()">Log Entry</a>	
+							
+						<!-- <input type="button" value="Log entry" id="enter-log-btn"
+							class="enter-log" title="Log entry" data-ng-click=addLog()> -->
 					</section>
 				</div>
 			</div>
@@ -256,9 +257,13 @@
 </div>
 
 <script>
- 
+var logOpened = false; 
 function openLog(){
-    $("#content-box").css('display','block').animate({'width': '49%'},500);
+    if(!logOpened){
+	$("#content-box").css('display','block').animate({'width': '49%'},500);
+	logOpened = true;
+    }
+    
 }
 	
  

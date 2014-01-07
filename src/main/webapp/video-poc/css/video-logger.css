@@ -252,7 +252,7 @@ ul.added-action-list1 li {
 	display:inline-block;
 	min-width:75px;
 }
-.row input[type="text"] {
+.row input1[type="text"] {
 	background-color:#dfdfdf;
 	border:1px solid #686868;
 	width:100px;
@@ -270,15 +270,15 @@ a.intime-btn, a.outtime-btn {
 	margin:0 0 0 5px;
 }
 .logger-note {
-	width:67%;
+	width:100%;
 }
 .logger-note textarea {
 	height: 46px;
 	width: 88%;
 	padding:5px;
 	margin:5px 0;
-	background-color:#e0e0e0;
-	border:1px solid #686868;
+	border-radius:5px;
+	border:1px solid #D9DDDE;
 }
 
 .enterLog {
@@ -375,7 +375,7 @@ th.tablesorter-header
 	background:url(../images/back.png) no-repeat left 3px;
 }
 select {
-	border:1px solid #6c6e6f;
+	border:1px solid #D9DDDE;
 	border-radius:5px;
 	padding:5px;
 }
@@ -731,6 +731,7 @@ ul.added-action-list1 li.has-hot-key
 	text-decoration:none;
 	text-shadow:0px 1px 0px #ffffff;
 	float:right;
+	margin:10px 20px 10px 10px;
 }
 .myButton:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #e8e8e8), color-stop(1, #ededed));
