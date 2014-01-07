@@ -458,7 +458,12 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				
 				$("#ClosePanel").click(function () {
 			        $("#content-box").animate({'width': 0},1,function(){
-			           $("#content-box").css('display','none')
+			           $("#content-box").css('display','none');
+			         /*  $('#in-time-input').val('');
+			           $('#out-time-input').val('');
+			           $('#actionSpan').html('');
+			           */
+			           logOpened = false;
 			        });
 				});
 				
@@ -501,6 +506,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		console.log("currentTime:: " + currentTime);
 		if(currentTime > 0 && currentTime < duration) {
 			$scope.currentLog.startTime = formatTime(currentTime);
+			$scope.currentLog.endTime = formatTime(currentTime);
 			$('.actions li').removeClass('selected');
 			$(event.currentTarget).addClass('selected');
 		} else if(currentTime >= duration) {
@@ -821,7 +827,7 @@ $( window ).resize(function() {
 
 function setVideoParentDimentions () {
 	var width = $(".logger-section").width() - 10;
-	var height = $(".logger-section").height() - 10;
+	var height = $(".logger-section").height() + 20;
 	$("#video-holder-div").height(height);
 	$("#video-holder-div").width(width);
 }

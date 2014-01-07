@@ -1,17 +1,17 @@
 <div class="panel-wrap step-2" data-ng-controller="step2Controller">
                     <h3>Step 2: Configure actions</h3>
                     <div class="panel-body clearfix">
-                    	<p class="instruction">Configure your own custom actions which you can use to tag a clip. For example, 'Boundary', 'Over boundary', 'Super catch' are possible logging actions of a cricket video. Alternatively you can select from list of available action profiles. You can also tag an action with a key board shortcut (0-9 and A-Z) for ease of logging.</p>
+                    	
                         <div class="top-gap">You have selected this video : <span id="video-name"></span></div>
                         <h2>
                         <input type="radio" value="custom-actions" checked="checked" id="custom-actions" name="action-rdo" data-ng-click="resetActions()" data-ng-model="customActions">Configure your own custom actions</h2>
                         <div class="add-action-wrap">
                             <label for="action-name" >Enter action name:</label>
-                            <input type="text" id="action-name" data-ng-model="action.name">
+                            <input type="text" id="action-name" class="simple-input" data-ng-model="action.name">
                             <label for="hot-key" >Enter hot key:</label>
                             <a class="tip-trigger help hideText" href="javascript:void(0)">What is a hot key</a>
                             <p class="tooltip-content hide">A hotkey is a key board shortcut for a particular action. While logging video in the subsequent step, you can use this key board shortcut to log an action.<br> <span class="orange-text">Allowed hot keys are (0-9) and (A-Z)</span></p>
-                            <input type="text" id="hot-key" data-ng-model="action.hotKeyChar" class="uppercase" maxlength="1">
+                            <input type="text" id="hot-key" data-ng-model="action.hotKeyChar" class="uppercase simple-input" maxlength="1">
                             
                             <input type="button" class="add-action" value="Add action" data-ng-click="addLogAction(action)">
                         </div>
@@ -24,7 +24,8 @@
                             <select id="popular-action-list" data-ng-model="selectedProfile" data-ng-options="profile.name for profile in actionProfiles">
                             	<option value="">--Select--</option>
                             </select>
-                            <input type="button" class="add-popular-action" value="Load selected action profile" data-ng-click="loadSavedProfile()">
+                           <!--  <input type="button" class="add-popular-action" value="Load selected action profile" data-ng-click="loadSavedProfile()"> -->
+                            <a href="javascript:void(0);" class="myButton" id="to-step-3-btn" data-ng-click="loadSavedProfile()" style="float:none !important;">Load selected action profile</a>
                         </div>
                         <ul class="added-action-list rounded-holder clearfix">
                         	<!-- ngRepeat: action in actions -->
