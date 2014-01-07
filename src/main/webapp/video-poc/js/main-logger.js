@@ -467,8 +467,6 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			        });
 				});
 				
-				
-				
 			}
 		}
 	}
