@@ -597,7 +597,13 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		$scope.selectedVideo.videoLogs.push($scope.currentLog);
 		$scope.currentLog = new VideoLog();
 		$('.actions li').removeClass('selected');
-		$('#image').css('display','block');
+		$('#image').css('display','none');
+		
+		 $("#content-box").animate({'width': 0},1,function(){
+	           $("#content-box").css('display','none');	         
+	           logOpened = false;
+	       });
+		 
 	}
 	
 	// Populate the out time in the input field
@@ -621,7 +627,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		return "";
 	}
 	
-	// 
+	
 	$scope.logCurrentTime = function (param) {
 		currentTime = videoObj.currentTime();
 		if(currentTime > 0 && currentTime < duration) {
