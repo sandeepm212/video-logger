@@ -135,6 +135,10 @@ $(document).ready(function() {
 				
 				 }).click();
 		} 
+		}else if(e.target.localName == 'textarea'){
+			if(e.keyCode=='13'){
+				$('#enter-log-btn').click();
+			}
 		}
 	});
 	
