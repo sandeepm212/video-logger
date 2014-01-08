@@ -942,4 +942,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#88bfe8', end
 .media-icon.archive-icon {
     background-position: -64px 0;
  }
-}
+
+ label{
+ font-weight:bold;
+ }
