@@ -894,15 +894,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#88bfe8', end
 }
 
 #CloseButton {
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	width: 10px;
-	height: 10px;
 	padding: 10px 10px 15px;
-	color: #fff;
-	background-color: #036;
-    border-radius: 0 0 0 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 #CloseButton a {
