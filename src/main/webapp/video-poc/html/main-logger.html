@@ -24,8 +24,12 @@
 
 <script type="text/javascript" src="../js/utils.js"></script>
 <script type="text/javascript" src="../js/main-logger.js"></script>
-<script type="text/javascript" src="../js/controller/publicVideosController.js"></script>
+<script type="text/javascript" src="../js/service/sharedservice.js"></script>
+<script type="text/javascript" src="../js/controller/step1Controller.js"></script>
+<script type="text/javascript" src="../js/controller/step2Controller.js"></script>
+<script type="text/javascript" src="../js/controller/step3Controller.js"></script>
 <script type="text/javascript" src="../js/controller/navigationController.js"></script>
+<script type="text/javascript" src="../js/controller/publicVideosController.js"></script>
 
 <script type="text/javascript" src="../js/jquery/jquery.jcarousel.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.tablesorter.min.js"></script>
@@ -48,7 +52,7 @@
             	<img width="18" height="21" src="../images/toggle.png" alt="logo">
             </a>
         	<a href="javascript:void(0)" title="Cognizant" class="logo">
-            	<img width="88" height="26" src="../images/cognizant-logo.png" alt="logo">
+            	<img width="88" height="26" src="../images/11cognizant-logo.png" alt="logo">
             </a>
             <ul>
             	<li class="welcome-user">Welcome <a href="javascript:void(0)" title="Go to your profile page">John Smith</a></li>
@@ -97,7 +101,7 @@
         <div class="clip-data"></div>
     </section>
 
-<div id="sidr" data-ng-controllers="navigationController">
+<div id="sidr" data-ng-controller="navigationController">
             	<div class="navHeader">Navigation</div>
                 	<ul class="logging-nav">
                     	<li class="step-1-nav selected" data-ng-click="step1Handle()">

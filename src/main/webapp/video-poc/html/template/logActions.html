@@ -10,25 +10,25 @@
 	</h3>
             
             <div id="navi">
-            <div class="added-action-list1">
-            <div class="navHeader">Legend</div>
-            <div style="padding:10px;">
-					<table data-ng-class="{'has-hot-key': hasHotKey(action)}"
-						data-ng-repeat="action in selectedVideo.actions" width="100%">
-						<tr style="height: 30px;">
-						<td  width="40px"><span data-ng-if="hasHotKey(action)"
-						title="Key board shortcut for this action is {{action.hotKeyChar}}"
-						class="hotkeyNav"	style="background-color: {{action.style.backgroundColor}}">{{action.hotKeyChar}}</span>
-						</td>
-						<td style="text-align: left;">
-						{{action.name}} 
-						</td>
-						</tr>
-						
-						
-						
-					</table>
-			</div>
+	            <div class="added-action-list1">
+		            <div class="navHeader">Legend</div>
+		            <div style="padding:10px;">
+							<table data-ng-class="{'has-hot-key': hasHotKey(action)}"
+								data-ng-repeat="action in selectedVideo.actions" width="100%">
+								<tr style="height: 30px;">
+								<td  width="40px"><span data-ng-if="hasHotKey(action)"
+								title="Key board shortcut for this action is {{action.hotKeyChar}}"
+								class="hotkeyNav"	style="background-color: {{action.style.backgroundColor}}">{{action.hotKeyChar}}</span>
+								</td>
+								<td style="text-align: left;">
+								{{action.name}} 
+								</td>
+								</tr>
+								
+								
+								
+							</table>
+					</div>
 				</div>
             </div>
 	
@@ -246,7 +246,7 @@
 							title="Keep on playing the video" href="javascript:void(0)"
 							data-ng-click="playVideo()">Play video</a> -->
 						<textarea class="notes-textarea" id="clip-notes"
-							data-ng-model="currentLog.note"></textarea>
+							data-ng-model="currentLog.note" autofocus></textarea>
 							
 						<a href="javascript:void(0);" class="myButton" id="enter-log-btn" data-ng-click="addLog()">Log Entry</a>	
 							

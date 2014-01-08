@@ -5,7 +5,8 @@
                         <div class="top-gap">You have selected this video : <span id="video-name"></span></div>
                         <h2>
                         <input type="radio" value="custom-actions" checked="checked" id="custom-actions" name="action-rdo" data-ng-click="resetActions()" data-ng-model="customActions">Configure your own custom actions</h2>
-                        <div class="add-action-wrap">
+                        
+                        <div class="add-action-wrap" id="actions-custom">
                             <label for="action-name" >Enter action name:</label>
                             <input type="text" id="action-name" class="simple-input" data-ng-model="action.name">
                             <label for="hot-key" >Enter hot key:</label>
@@ -17,9 +18,10 @@
                         </div>
                         
                         <h2>
-                        	<input type="radio" value="popular-actions" id="popular-actions" name="action-rdo" data-ng-click="resetActions()" data-ng-model="customActions">Select from existing popular actions
+                        	<input type="radio" value="popular-actions" id="popular-actions" name="action-rdo" data-ng-click="resetActions('actions-popular')" data-ng-model="customActions">Select from existing popular actions
                         </h2>
-                        <div class="add-action-wrap hide">
+                        
+                        <div class="add-action-wrap hide" id="actions-popular">
                             <label for="popular-action-list">Available action profiles:</label>
                             <select id="popular-action-list" data-ng-model="selectedProfile" data-ng-options="profile.name for profile in actionProfiles">
                             	<option value="">--Select--</option>
@@ -27,6 +29,7 @@
                            <!--  <input type="button" class="add-popular-action" value="Load selected action profile" data-ng-click="loadSavedProfile()"> -->
                             <a href="javascript:void(0);" class="myButton" id="to-step-3-btn" data-ng-click="loadSavedProfile()" style="float:none !important;">Load selected action profile</a>
                         </div>
+                        
                         <ul class="added-action-list rounded-holder clearfix">
                         	<!-- ngRepeat: action in actions -->
                      	   	<li data-ng-class="{'has-hot-key': hasHotKey(action)}" data-ng-repeat="action in actions">{{action.name}}
