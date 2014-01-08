@@ -25,6 +25,7 @@
 <script type="text/javascript" src="../js/utils.js"></script>
 <script type="text/javascript" src="../js/main-logger.js"></script>
 <script type="text/javascript" src="../js/controller/publicVideosController.js"></script>
+<script type="text/javascript" src="../js/controller/navigationController.js"></script>
 
 <script type="text/javascript" src="../js/jquery/jquery.jcarousel.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.tablesorter.min.js"></script>
@@ -96,16 +97,16 @@
         <div class="clip-data"></div>
     </section>
 
-<div id="sidr">
+<div id="sidr" data-ng-controllers="navigationController">
             	<div class="navHeader">Navigation</div>
                 	<ul class="logging-nav">
-                    	<li class="step-1-nav selected">
+                    	<li class="step-1-nav selected" data-ng-click="step1Handle()">
                         	<a href="javascript:void(0)">Step 1: Select video</a>
                         </li>
-                        <li class="step-2-nav">
+                        <li class="step-2-nav" data-ng-click="step2Handle()">
                         	<a href="javascript:void(0)">Step 2: Configure actions</a>
                           </li>
-                        <li class="step-3-nav">
+                        <li class="step-3-nav" data-ng-click="step3Handle()">
                         	<a href="javascript:void(0)">Step 3: Capture &amp; save</a>
                          </li>
                     </ul>
