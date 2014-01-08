@@ -26,9 +26,7 @@ $(document).ready(function() {
 	});
 	
 	//Handling action radio buttons handler in step 2
-	$('input[name="action-rdo"]').live('change', function() {
-		$('input[name="action-rdo"]').parent('h2').next().slideUp(slideTime);
-		$(this).is(':checked') ? $(this).parent('h2').next().slideDown(slideTime): $(this).parent('h2').next().slideUp(slideTime);
+	$('input[name="action-rdo"]').live('change', function() {		
 		//$('.step-2 .added-action-list').html('').slideUp(slideTime);
 	});
 	
@@ -78,7 +76,7 @@ $(document).ready(function() {
 	
 		
 	//navigation menu click handler
-	$('ul.logging-nav li').live('click', function()
+	$('ul.logging-nav1 li').live('click', function()
 	{
 		var liIndex = $(this).index();
 		
