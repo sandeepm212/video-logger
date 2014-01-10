@@ -23,6 +23,9 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 					duration = $scope.selectedVideo.duration;
 				}
 				loadVideo(videoURL, isPublic);
+				videoObj.on('pause', function() {
+					$('#outtime-btn').click();	
+				});
 				//js actions
 				$('#navi-menu').sidr({side: 'right',name: 'navi'});
 				$('#eventSelect').on('change', function (e) {

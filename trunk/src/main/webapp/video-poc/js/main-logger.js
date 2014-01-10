@@ -249,6 +249,7 @@ function loadVideo(videoURL, isPublic) {
 	
 	$('#video-holder-div').slideDown(slideTime);
 	setVideoParentDimentions();
+	
 	//Caching media properties once the media metadata are loaded
 	if (isPublic) {
 		$('.loading-wrap').addClass('hide');
@@ -258,6 +259,7 @@ function loadVideo(videoURL, isPublic) {
 			frameRate = videoObj.options.framerate ? videoObj.options.framerate : 30;// TBD : Calculation of framerate needs to be accurate
 			$('.loading-wrap').addClass('hide');
 			videoObj.controls(true);
+			
 		});
 	}
 }
@@ -269,7 +271,10 @@ $( window ).resize(function() {
 function setVideoParentDimentions () {
 	var width = $(".logger-section").width() - 10;
 	var height = $(".logger-section").height() + 20;
-	$("#video-holder-div").height(height);
-	$("#video-holder-div").width(width);
+	$("#video-holder-div").height("440px");
+	$("#video-holder-div").width("732px");
+	
+	
+	
 }
 
