@@ -22,9 +22,13 @@ myAppModule.service('sharedService', function ($http) {
     
     this.setVideo = function(video) {
     	this.video = video;
-    	if (video.videoType == VIDEO_TYPE_LOCAL) {
-    		this.video.thumbnailUrl = "../images/slider.png"; //videoPath;
+    	if (video != null) {
+    		if (video.videoType == VIDEO_TYPE_LOCAL) {
+        		this.video.thumbnailUrl = "../images/slider.png"; //videoPath;
+        	}
+    		this.setActions(video.actions);
     	}
+    	
     };
     
     this.getVideo = function () {

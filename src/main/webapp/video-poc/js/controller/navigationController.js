@@ -17,6 +17,7 @@ myAppModule.controller('navigationController', function($scope, $http, $location
 	}
 
 	$scope.step3Handle = function () {
+		console.log("step3Handle");
 		var actions = sharedService.getActions();
 		var video = sharedService.getVideo();
 		if (video != null && actions.length > 0) {
@@ -29,6 +30,5 @@ myAppModule.controller('navigationController', function($scope, $http, $location
 			$location.path("step2");
 			highlightCurrentTab(1);
 		}		
-		console.log("step3Handle");
 	}
 });
