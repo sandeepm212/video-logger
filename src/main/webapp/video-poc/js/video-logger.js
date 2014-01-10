@@ -118,14 +118,14 @@ $(document).ready(function() {
 		var pressedKey = String.fromCharCode(e.keyCode).toUpperCase();
 		if(e.target.localName != 'textarea'){
 			if(pressedKey=='L'){
-				openLog();
+				$('#clip-notes').focus();
 			}
 			else if(allowedKeysRegex.test(pressedKey) && $('.actions .added-action-list1').children().length > 0)
 		{
 				
 			$('.actions .added-action-list1 li').filter(function() {
 				if(this.children[0].textContent == pressedKey){
-					openLog();
+					$('#clip-notes').focus();
 					return true
 				}else{
 					return false;
