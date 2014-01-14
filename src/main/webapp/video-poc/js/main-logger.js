@@ -270,9 +270,9 @@ $( window ).resize(function() {
 
 function setVideoParentDimentions () {
 	var width = $(".logger-section").width() - 10;
-	var height = $(".logger-section").height() + 20;
-	$("#video-holder-div").height("440px");
-	$("#video-holder-div").width("732px");
+	var height = $("#video-holder-div").height() + 20;
+	$("#video-holder-div").height('auto');
+	$("#video-holder-div").width(width);
 	
 	
 	
