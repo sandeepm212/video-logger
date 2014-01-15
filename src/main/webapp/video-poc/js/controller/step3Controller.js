@@ -81,6 +81,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	
 	// Handle the action selection during video playback
 	$scope.applyAction = function (index, event) {
+		videoObj.pause();
 		var selectedAction = $scope.selectedVideo.actions[index];
 		$scope.currentLog.action = selectedAction.name;
 		currentTime = videoObj.currentTime();

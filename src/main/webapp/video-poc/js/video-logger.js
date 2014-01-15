@@ -126,17 +126,13 @@ $(document).ready(function() {
 			$('.actions .added-action-list1 li').filter(function() {
 				if(this.children[0].textContent == pressedKey){
 					$('#clip-notes').focus();
-					return true
+					return true;
 				}else{
 					return false;
 				}
 				
 				 }).click();
 		} 
-		}else if(e.target.localName == 'textarea'){
-			if(e.keyCode=='13'){
-				$('#enter-log-btn').click();
-			}
 		}
 	});
 	
