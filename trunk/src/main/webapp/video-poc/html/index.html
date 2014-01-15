@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Video logger</title>
+<link type="text/css" rel="stylesheet" href="../css/layout-default-latest.css">
+<link type="text/css" rel="stylesheet" media="all" href="../css/jquery-ui-1.9.2.custom.min.css" />
+<link type="text/css" rel="stylesheet" media="all" href="../css/video-logger1.css" />
+<link type="text/css" rel="stylesheet" media="all" href="../css/media-editor.css" />
+
+<script type="text/javascript" src="../js/jquery-latest.js"></script>
+<script type="text/javascript" src="../js/jquery-ui-latest.js"></script>
+<script type="text/javascript" src="../js/jquery.layout-latest.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	var pageLayout = $('body').layout({	
+        spacing_open:2,
+		north :{
+			resizable: false,
+			slidable:false,
+			closable:false
+		},
+		south :{
+			resizable: false,
+			slidable:false,
+			closable:false
+		},		
+		west__size: .60, 		
+		west__minSize: .60, 		
+		west__childOptions: {
+			spacing_open:2,		
+			north__size:.60,
+			north__minSize:.60			
+		}
+	});
+}); 
+</script>
+</head>
+<body>
+<div class="ui-layout-north">
+	<a href="javascript:void(0)" title="Cognizant" class="logo">
+    	<img width="88" height="26" src="../images/cognizant-logo.png" alt="logo">
+    </a>
+</div>
+<div class="ui-layout-center">Outer Center</div>
+<div class="ui-layout-west">
+	<div class="ui-layout-north">Middle North</div>	
+	<div class="ui-layout-center">Middle Center</div>
+</div> 
+<div class="ui-layout-south footer">
+
+    	&copy; 2013 Cognizant. All rights reserved.
+</div>
+</body>
+</html>
