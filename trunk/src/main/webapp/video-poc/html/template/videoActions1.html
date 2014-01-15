@@ -1,0 +1,44 @@
+<div class="panel-wrap step-2" data-ng-controller="step2Controller">
+                    <h3>Step 2: Configure actions</h3>
+                    <div class="panel-body clearfix">
+                    	
+                        <div class="top-gap">You have selected this video : <span id="video-name"></span></div>
+                        <h2>
+                        <input type="radio" value="custom-actions" checked="checked" id="custom-actions" name="action-rdo" data-ng-click="resetActions()" data-ng-model="customActions">Configure your own custom actions</h2>
+                        
+                        <div class="add-action-wrap" id="actions-custom">
+                            <label for="action-name" >Enter action name:</label>
+                            <input type="text" id="action-name" class="simple-input" data-ng-model="action.name">
+                            <label for="hot-key" >Enter hot key:</label>
+                            <a class="tip-trigger help hideText" href="javascript:void(0)">What is a hot key</a>
+                            <p class="tooltip-content hide">A hotkey is a key board shortcut for a particular action. While logging video in the subsequent step, you can use this key board shortcut to log an action.<br> <span class="orange-text">Allowed hot keys are (0-9) and (A-Z)</span></p>
+                            <input type="text" id="hot-key" data-ng-model="action.hotKeyChar" class="uppercase simple-input" maxlength="1">
+                            
+                            <input type="button" class="add-action" value="Add action" data-ng-click="addLogAction(action)">
+                        </div>
+                        
+                        <h2>
+                        	<input type="radio" value="popular-actions" id="popular-actions" name="action-rdo" data-ng-click="resetActions('actions-popular')" data-ng-model="customActions">Select from existing popular actions
+                        </h2>
+                        
+                        <div class="add-action-wrap hide" id="actions-popular">
+                            <label for="popular-action-list">Available action profiles:</label>
+                            <select id="popular-action-list" data-ng-model="selectedProfile" data-ng-options="profile.name for profile in actionProfiles">
+                            	<option value="">--Select--</option>
+                            </select>
+                           <!--  <input type="button" class="add-popular-action" value="Load selected action profile" data-ng-click="loadSavedProfile()"> -->
+                            <a href="javascript:void(0);" class="myButton" id="to-step-3-btn" data-ng-click="loadSavedProfile()" style="float:none !important;">Load selected action profile</a>
+                        </div>
+                        
+                        <ul class="added-action-list rounded-holder clearfix">
+                        	<!-- ngRepeat: action in actions -->
+                     	   	<li data-ng-class="{'has-hot-key': hasHotKey(action)}" data-ng-repeat="action in actions">{{action.name}}
+                        	<a href="javascript:void(0)" class="delete-action hideText" title="Delete this action" data-ng-click="deleteAction($index)">Delete this action</a>
+                        	<span data-ng-if="hasHotKey(action)" title="Key board shortcut for this action is {{action.hotKeyChar}}" class="hotkey"
+                        	 style="background-color: {{action.style.backgroundColor}}">{{action.hotKeyChar}}</span>
+                        	</li>
+                        </ul>
+                        <!-- <input type="button" class="video-logger-btn f-right top-gap" id="to-step-3-btn" data-ng-click="showStep3()" value="Save &amp; go to step 3" />
+                         --><a href="javascript:void(0);" class="myButton" id="to-step-3-btn" data-ng-click="showStep3()">Save &amp; go to Step 3</a>
+                    </div>
+                </div>

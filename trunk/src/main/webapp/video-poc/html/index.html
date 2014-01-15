@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="videoLoggerApp">
 <head>
 <title>Video logger</title>
 <link type="text/css" rel="stylesheet" href="../css/layout-default-latest.css">
@@ -10,6 +10,39 @@
 <script type="text/javascript" src="../js/jquery-latest.js"></script>
 <script type="text/javascript" src="../js/jquery-ui-latest.js"></script>
 <script type="text/javascript" src="../js/jquery.layout-latest.js"></script>
+<script type="text/javascript" src="../js/jquery.simplemodal.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="../css/slider-style.css" />
+<link rel="stylesheet" type="text/css" href="../css/jquery.sidr.light.css" />
+
+<script type="text/javascript" src="../js/popcorn/popcorn-complete.js"></script>
+
+<script type="text/javascript" src="../js/angularjs/angular.js"></script>
+<script type="text/javascript" src="../js/angularjs/angular-route.js"></script>
+
+<script type="text/javascript" src="../js/util/uri.js"></script>
+<script type="text/javascript" src="../js/util/time.js"></script>
+<script type="text/javascript" src="../js/util/mediatypes.js"></script>
+
+
+<script type="text/javascript" src="../js/utils.js"></script>
+<script type="text/javascript" src="../js/main-logger1.js"></script>
+<script type="text/javascript" src="../js/service/sharedservice.js"></script>
+<script type="text/javascript" src="../js/controller/step1Controller1.js"></script>
+<script type="text/javascript" src="../js/controller/step2Controller.js"></script>
+<script type="text/javascript" src="../js/controller/step3Controller1.js"></script>
+<script type="text/javascript" src="../js/controller/navigationController.js"></script>
+<script type="text/javascript" src="../js/controller/publicVideosController.js"></script>
+
+<script type="text/javascript" src="../js/jquery/jquery.jcarousel.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="../js/popcorn/popcorn.pop.js"></script>
+<script type="text/javascript" src="../js/popcorn/popcorn.custom.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.sidr.min.js"></script>
+
+
 <script type="text/javascript">
 $(document).ready(function () {
 	var pageLayout = $('body').layout({	
@@ -32,6 +65,7 @@ $(document).ready(function () {
 			north__minSize:.60			
 		}
 	});
+	$('#basic-modal-content').modal({escClose :false});
 }); 
 </script>
 </head>
@@ -50,5 +84,13 @@ $(document).ready(function () {
 
     	&copy; 2013 Cognizant. All rights reserved.
 </div>
+
+
+<div id="basic-modal-content">
+			<div data-ng-view=""></div>
+		</div>
+		
+		<script type="text/javascript" src="../js/video-logger.js"></script>
+<script type="text/javascript" src="../js/tooltip.js"></script>
 </body>
 </html>

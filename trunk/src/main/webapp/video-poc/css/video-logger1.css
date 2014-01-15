@@ -139,18 +139,10 @@ section.right {
 	-webkit-border-radius: 5px 5px 0 0;
 	-moz-border-radius: 5px 5px 0 0;
 	border-radius: 5px 5px 0 0;
-	color: #FFFFFF;
-	padding: 9px 0 9px 15px;
-	
+	color: #333 !important;
+	text-align: center;	
 	font-size: 18px;
-	background: #63b6db; /* Old browsers */
-	background: -moz-linear-gradient(top,  #63b6db 0%, #309dcf 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#63b6db), color-stop(100%,#309dcf)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #63b6db 0%,#309dcf 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #63b6db 0%,#309dcf 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #63b6db 0%,#309dcf 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #63b6db 0%,#309dcf 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63b6db', endColorstr='#309dcf',GradientType=0 ); /* IE6-9 */
+	
 
 }
 
@@ -734,7 +726,7 @@ ul.added-action-list1 li.has-hot-key
 	border:1px solid #dcdcdc;
 	display:inline-block;
 	cursor:pointer;
-	color:#666666;
+	color:#666666 !important;
 	font-family:Arial;
 	font-size:15px;
 	font-weight:normal;
@@ -957,3 +949,26 @@ border: 1px solid #CACACA;
  label{
  font-weight:bold;
  }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ #basic-modal-content {display:none;}
+
+/* Overlay */
+#simplemodal-overlay {background-color:#000;}
+
+/* Container */
+#simplemodal-container {height:550px; width:900px; color:#bbb; background-color:#FFFFFF; border:4px solid #444; padding:12px;}
+#simplemodal-container .simplemodal-data {padding:8px;}
+#simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; font-size:12px; margin-bottom:12px; padding:4px 6px 6px;}
+#simplemodal-container a {color:#ddd;}
+#simplemodal-container a.modalCloseImg {background:none no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}
+#simplemodal-container h3 {color:#84b8d9;}
+ 
+ 
