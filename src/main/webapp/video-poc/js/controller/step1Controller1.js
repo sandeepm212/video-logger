@@ -16,6 +16,7 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 			console.log("SAVED VIDEO SELECTED");
 			sharedService.setVideo(exisitngDataMap[projectName]);
 			$location.path("step3");
+			$.modal.close();
 		} else {
 			sharedService.setVideo(videoInfo);
 		}
@@ -24,7 +25,7 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 		});
 		sharedService.setVideoType($scope.videoType);		
 		$('a', event.currentTarget).addClass('active');
-		$.modal.close();
+		
 	}
 	
 	$scope.safeApply = function(fn) {
