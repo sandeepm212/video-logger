@@ -14,9 +14,9 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 		videoPath = videoInfo.url;
 		if (exisitngDataMap[projectName] != null) {
 			console.log("SAVED VIDEO SELECTED");
+			$.modal.close();
 			sharedService.setVideo(exisitngDataMap[projectName]);
 			$location.path("step3");
-			$.modal.close();
 		} else {
 			sharedService.setVideo(videoInfo);
 		}
@@ -25,7 +25,7 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 		});
 		sharedService.setVideoType($scope.videoType);		
 		$('a', event.currentTarget).addClass('active');
-		
+	
 	}
 	
 	$scope.safeApply = function(fn) {
@@ -74,6 +74,7 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 		
 		
 		if (isPassed) {
+			$.modal.close();
 			goToNextPage('.step-2');
 			if (videoObj) {
 				videoObj.pause();
@@ -92,6 +93,7 @@ myAppModule.controller('step1Controller', function($rootScope, $scope, $location
 			autoHeight: false,
 			navigation: true
 		});
+		$('#basic-modal-content').modal({escClose :false});
 	}
 	
 	$scope.init();
