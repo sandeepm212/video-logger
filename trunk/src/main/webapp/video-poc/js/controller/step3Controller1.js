@@ -49,7 +49,30 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			           */
 			           logOpened = false;
 			        });
-				});				
+				});		
+				 $('#dvview').layout();
+				var pageLayout = $('#layoutdiv').layout({	
+			        spacing_open:2,
+					north :{
+						resizable: false,
+						slidable:false,
+						closable:false
+					},
+					south :{
+						resizable: false,
+						slidable:false,
+						closable:false
+					},		
+					west__size: .60, 		
+					west__minSize: .60, 		
+					west__childOptions: {
+						spacing_open:2,		
+						north__size:.60,
+						north__minSize:.60			
+					}
+				});
+				
+				//$('#layoutdiv').css("position","");
 			}
 		}
 	}

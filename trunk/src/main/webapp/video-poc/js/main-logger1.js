@@ -130,7 +130,7 @@ myAppModule.config(function($routeProvider, $locationProvider) {
           });
           $routeProvider.when('/step3', {
         	  	controller: "step3Controller",
-   		   		templateUrl: "/video-logger/video-poc/html/template/logActions.html"
+   		   		templateUrl: "/video-logger/video-poc/html/template/logActions1.html"
           });
           $routeProvider.otherwise({
         	  redirectTo: '/'
