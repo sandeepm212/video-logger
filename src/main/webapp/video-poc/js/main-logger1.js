@@ -272,7 +272,7 @@ function setVideoParentDimentions () {
 	var width = $(".logger-section").width() - 10;
 	var height = $("#video-holder-div").height() + 20;
 	$("#video-holder-div").height('auto');
-	$("#video-holder-div").width(width);
+	$("#video-holder-div").width('auto');
 	
 	
 	

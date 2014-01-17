@@ -69,7 +69,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 					west__childOptions: {
 						spacing_open:2,		
 						north__size:.60,
-						north__minSize:.60			
+						north__minSize:.60,
+						north__maxSize:.60
 					}
 				});
 				
