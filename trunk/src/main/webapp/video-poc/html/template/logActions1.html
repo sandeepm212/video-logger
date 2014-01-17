@@ -1,5 +1,15 @@
-<div class="panel-wrap step-3" data-ng-controller="step3Controller">
-	<h3>Step 3: Capture clip 
+<div id="layoutdiv"  data-ng-controller="step3Controller"  class="pane ui-layout-center">
+<div class="pane ui-layout-north">
+	<a href="javascript:void(0)" title="Cognizant" class="logo">
+    	<img width="88" height="26" src="../images/cognizant-logo.png" alt="logo">
+    </a>
+</div>
+<div class="pane ui-layout-center">
+
+
+	
+<div class="panel-wrap step-3">
+	<h3>Capture clip 
 	
 	<span style="float:right;margin-right:20px">
 	 <a title="Misc" class="misc" id="navi-menu" href="#navi">
@@ -47,7 +57,81 @@
 					</li>
 				</ul>
 			</div> -->
-			<div class="video-holder" id="video-holder-div">
+			
+			
+		</section>
+		<section class="data-section">
+			<div class="panel-wrap">
+				<h2>
+					Captured moments
+					<div class="f-right">
+						<a title="Preview logged video" id="preview" class="log-action"
+							href="javascript:void(0)" data-ng-click="preview()">Preview</a> <a
+							title="Go back to logger screen" id="back-to-logger"
+							class="log-action hide" href="javascript:void(0)"
+							data-ng-click="backToLogger()">Back to logger</a> <a
+							title="View generated log" id="view-log" class="log-action"
+							data-ng-click="viewLog()" href="javascript:void(0)">View log</a>
+						<a title="Submit the log to server" id="submit-log"
+							class="log-action" href="javascript:void(0)"
+							data-ng-click="saveVideoLog()">Submit log</a>	
+					</div>
+				</h2>
+				<div class="panel-body">
+					<table class="logg-table" id="clip-logger">
+						<thead>
+							<tr>
+								<th class="col-2">Action</th>
+								<th class="col-1">In time</th>
+								<th class="col-5">Out time</th>
+								<th class="col-3">Note</th>
+								<th class="col-4">&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-ng-repeat="log in selectedVideo.videoLogs" id="logRow{{$index}}"
+								data-ng-click="showLogVideo($index)">
+								<td><span data-ng-if="hotKeyCharStyle($index) === ''">{{log.action}}</span>
+									<span style="background-color: {{hotKeyCharStyle($ index)"
+									class="hotkeyl" title=""
+									data-ng-if="hotKeyCharStyle($index) != ''">{{log.hotKeyChar}}</span>
+								</td>
+								<td>{{log.startTime}}</td>
+								<td>{{log.endTime}}</td>
+								<td>{{log.note}}</td>
+								<td><a href="javascript:void(0)"
+									data-ng-click="deleteLog()" class="delete-cue hideText"
+									title="Delete this log entry">Delete this log entry</a></td>
+							</tr>
+						</tbody>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+			<div id="previewData" style="height: 200px; width: 400px;"></div>
+
+			<div id="wikidiv"
+				style="height: 200px; width: 500px; overflow: auto;"></div>
+
+
+		</section>
+	</div>
+	
+	<section class="modal-popup" id="project-name-popup">
+		<h2>Project Name :</h2>
+		<input type="text" data-ng-model="selectedVideo.projectName" value="{{selectedVideo.projectName}}">
+		<input type="button" value="Save Project"
+			data-ng-click="saveVideoLog('save')">
+	</section>
+
+</div>
+
+
+</div>
+<div class="pane ui-layout-west">
+	<div class="pane ui-layout-north">
+	
+	<div class="video-holder" id="video-holder-div">
 				<div id="helper"
 					style="width: 50px; height: 50px; z-index: 9999; position: absolute !important;">
 					<div id="image"></div>
@@ -58,6 +142,10 @@
 					<div>Loading video. Please wait</div>
 				</div>
 			</div>
+	
+	</div>	
+	<div class="pane ui-layout-center">
+
 			<div class="logger-holder rounded-holder">
 				<!-- <h2>
 					Logger
@@ -131,76 +219,12 @@
 					</section>
 				</div>
 			</div>
-		</section>
-		<section class="data-section">
-			<div class="panel-wrap">
-				<h2>
-					Captured moments
-					<div class="f-right">
-						<a title="Preview logged video" id="preview" class="log-action"
-							href="javascript:void(0)" data-ng-click="preview()">Preview</a> <a
-							title="Go back to logger screen" id="back-to-logger"
-							class="log-action hide" href="javascript:void(0)"
-							data-ng-click="backToLogger()">Back to logger</a> <a
-							title="View generated log" id="view-log" class="log-action"
-							data-ng-click="viewLog()" href="javascript:void(0)">View log</a>
-						<a title="Submit the log to server" id="submit-log"
-							class="log-action" href="javascript:void(0)"
-							data-ng-click="saveVideoLog()">Submit log</a>	
-					</div>
-				</h2>
-				<div class="panel-body">
-					<table class="logg-table" id="clip-logger">
-						<thead>
-							<tr>
-								<th class="col-2">Action</th>
-								<th class="col-1">In time</th>
-								<th class="col-5">Out time</th>
-								<th class="col-3">Note</th>
-								<th class="col-4">&nbsp;</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr data-ng-repeat="log in selectedVideo.videoLogs" id="logRow{{$index}}"
-								data-ng-click="showLogVideo($index)">
-								<td><span data-ng-if="hotKeyCharStyle($index) === ''">{{log.action}}</span>
-									<span style="background-color: {{hotKeyCharStyle($ index)"
-									class="hotkeyl" title=""
-									data-ng-if="hotKeyCharStyle($index) != ''">{{log.hotKeyChar}}</span>
-								</td>
-								<td>{{log.startTime}}</td>
-								<td>{{log.endTime}}</td>
-								<td>{{log.note}}</td>
-								<td><a href="javascript:void(0)"
-									data-ng-click="deleteLog()" class="delete-cue hideText"
-									title="Delete this log entry">Delete this log entry</a></td>
-							</tr>
-						</tbody>
-						<tbody></tbody>
-					</table>
-				</div>
-			</div>
-			<div id="previewData" style="height: 200px; width: 400px;"></div>
 
-			<div id="wikidiv"
-				style="height: 200px; width: 500px; overflow: auto;"></div>
-
-
-		</section>
 	</div>
-	
-	<section class="modal-popup" id="project-name-popup">
-		<h2>Project Name :</h2>
-		<input type="text" data-ng-model="selectedVideo.projectName" value="{{selectedVideo.projectName}}">
-		<input type="button" value="Save Project"
-			data-ng-click="saveVideoLog('save')">
-	</section>
+</div> 
+<div class="pane ui-layout-south footer">
 
+    	&copy; 2013 Cognizant. All rights reserved.
+</div>
 </div>
 
-<script>
-
-	
- 
- 
-</script>
