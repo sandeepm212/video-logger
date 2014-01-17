@@ -31,7 +31,7 @@
 <script type="text/javascript" src="../js/main-logger1.js"></script>
 <script type="text/javascript" src="../js/service/sharedservice.js"></script>
 <script type="text/javascript" src="../js/controller/step1Controller1.js"></script>
-<script type="text/javascript" src="../js/controller/step2Controller.js"></script>
+<script type="text/javascript" src="../js/controller/step2Controller1.js"></script>
 <script type="text/javascript" src="../js/controller/step3Controller1.js"></script>
 <script type="text/javascript" src="../js/controller/navigationController.js"></script>
 <script type="text/javascript" src="../js/controller/publicVideosController.js"></script>
@@ -45,7 +45,7 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-	var pageLayout = $('body').layout({	
+	/* var pageLayout = $('body').layout({	
         spacing_open:2,
 		north :{
 			resizable: false,
@@ -64,33 +64,19 @@ $(document).ready(function () {
 			north__size:.60,
 			north__minSize:.60			
 		}
-	});
-	$('#basic-modal-content').modal({escClose :false});
+	}); */
+	
 }); 
 </script>
 </head>
 <body>
-<div class="ui-layout-north">
-	<a href="javascript:void(0)" title="Cognizant" class="logo">
-    	<img width="88" height="26" src="../images/cognizant-logo.png" alt="logo">
-    </a>
-</div>
-<div class="ui-layout-center">Outer Center</div>
-<div class="ui-layout-west">
-	<div class="ui-layout-north">Middle North</div>	
-	<div class="ui-layout-center">Middle Center</div>
-</div> 
-<div class="ui-layout-south footer">
-
-    	&copy; 2013 Cognizant. All rights reserved.
-</div>
 
 
-<div id="basic-modal-content">
-			<div data-ng-view=""></div>
-		</div>
+	<div data-ng-view="" id="dvview" ></div>
+
+
 		
-		<script type="text/javascript" src="../js/video-logger.js"></script>
+		<script type="text/javascript" src="../js/video-logger1.js"></script>
 <script type="text/javascript" src="../js/tooltip.js"></script>
 </body>
 </html>

@@ -23,6 +23,18 @@ blockquote:before, blockquote:after, q:before, q:after {
 	content: '';
 	content: none;
 }
+.pane {
+		display:	none; /* will appear when layout inits */
+	}
+
+#layoutdiv{
+	height:100%;
+}
+
+#dvview{
+	height:100%;
+}
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
