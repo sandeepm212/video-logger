@@ -19,35 +19,6 @@ $(document).ready(function() {
 		headers:{ 3 : {sorter : false}, 4 : {sorter : false}}
 	});
 	
-	//Handling selection radio buttons
-	$('input[name="video-type-rdo"]').live('change', function() {
-		$('input[name="video-type-rdo"]').parent('h2').next().slideUp(slideTime);
-		$(this).is(':checked') ? $(this).parent('h2').next().slideDown(slideTime): $(this).parent('h2').next().slideUp(slideTime);
-	});
-	
-	//Handling action radio buttons handler in step 2
-	$('input[name="action-rdo"]').live('change', function() {		
-		//$('.step-2 .added-action-list').html('').slideUp(slideTime);
-	});
-	
-	//Carousel thumbnail click handler
-	$('#video-carousel li').live('click', function() {
-//		var liObj = $(this);
-//		$('#video-carousel li').each(function () {
-//			var locLiObj = $(this);
-//			var savedId = locLiObj.data('video-id');
-//			if (exisitngDataMap[savedId] == null) {
-//				$('a', locLiObj).removeClass('active');				
-//				//to-step-3-btn
-//			}
-//		});
-//		$('a', liObj).addClass('active');
-//		videoPath = liObj.data('video-path');
-//		videoId = liObj.data('video-id');
-//		if (exisitngDataMap[videoId] != null) {
-//			showSavedVideo(exisitngDataMap[videoId]);			
-//		}
-	});
 		
 	//Load button click handler
 	$('#play-btn').on('click', function() {
@@ -75,42 +46,6 @@ $(document).ready(function() {
 	});
 	
 		
-	//navigation menu click handler
-	$('ul.logging-nav1 li').live('click', function()
-	{
-		var liIndex = $(this).index();
-		
-		switch(liIndex)
-		{
-			case 0:
-				if(videoObj)
-				{
-					if(confirm("If you select a new video, the current video logging will be lost. Are you sure to navigate away?"))
-					{
-						goToNextPage('.step-1');
-						highlightCurrentTab(0);
-						resetLoggingScope();
-					}
-				}
-				else
-				{
-					goToNextPage('.step-1');
-					highlightCurrentTab(0);
-				}
-				break;
-			
-			case 1:
-				$('#to-step-2-btn').click();
-				break;
-				
-			case 2:
-				$('#to-step-3-btn').click();
-				break;
-				
-			default:
-				//
-		}
-	});
 	
 	//Handling hot key press events for each corresponding action
 	$(document).keyup(function(e)
