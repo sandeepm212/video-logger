@@ -64,14 +64,14 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 						slidable:false,
 						closable:false
 					},		
-					west__size: .60, 		
-					west__minSize: .60,
-					west__maxSize: .60,
+					west__size: .55, 		
+					west__minSize: .55,
+					west__maxSize: .55,
 					west__childOptions: {
 						spacing_open:2,		
-						north__size:.60,
-						north__minSize:.60,
-						north__maxSize:.60
+						north__size:.65,
+						north__minSize:.65,
+						north__maxSize:.65
 					}
 				});
 				

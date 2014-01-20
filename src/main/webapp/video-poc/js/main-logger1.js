@@ -269,11 +269,13 @@ function loadVideo(videoURL, isPublic) {
 });*/
 
 function setVideoParentDimentions () {
-	var width = $("#videoDivNorth").height();;
+	var width = $("#videoDivNorth").width()-10;;
 	var height = $("#videoDivNorth").height();
 	$("#video-holder-div").height(height);
 	$("#video-holder-div").width('auto');
 	
+	$("#video-holder-div video").height(height);
+
 	
 	
 }
