@@ -264,9 +264,9 @@ function loadVideo(videoURL, isPublic) {
 	}
 }
 
-$( window ).resize(function() {
-	setVideoParentDimentions();
-});
+/*$( window ).resize(function() {
+	setVideoParentDimentions1();
+});*/
 
 function setVideoParentDimentions () {
 	var width = $("#videoDivNorth").height();;

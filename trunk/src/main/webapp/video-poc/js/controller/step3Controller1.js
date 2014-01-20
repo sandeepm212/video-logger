@@ -53,6 +53,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				 $('#dvview').layout();
 				var pageLayout = $('#layoutdiv').layout({	
 			        spacing_open:2,
+			        onresize : setVideoParentDimentions,
 					north :{
 						resizable: false,
 						slidable:false,
