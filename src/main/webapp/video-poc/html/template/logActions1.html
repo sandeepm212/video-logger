@@ -49,8 +49,7 @@
 		</section>
 		<section class="data-section">
 			<div class="panel-wrap">
-				<h2>
-					Captured moments
+				<div class="capturedPanel">					
 					<div class="f-right">
 						<a title="Preview logged video" id="preview" class="log-action"
 							href="javascript:void(0)" data-ng-click="preview()">Preview</a> <a
@@ -63,8 +62,8 @@
 							class="log-action" href="javascript:void(0)"
 							data-ng-click="saveVideoLog()">Submit log</a>	
 					</div>
-				</h2>
-				<div class="panel-body">
+				</div>
+				<div class="capturedPanelBody">
 					<table class="logg-table" id="clip-logger">
 						<thead>
 							<tr>
@@ -116,7 +115,7 @@
 
 </div>
 <div class="pane ui-layout-west">
-	<div class="pane ui-layout-north">
+	<div class="pane ui-layout-north" id="videoDivNorth">
 	
 	<div class="video-holder" id="video-holder-div">
 				<div id="helper"
@@ -133,7 +132,7 @@
 	</div>	
 	<div class="pane ui-layout-center">
 
-			<div class="logger-holder rounded-holder">
+			<div class="logger-holder">
 				<!-- <h2>
 					Logger
 				</h2> -->

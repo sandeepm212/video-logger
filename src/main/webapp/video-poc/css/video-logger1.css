@@ -182,11 +182,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	border:1px solid #b0b0b0;
 }
 .video-holder {
-	background-color: #D1D1D1;
-	border: 1px solid #B0B0B0;	
-	padding: 5px;
+	
 	text-align: center;
-	min-height: 200px;
+}
+
+#videoDivNorth{
+	overflow:hidden;
 }
 .actions {
 	float: none;
@@ -527,7 +528,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', end
 }
 .video-holder video
 {
-	width:100%;
+	width:auto;
 }
 ul.logging-nav {
     padding: 20px 0;
@@ -587,18 +588,21 @@ ul.logging-nav li.selected a
 {
 	margin-top:10px;
 }
-section.logger-section
-{
-	width:48%;
-}
-section.data-section
-{
-	width:52%;
-}
+
 .logger-holder
 {
 	margin:10px;
 }
+
+.capturedPanel{
+	font-size: 15px;
+}
+
+.capturedPanelBody {
+	/*min-height:200px;*/
+	padding:30px 5px 5px;
+}
+
 ul.logging-nav li.selected
 {
 	
