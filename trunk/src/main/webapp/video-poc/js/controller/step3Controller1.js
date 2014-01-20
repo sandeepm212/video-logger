@@ -75,6 +75,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				});
 				
 				//$('#layoutdiv').css("position","");
+				
+				setVideoParentDimentions();
 			}
 		}
 	}

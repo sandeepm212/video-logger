@@ -248,7 +248,7 @@ function loadVideo(videoURL, isPublic) {
 	videoObj = Popcorn.smart('#video-holder-div', url);
 	
 	$('#video-holder-div').slideDown(slideTime);
-	setVideoParentDimentions();
+	//setVideoParentDimentions();
 	
 	//Caching media properties once the media metadata are loaded
 	if (isPublic) {
@@ -269,9 +269,9 @@ $( window ).resize(function() {
 });
 
 function setVideoParentDimentions () {
-	var width = $(".logger-section").width() - 10;
-	var height = $("#video-holder-div").height() + 20;
-	$("#video-holder-div").height('auto');
+	var width = $("#videoDivNorth").height();;
+	var height = $("#videoDivNorth").height();
+	$("#video-holder-div").height(height);
 	$("#video-holder-div").width('auto');
 	
 	
