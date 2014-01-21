@@ -33,6 +33,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				    var valueSelected = this.value;
 				    if (valueSelected == "Pop") {
 				    	$('#image').css('display','block');
+				    }else{
+				    	$('#image').css('display','none');
 				    }
 				});
 				$('#helper').draggable({
@@ -124,6 +126,26 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		} else {
 			alert("The video has not yet started playing. Try logging after you have started playing the video");
 		}
+	}
+	
+	$scope.publishVideoLog = function (type) {
+		var d = new Date();
+		var pid = d.getTime();
+//		console.log(JSON.stringify($scope.selectedVideo));
+		$.ajax({
+			  contentType:"text/plain;charset=UTF-8",
+			  type: "POST",
+			  url: '/video-logger/getVideoLog?publish=true&pid='+pid,
+			  data: JSON.stringify($scope.selectedVideo),
+			  success: function (data) {
+				  console.log(data);
+				  window.open('/video-logger/getVideoLog?publish=true&show=y&pid='+pid,'_blank');
+			  },
+			  error: function (data) {
+//				  console.log(data);
+			  },
+			  dataType: "json"
+		});
 	}
 		
 	// Save the video logs
