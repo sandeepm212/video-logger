@@ -29,6 +29,7 @@ blockquote:before, blockquote:after, q:before, q:after {
 
 #layoutdiv{
 	height:100%;
+	font-size: 12px;
 }
 
 #dvview{
