@@ -380,12 +380,21 @@ th.tablesorter-header
 {
 	width:5%;
 }
-.log-action, .log-action:hover {
+.pub-action, .pub-action:hover {
 	color:#676767;
-	background:url(../images/submit.png) no-repeat left 3px;
+	background:url(../images/publish.png) no-repeat left 3px;
 	padding:0 0 0 18px;
 	margin-right:10px;
 }
+
+.log-action, .log-action:hover {
+	color:#676767;
+	background:url(../images/save_log.png) no-repeat left 3px;
+	padding:0 0 0 18px;
+	margin-right:10px;
+}
+
+
 #view-log {
 	background:url(../images/view.png) no-repeat left 3px;
 }
