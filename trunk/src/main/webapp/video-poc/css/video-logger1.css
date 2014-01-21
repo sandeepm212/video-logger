@@ -286,7 +286,7 @@ a.intime-btn, a.outtime-btn {
 	display:inline-block;
 	width:24px;
 	height:24px;
-	background:url(../images/clock.png) no-repeat 0 0;
+	background:url(../images/full-time.png) no-repeat 0 0;
 	vertical-align: middle;
 	margin:0 0 0 5px;
 }
