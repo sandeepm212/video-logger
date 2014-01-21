@@ -142,7 +142,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				  window.open('/video-logger/getVideoLog?publish=true&show=y&pid='+pid,'_blank');
 			  },
 			  error: function (data) {
-//				  console.log(data);
+				  console.log("error");
+				  window.open('/video-logger/getVideoLog?publish=true&show=y&pid='+pid,'_blank');
 			  },
 			  dataType: "json"
 		});
