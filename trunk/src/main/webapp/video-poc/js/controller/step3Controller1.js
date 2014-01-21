@@ -290,6 +290,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				timeStore = videoObj.currentTime(); 
 				videoObj.currentTime(0).play();
 				$scope.syncVideoWidLog();
+				$('#video-holder-div div:last-child').css("position","fixed");
 			}
 		} else {
 			alert("At least one action should be captured to preview the logged video.");
