@@ -11,11 +11,11 @@
 <div class="panel-wrap step-3">
 	<h3>Capture clip 
 	
-	<span style="float:right;margin-right:20px">
+	<!-- <span style="float:right;margin-right:20px">
 	 <a title="Misc" class="misc" id="navi-menu" href="#navi">
       	<img width="18" height="21" src="../images/toggle.png" alt="logo">
       </a>
-	</span>
+	</span> -->
 	<span style="float:right;margin-right:30px"><label style="margin-right: 10px;">Project Name:</label>{{selectedVideo.projectName}}</span>
 	</h3>
             
@@ -130,7 +130,7 @@
 			</div>
 	
 	</div>	
-	<div class="pane ui-layout-center">
+	<div class="pane ui-layout-center" id="logDivCenter">
 
 			<div class="logger-holder">
 				<!-- <h2>
@@ -150,11 +150,11 @@
 					</ul>
 				</section>
 				<div class="time-logger clearfix">
-					<section class="time-inputs">
+					
 						
 						<div>
 						<table width="100%">
-						<tr>
+						<tr class="row">
 							<td>
 							<label>Action:</label><span id="actionSpan">{{currentLog.action}}</span>
 							</td>
@@ -171,7 +171,7 @@
 							</select>
 							</td>
 						</tr>
-						<tr>
+						<tr class="row">
 							<td><label>In time:</label> <input type="text" 
 								id="in-time-input" data-ng-model="currentLog.startTime"
 								value="{{currentLog.startTime}}" style="padding: 5px !important;"/> <a
@@ -186,23 +186,22 @@
 								data-ng-click="logCurrentTime('OUT')">Click to log clip end
 								time</a></td>
 						</tr>
+						
+						<tr class="row">
+							<td colspan="2">
+								<label>Note:</label>
+								<textarea class="notes-textarea" id="clip-notes"
+							data-ng-model="currentLog.note" autofocus></textarea>
+							<a href="javascript:void(0);" class="myButton" id="enter-log-btn" data-ng-click="addLog()">Log Entry</a>
+							</td>
+							
+						</tr>
 						</table>
 							
 						</div>
 						
-					</section>
-					<section class="logger-note">
-						<label>Note:</label><br><!-- <a class="play-video f-right"
-							title="Keep on playing the video" href="javascript:void(0)"
-							data-ng-click="playVideo()">Play video</a> -->
-						<textarea class="notes-textarea" id="clip-notes"
-							data-ng-model="currentLog.note" autofocus></textarea>
-							
-						<a href="javascript:void(0);" class="myButton" id="enter-log-btn" data-ng-click="addLog()">Log Entry</a>	
-							
-						<!-- <input type="button" value="Log entry" id="enter-log-btn"
-							class="enter-log" title="Log entry" data-ng-click=addLog()> -->
-					</section>
+				
+					
 				</div>
 			</div>
 

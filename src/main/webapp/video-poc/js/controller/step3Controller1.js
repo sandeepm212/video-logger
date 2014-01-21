@@ -27,7 +27,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 					$('#outtime-btn').click();	
 				});
 				//js actions
-				$('#navi-menu').sidr({side: 'right',name: 'navi'});
+				//$('#navi-menu').sidr({side: 'right',name: 'navi'});
 				$('#eventSelect').on('change', function (e) {
 				    var optionSelected = $("option:selected", this);
 				    var valueSelected = this.value;
