@@ -189,6 +189,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 #videoDivNorth{
 	overflow:hidden;
 }
+
+#logDivCenter{
+	overflow:hidden;
+}
 .actions {
 	float: none;
 	margin:10px 0 0;
@@ -260,9 +264,10 @@ ul.added-action-list1 li {
 .time-inputs {
 	padding:10px;
 }
-.row {
-	margin-bottom:15px;
+.row td{
+	padding:5px;
 }
+
 .row label {
 	display:inline-block;
 	min-width:75px;
@@ -287,9 +292,9 @@ a.intime-btn, a.outtime-btn {
 .logger-note {
 	width:100%;
 }
-.logger-note textarea {
+.notes-textarea {
 	height: 46px;
-	width: 88%;
+	width: 60%;
 	padding:5px;
 	margin:5px 0;
 	border-radius:5px;
