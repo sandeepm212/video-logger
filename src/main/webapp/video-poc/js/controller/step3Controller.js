@@ -9,7 +9,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	$scope.init = function () {
 		console.log("intializing step3Controller...");
 		$scope.selectedVideo = sharedService.getVideo();		
-//		console.log($scope.selectedVideo);
+		console.log($scope.selectedVideo);
 		$('#navi').hide();
 		if (!videoObj) {
 			// Play Selected Video
@@ -23,9 +23,9 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 					duration = $scope.selectedVideo.duration;
 				}
 				loadVideo(videoURL, isPublic);
-				videoObj.on('pause', function() {
-					$('#outtime-btn').click();	
-				});
+//				videoObj.on('pause', function() {
+//					$('#outtime-btn').click();	
+//				});
 				//js actions
 				$('#navi-menu').sidr({side: 'right',name: 'navi'});
 				$('#eventSelect').on('change', function (e) {
@@ -85,7 +85,14 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		var selectedAction = $scope.selectedVideo.actions[index];
 		$scope.currentLog.action = selectedAction.name;
 		currentTime = videoObj.currentTime();
-//		console.log("currentTime:: " + currentTime);
+		
+		videoObj.listen( "timeupdate", function() {
+		    console.log("Time:::" +  this.currentTime() );
+		});
+		
+		console.log("----------------");
+		console.log("currentTime:: " + currentTime);
+		console.log("duration:: " + duration);
 		if(currentTime > 0 && currentTime < duration) {
 			$scope.currentLog.startTime = formatTime(currentTime);
 			$scope.currentLog.endTime = formatTime(currentTime);

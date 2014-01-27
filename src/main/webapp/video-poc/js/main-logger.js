@@ -247,6 +247,9 @@ function loadVideo(videoURL, isPublic) {
 	url = videoURL;
 	videoObj = Popcorn.smart('#video-holder-div', url);
 	
+//	videoObj = Popcorn.youtube('#video-holder-div', url);
+			  
+	
 	$('#video-holder-div').slideDown(slideTime);
 	setVideoParentDimentions();
 	
