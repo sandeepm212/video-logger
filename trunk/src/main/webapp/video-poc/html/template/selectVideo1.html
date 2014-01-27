@@ -61,6 +61,14 @@
 		</div>
 	</div>
 	
+	<h3><a href="#">Show Published Video</a></h3>
+	<div data-ng-controller="publishedVideosController">
+		<div class="video-options clearfix media-editor">
+			Select Published Video Log: <input type="file" id="logFile" name="file" /> <br><br>
+			<input type="button" value="Show Published Video" ng-click="showPublishedVideo()">
+		</div>
+	</div>
+	
 	</div>
 	<a href="javascript:void(0);" class="myButton" id="to-step-2-btn" data-ng-click="showStep2()">Go to Step 2</a>
 		

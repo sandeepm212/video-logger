@@ -143,14 +143,15 @@ myAppModule.run( function($rootScope, $location, sharedService) {
     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
     	var video = sharedService.getVideo();
     	if (video == null) {
+    		//alert("test" + next.templateUrl);
 			// no logged user, we should be going to #login
-	        if ( next.templateUrl == "/video-logger/video-poc/html/template/logActions.html" || next.templateUrl == "/video-logger/video-poc/html/template/videoActions.html" ) {
+	        if ( next.templateUrl == "/video-logger/video-poc/html/template/logActions1.html" || next.templateUrl == "/video-logger/video-poc/html/template/videoActions1.html" ) {
 	        		// not going to #step3, we should redirect now
 		          $location.path( "step1" );
 	        }
 	    } else if (sharedService.getActions().length == 0) {
 	    	$location.path( "step2" );
-	    }    
+	    }
     });
  })
 
