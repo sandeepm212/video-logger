@@ -25,7 +25,7 @@ jar {
 }
 
 jettyRun.contextPath = "video-logger"
-jettyRun.httpPort = 8080
+jettyRun.httpPort = 8081
 jettyRun.webDefaultXml = file("${project.webAppDir}/WEB-INF/jetty-webdefault.xml")
 
 jettyRun.dependsOn videoLoggerInfo
