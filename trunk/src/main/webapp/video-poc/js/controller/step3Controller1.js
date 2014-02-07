@@ -121,6 +121,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			$scope.currentLog.endTime = formatTime(currentTime);
 			$('.actions li').removeClass('selected');
 			$(event.currentTarget).addClass('selected');
+			$('#eventSelect option:eq(1)').prop('selected', true)
 		} else if(currentTime >= duration) {
 			alert("The video playing is over. You can't log time now. To log time, replay the video");
 		} else {
