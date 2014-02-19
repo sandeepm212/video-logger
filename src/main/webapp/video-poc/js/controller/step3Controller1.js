@@ -293,7 +293,11 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				videoObj.currentTime(0).play();
 				$scope.syncVideoWidLog();
 				$('#video-holder-div div:last-child').css("position","fixed");
-				$('#'+$('#videoDivNorth').children()[$('#videoDivNorth').children().length-1].id).css("position","fixed");
+				if(isVimeo || isYout){
+					$('#'+$('#videoDivNorth').children()[$('#videoDivNorth').children().length-1].id).css("position","fixed");
+				}
+					
+				
 			}
 		} else {
 			alert("At least one action should be captured to preview the logged video.");
@@ -356,6 +360,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		$('#back-to-logger').hide();
 		$('th:last-child, tr td:last-child', logTable).removeClass('hide');
 		$('tbody tr', logTable).removeClass('row-highlight');
+		$('.popcorn-pop').remove();
 	}
 	
 	$scope.viewLog = function () {

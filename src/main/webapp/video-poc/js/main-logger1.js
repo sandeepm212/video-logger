@@ -3,6 +3,7 @@ var CUE_IN = "IN";
 var CUE_OUT = "OUT";
 var previewCount=0;
 var isVimeo = false;
+var isYout = false;
 
 var VIDEO_TYPE_LOCAL = "LOCAL";
 var VIDEO_TYPE_WEB = "WEB";
@@ -240,6 +241,8 @@ function loadVideo(videoURL, isPublic) {
 	if(isPublic){
 		if(videoURL.contains('vimeo')){
 			isVimeo = true;
+		}else if(videoURL.contains('youtube')){
+			isYout = true;
 		}
 	}
 	
