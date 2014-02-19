@@ -27,7 +27,7 @@ var videoPath = '',
 		//localFilePath = 'http://localhost/projects/video-logger/assets/',
 		slideTime = 300,
 		fadeTime = 500,
-		currentProfile,
+		currentProfile;
 		
 
 function ActionProfile(id, name, actions) {
