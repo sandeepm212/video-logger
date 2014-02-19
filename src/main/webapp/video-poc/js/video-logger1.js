@@ -51,11 +51,8 @@ $(document).ready(function() {
 	$(document).keyup(function(e)
 	{
 		var pressedKey = String.fromCharCode(e.keyCode).toUpperCase();
-		if(e.target.localName != 'textarea'){
-			if(pressedKey=='L'){
-				$('#clip-notes').focus();
-			}
-			else if(allowedKeysRegex.test(pressedKey) && $('.actions .added-action-list1').children().length > 0)
+		if(e.target.id != 'clip-notes'){
+		if(allowedKeysRegex.test(pressedKey) && $('.actions .added-action-list1').children().length > 0)
 		{
 				
 			$('.actions .added-action-list1 li').filter(function() {
@@ -68,6 +65,11 @@ $(document).ready(function() {
 				
 				 }).click();
 		} 
+		}else if(e.target.id == 'clip-notes'){
+			if(e.keyCode==13){
+				$('#enter-log-btn').click();
+			}
+			
 		}
 	});
 	

@@ -293,6 +293,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				videoObj.currentTime(0).play();
 				$scope.syncVideoWidLog();
 				$('#video-holder-div div:last-child').css("position","fixed");
+				$('#'+$('#videoDivNorth').children()[$('#videoDivNorth').children().length-1].id).css("position","fixed");
 			}
 		} else {
 			alert("At least one action should be captured to preview the logged video.");
@@ -301,6 +302,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	
 	//Helper function to synchronize video with log record table
 	$scope.syncVideoWidLog = function () {
+		
+		//$('#'+$('#videoDivNorth').children()[$('#videoDivNorth').children().length-1].id).html("");
 		
 		videoObj.highlightrow({
 			start:1,
@@ -342,6 +345,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			}
 		
 		});	
+		
 		
 	}
 	

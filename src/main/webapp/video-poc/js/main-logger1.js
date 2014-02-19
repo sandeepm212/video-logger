@@ -1,6 +1,8 @@
 //variable declaration
 var CUE_IN = "IN";
 var CUE_OUT = "OUT";
+var previewCount=0;
+var isVimeo = false;
 
 var VIDEO_TYPE_LOCAL = "LOCAL";
 var VIDEO_TYPE_WEB = "WEB";
@@ -235,6 +237,12 @@ function showMessage(msg) {
 
 //Helper function to load a video either from local resource or from web
 function loadVideo(videoURL, isPublic) {
+	if(isPublic){
+		if(videoURL.contains('vimeo')){
+			isVimeo = true;
+		}
+	}
+	
 	url = videoURL;
 	videoObj = Popcorn.smart('#video-holder-div', url);
 	
@@ -263,7 +271,12 @@ function setVideoParentDimentions () {
 	var width = $("#videoDivNorth").width()-10;;
 	var height = $("#videoDivNorth").height();
 	$("#video-holder-div").height(height);
-	$("#video-holder-div").width('auto');
+	
+	if(isVimeo){
+		$("#video-holder-div").width(width);
+	}else{
+		$("#video-holder-div").width('auto');
+	}
 	
 	$("#video-holder-div video").height(height);
 
