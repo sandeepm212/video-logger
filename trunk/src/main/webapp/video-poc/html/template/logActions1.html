@@ -84,7 +84,7 @@
 						</thead>
 						<tbody>
 							<tr data-ng-repeat="log in selectedVideo.videoLogs" id="logRow{{$index}}"
-								data-ng-click="showLogVideo($index)">
+								data-ng-click="showLogVideo($index, $event)">
 								<td><span data-ng-if="hotKeyCharStyle($index) === ''">{{log.action}}</span>
 									<span style="background-color: {{hotKeyCharStyle($ index)"
 									class="hotkeyl" title=""
@@ -94,7 +94,7 @@
 								<td>{{log.endTime}}</td>
 								<td>{{log.note}}</td>
 								<td><a href="javascript:void(0)"
-									data-ng-click="deleteLog()" class="delete-cue hideText"
+									data-ng-click="deleteLog($index)" class="delete-cue hideText"
 									title="Delete this log entry">Delete this log entry</a></td>
 							</tr>
 						</tbody>
@@ -146,9 +146,10 @@
 				</h2> -->
 
 				<section class="actions">
-					<ul class="added-action-list1 clearfix">
+					<ul class="added-action-list1 clearfix" id="actionList">
 						<li data-ng-class="{'has-hot-key': hasHotKey(action)}"
 							data-ng-repeat="action in selectedVideo.actions"
+							data-actionname="{{action.name}}"
 							data-ng-click="applyAction($index, $event)">{{action.name}}
 							<span data-ng-if="hasHotKey(action)"
 							title="Key board shortcut for this action is {{action.hotKeyChar}}"
@@ -200,9 +201,14 @@
 								<label>Note:</label>
 								<input type="text"  style="padding: 5px !important;" size="84" id="clip-notes"
 							data-ng-model="currentLog.note" autofocus></input>
-							<a href="javascript:void(0);" class="myButton" id="enter-log-btn" data-ng-click="addLog()">Log Entry</a>
 							</td>
-							
+						</tr>
+						<tr>
+							<td colspan="2" align="right">
+								<a href="javascript:void(0);" class="myButton" id="enter-log-btn" data-ng-click="addLog()">Log Entry</a>
+								<a href="javascript:void(0);" style="display: none;" class="myButton" id="cancel-log-btn" data-ng-click="cancelUpdate()">Cancel</a>	
+								<a href="javascript:void(0);" style="display: none;" class="myButton" id="update-log-btn" data-ng-click="updateLog()">Update Entry</a>
+							</td>
 						</tr>
 						</table>
 							
