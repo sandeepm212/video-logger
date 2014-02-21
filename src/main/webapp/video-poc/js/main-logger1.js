@@ -261,14 +261,11 @@ function loadVideo(videoURL, isPublic) {
 			frameRate = videoObj.options.framerate ? videoObj.options.framerate : 30;// TBD : Calculation of framerate needs to be accurate
 			$('.loading-wrap').addClass('hide');
 			videoObj.controls(true);
-			
+			videoObj.preload("metadata");
 		});
 	}
 }
 
-/*$( window ).resize(function() {
-	setVideoParentDimentions1();
-});*/
 
 function setVideoParentDimentions () {
 	var width = $("#videoDivNorth").width()-10;;
