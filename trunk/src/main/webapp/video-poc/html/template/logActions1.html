@@ -85,7 +85,7 @@
 						</thead>
 						<tbody>
 							<tr data-ng-repeat="log in selectedVideo.videoLogs" id="logRow{{$index}}"
-								>
+								data-ng-click="selectRow($index, $event)">
 								<td><span data-ng-if="hotKeyCharStyle($index) === ''">{{log.action}}</span>
 									<span style="background-color: {{hotKeyCharStyle($ index)"
 									class="hotkeyl" title=""

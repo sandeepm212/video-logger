@@ -143,6 +143,11 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		});
 	}
 	
+	$scope.selectRow = function  (index, $event) {
+		videoObj.play($scope.selectedVideo.videoLogs[index].startTime);
+		
+	}
+	
 	$scope.copyLog = function (log) {
 		var newLog = new VideoLog();
 		newLog.action = log.action;
