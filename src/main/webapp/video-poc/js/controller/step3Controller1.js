@@ -148,6 +148,9 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		$('#actionList li').each(function(i) {
 			$(this).removeClass("selected");
 		});
+		if ($scope.lastSelectedRow != null) {
+			$($scope.lastSelectedRow).removeClass("selected");
+		}
 	}
 	
 	$scope.updateLog = function () {
