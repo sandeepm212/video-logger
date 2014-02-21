@@ -80,11 +80,12 @@
 								<th class="col-5">Out time</th>
 								<th class="col-3">Note</th>
 								<th class="col-4">&nbsp;</th>
+								<th class="col-4">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr data-ng-repeat="log in selectedVideo.videoLogs" id="logRow{{$index}}"
-								data-ng-click="showLogVideo($index, $event)">
+								>
 								<td><span data-ng-if="hotKeyCharStyle($index) === ''">{{log.action}}</span>
 									<span style="background-color: {{hotKeyCharStyle($ index)"
 									class="hotkeyl" title=""
@@ -93,9 +94,18 @@
 								<td>{{log.startTime}}</td>
 								<td>{{log.endTime}}</td>
 								<td>{{log.note}}</td>
-								<td><a href="javascript:void(0)"
+								
+									<td>
+									<a href="javascript:void(0)"
+									data-ng-click="showLogVideo($index, $event)" class="edit-cue hideText"
+									title="Edit this log entry">Edit this log entry</a>
+									</td>
+									<td><a href="javascript:void(0)"
 									data-ng-click="deleteLog($index)" class="delete-cue hideText"
 									title="Delete this log entry">Delete this log entry</a></td>
+								
+								
+								
 							</tr>
 						</tbody>
 						<tbody></tbody>
