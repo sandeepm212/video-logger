@@ -84,10 +84,13 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		}
 	}
 	
-	$scope.deleteLog = function(logToRemove) {
+	$scope.selectedLogIndex = -1;
+	$scope.deleteLog = function(index) {
 		if(confirm("Are you sure to delete this log entry?")) {
-			var index = $scope.selectedVideo.indexOf(logToRemove);
-			$scope.selectedVideo.splice(index, 1);			
+			$scope.selectedVideo.videoLogs.splice(index, 1);
+			if ($scope.selectedLogIndex == index) {
+				$scope.cancelUpdate();
+			}
 		}
 	}
 	
@@ -101,8 +104,58 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		videoObj.play();
 	}
 	
-	$scope.showLogVideo = function  (index) {
+	$scope.lastSelectedRow = null;
+	$scope.showLogVideo = function  (index, $event) {
 		videoObj.play($scope.selectedVideo.videoLogs[index].startTime);
+		if ($scope.lastSelectedRow != null) {
+			$($scope.lastSelectedRow).removeClass("selected");
+		}
+		$scope.lastSelectedRow = $event.currentTarget;
+		$($event.currentTarget).addClass("selected");
+		$scope.selectedLogIndex = index;
+		
+		$('#cancel-log-btn, #update-log-btn').show();
+		$('#enter-log-btn').hide();
+		
+		$scope.currentLog = $scope.copyLog($scope.selectedVideo.videoLogs[index]);
+		
+		$('#actionList li').each(function(i, element) {
+			if (element.dataset.actionname === $scope.currentLog.action) {
+				$(element).addClass("selected");
+			} else {
+				$(element).removeClass("selected");
+			}
+		});
+	}
+	
+	$scope.copyLog = function (log) {
+		var newLog = new VideoLog();
+		newLog.action = log.action;
+		newLog.note = log.note;
+		newLog.startTime = log.startTime;
+		newLog.endTime = log.endTime;
+		newLog.relativeX = log.relativeX;
+		newLog.relativeY = log.relativeY;
+		newLog.eventType = log.eventType;
+		
+		return newLog;
+	}
+	
+	$scope.cancelUpdate = function () {
+		$('#cancel-log-btn, #update-log-btn').hide();
+		$('#enter-log-btn').show();
+		$scope.currentLog = new VideoLog();
+		$('#actionList li').each(function(i) {
+			$(this).removeClass("selected");
+		});
+	}
+	
+	$scope.updateLog = function () {
+		$('#cancel-log-btn, #update-log-btn').hide();
+		$('#enter-log-btn').show();
+		$scope.selectedVideo.videoLogs[$scope.selectedLogIndex] = $scope.currentLog; 
+		
+		$scope.currentLog = new VideoLog();
 	}
 		
 	$scope.hasHotKey = function (action) {
