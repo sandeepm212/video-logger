@@ -4,7 +4,7 @@ $(document).ready(function() {
 	startInput = $('#in-time-input'),
 	endInput = $('#out-time-input'),
 	notesTextarea = $('#clip-notes'),
-	logTable = $('#clip-logger'),
+	
 	clipAction = $('#action-value'),
 	submitBtn = $('#submit-log'),
 	
@@ -13,11 +13,6 @@ $(document).ready(function() {
 	
 	//loading the existing video carousel
 	$('#video-carousel').jcarousel();
-	
-	//Calling the table sorter plugin
-	logTable.tablesorter({
-		headers:{ 3 : {sorter : false}, 4 : {sorter : false}}
-	});
 	
 		
 	//Load button click handler

@@ -495,6 +495,22 @@ ul.added-action-list1 li {
 	margin:0 0 0 10px;
 	float:right;
 }
+
+.edit-cue {
+	width:16px;
+	height:16px;
+	display:inline-block;
+	background:url(../images/edit.png) no-repeat 0 0;
+	margin:0 0 0 10px;
+	float:right;
+}
+
+.edit-cue {
+	float:none;
+	margin:0;
+	vertical-align: middle;
+}
+
 .delete-cue {
 	float:none;
 	margin:0;

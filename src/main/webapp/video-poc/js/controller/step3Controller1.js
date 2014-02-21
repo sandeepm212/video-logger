@@ -80,6 +80,21 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				//$('#layoutdiv').css("position","");
 				
 				setVideoParentDimentions();
+				// $scope.syncVideoWidLog();
+				
+				  $('#clip-logger').tablesorter({
+						headers:{ 3 : {sorter : false}, 4 : {sorter : false}},
+						sortList: [
+						          
+						           [0, 0]
+						       ],
+						       selectorHeaders: '> thead th, > thead td',
+
+						       // jQuery selector of content within selectorHeaders
+						       // that is clickable to trigger a sort.
+						       selectorSort: "th, td",
+						       debug:true
+					});
 			}
 		}
 	}
@@ -170,6 +185,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		videoObj.pause();
 		var selectedAction = $scope.selectedVideo.actions[index];
 		$scope.currentLog.action = selectedAction.name;
+		
 		currentTime = videoObj.currentTime();
 //		console.log("currentTime:: " + currentTime);
 		if(currentTime > 0 && currentTime < duration) {
@@ -177,7 +193,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			$scope.currentLog.endTime = formatTime(currentTime);
 			$('.actions li').removeClass('selected');
 			$(event.currentTarget).addClass('selected');
-			$('#eventSelect option:eq(1)').prop('selected', true)
+			$scope.currentLog.eventType = "Subtitle";
 		} else if(currentTime >= duration) {
 			alert("The video playing is over. You can't log time now. To log time, replay the video");
 		} else {
@@ -285,15 +301,12 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		if ($scope.selectedVideo.videoLogs == null) {
 			$scope.selectedVideo.videoLogs = [];
 		}
-		$scope.selectedVideo.videoLogs.push($scope.currentLog);
-		$scope.currentLog = new VideoLog();
+		$scope.selectedVideo.videoLogs.push($scope.currentLog);		
 		$('.actions li').removeClass('selected');
-		$('#image').css('display','none');
-		
-		 $("#content-box").animate({'width': 0},1,function(){
-	           $("#content-box").css('display','none');	         
-	           logOpened = false;
-	       });
+		$('#image').css('display','none');		 
+		 sortTable();
+		 $scope.syncVideoWidLog();
+		 $scope.currentLog = new VideoLog();
 		 
 	}
 	
@@ -344,17 +357,16 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			$('.logger-holder, section.left, #preview, #view-log, #submit-log').hide();
 			$('section.right').css('width', '100%');
 			$('#back-to-logger').show();
+			$('th:nth-child(5), tr td:nth-child(5)', logTable).addClass('hide');
 			$('th:last-child, tr td:last-child', logTable).addClass('hide');
 			if (videoObj) {
 				timeStore = videoObj.currentTime(); 
 				videoObj.currentTime(0).play();
 				$scope.syncVideoWidLog();
-				$('#video-holder-div div:last-child').css("position","fixed");
+				$('#video-holder-div div').css("position","fixed");
 				if(isVimeo || isYout){
 					$('#'+$('#videoDivNorth').children()[$('#videoDivNorth').children().length-1].id).css("position","fixed");
 				}
-					
-				
 			}
 		} else {
 			alert("At least one action should be captured to preview the logged video.");
@@ -378,8 +390,13 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			videoObj.highlightrow({
 				start:inTime,
 				end:outTime,
-				index:index
-			});			
+			});	
+			if(typeof log.trackId == 'undefined'){
+				log.trackId = "";
+			}else{
+				videoObj.removeTrackEvent(log.trackId);
+				log.trackId="";
+			}
 			if(log.trackId == ""){
 			if (log.eventType == "Subtitle") {
 				videoObj.subtitle({
@@ -418,8 +435,9 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		//$('section.right').css('width', '85%');
 		$('#back-to-logger').hide();
 		$('th:last-child, tr td:last-child', logTable).removeClass('hide');
+		$('th:nth-child(5), tr td:nth-child(5)', logTable).removeClass('hide');
 		$('tbody tr', logTable).removeClass('row-highlight');
-		$('.popcorn-pop').remove();
+		
 	}
 	
 	$scope.viewLog = function () {
@@ -459,3 +477,16 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 	
 	$scope.init();
 });
+
+function sortTable(){
+	logTable = $('#clip-logger');
+	logTable.trigger("update"); 
+     // set sorting column and direction, this will sort on the first and third column 
+//     var sorting = [[2,1],[0,0]]; 
+//     // sort on the first column 
+//     logTable.trigger("sorton",[sorting]); 
+	
+	
+	//Calling the table sorter plugin
+   
+}
