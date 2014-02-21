@@ -225,6 +225,7 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 		videoObj.play();
 		$scope.currentLog.relativeX = relativeX;
 		$scope.currentLog.relativeY = relativeY;
+		$scope.currentLog.trackId="";
 		if ($scope.selectedVideo.videoLogs == null) {
 			$scope.selectedVideo.videoLogs = [];
 		}
@@ -323,12 +324,13 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 				end:outTime,
 				index:index
 			});			
+			if(log.trackId == ""){
 			if (log.eventType == "Subtitle") {
 				videoObj.subtitle({
 	    	         start: log.startTime,
 	    	          end: log.endTime,
 	    	          text: log.note
-	    	       });
+	    	       });				
 			} else if(log.eventType == "Footnote") {
 				videoObj.footnote({
 					  start: log.startTime,
@@ -347,7 +349,8 @@ myAppModule.controller('step3Controller', function($scope, sharedService, $locat
 			        icon:"../css/images/pointer.png"
 				});
 			}
-		
+			log.trackId = videoObj.getLastTrackEventId();
+			}
 		});	
 		
 		
