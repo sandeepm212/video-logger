@@ -61,6 +61,7 @@ myAppModule.service('sharedService', function ($http) {
     	var promise = $http({method: 'GET', url: '/video-logger/getVideoLog'}).
 				  	  	success(function(data, status, headers, config) {
 				  		  if (data != null) {
+				  			data.sort(SortByName);
 				  			  angular.forEach(data, function(video) {
 			  				  if (video.sourceType != null) {
 			  					  video.mediaIcon = video.sourceType.toLowerCase() +  "-icon";
@@ -77,3 +78,9 @@ myAppModule.service('sharedService', function ($http) {
         return promise; 
     };    
 });
+
+function SortByName(a, b){
+	  var aName = parseInt(a.lastSavedDate.toLowerCase());
+	  var bName = parseInt(b.lastSavedDate.toLowerCase()); 
+	  return ((aName > bName) ? -1 : ((aName < bName) ? 1 : 0));
+	}

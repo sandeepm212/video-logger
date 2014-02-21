@@ -17,6 +17,15 @@ public class Video {
 	private String duration;
 	private String title;
 	private String sourceType;
+	private String lastSavedDate;
+
+	public String getLastSavedDate() {
+		return lastSavedDate;
+	}
+
+	public void setLastSavedDate(String lastSavedDate) {
+		this.lastSavedDate = lastSavedDate;
+	}
 
 	public String getDuration() {
 		return duration;
