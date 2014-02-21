@@ -239,9 +239,9 @@ function showMessage(msg) {
 //Helper function to load a video either from local resource or from web
 function loadVideo(videoURL, isPublic) {
 	if(isPublic){
-		if(videoURL.contains('vimeo')){
+		if(videoURL.indexOf('vimeo.com') != -1){
 			isVimeo = true;
-		}else if(videoURL.contains('youtube')){
+		} else if(videoURL.indexOf('youtube.com') != -1){
 			isYout = true;
 		}
 	}
