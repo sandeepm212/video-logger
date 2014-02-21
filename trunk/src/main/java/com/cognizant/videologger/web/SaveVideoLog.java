@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -61,8 +62,10 @@ public class SaveVideoLog extends HttpServlet {
 				newProjId = System.currentTimeMillis() + "" + videoLog.getUserId();
 				videoLog.setProjectId(newProjId);
 			}
+			videoLog.setLastSavedDate(new Date().getTime()+"");
 			ApplicationContextListener.VIDEO_LOG_PROJECTS.put(videoLog.getProjectId() + "" + videoLog.getUserId(), videoLog);
 		}
+		
 		String gsonData = gson.toJson(ApplicationContextListener.VIDEO_LOG_PROJECTS.values());
 		Utils.writeToFile(gsonData, new File("videolog.data"));
 		

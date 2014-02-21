@@ -46,7 +46,7 @@ $(document).ready(function() {
 	$(document).keyup(function(e)
 	{
 		var pressedKey = String.fromCharCode(e.keyCode).toUpperCase();
-		if(e.target.id != 'clip-notes'){
+		if(e.target.localName != 'input'){
 		if(allowedKeysRegex.test(pressedKey) && $('.actions .added-action-list1').children().length > 0)
 		{
 				
