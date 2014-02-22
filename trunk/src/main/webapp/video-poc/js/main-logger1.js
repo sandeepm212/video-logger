@@ -42,6 +42,9 @@ function ActionProfile(id, name, actions) {
 var actionProfiles = [];
 actionProfiles.push(new ActionProfile("cricket", "Cricket", cricketActionProfile));
 actionProfiles.push(new ActionProfile("soccer", "Soccer", soccerActionProfile));
+actionProfiles.push(new ActionProfile("Rugby", "Rugby", rugbyActionProfile));
+actionProfiles.push(new ActionProfile("Football", "Football", footballActionProfile));
+actionProfiles.push(new ActionProfile("Basketball", "Basketball", basketballActionProfile));
 	
 /**
  * Styles to be applied for every Action 
