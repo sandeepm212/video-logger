@@ -1,0 +1,41 @@
+#main {
+  width: 97%;
+}
+#main p, #main div {
+  font-size: 2em;
+}
+#main p a, #main div a {
+  font-weight: bold;
+}
+#main pre {
+  font-size: 3em;
+}
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+body.firefox a {
+  font-weight: normal;
+}
+
+#main {
+  color: black;
+}
+#main a {
+  font-weight: bold;
+}
+#main a:hover {
+  color: red;
+}
+
+.bam {
+  background: url('/images/foo.png'), -webkit-gradient(linear, 0% 0%, 100% 100%, color-stop(0%, #333333), color-stop(100%, #00cc00)), -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 100, color-stop(0%, #cc0000), color-stop(100%, #ffffff));
+  background: url('/images/foo.png'), -webkit-linear-gradient(top left, #333333, #00cc00), -webkit-radial-gradient(#cc0000, #ffffff 100px);
+  background: url('/images/foo.png'), -moz-linear-gradient(top left, #333333, #00cc00), -moz-radial-gradient(#cc0000, #ffffff 100px);
+  background: url('/images/foo.png'), -o-linear-gradient(top left, #333333, #00cc00), -o-radial-gradient(#cc0000, #ffffff 100px);
+  background: url('/images/foo.png'), linear-gradient(top left, #333333, #00cc00), radial-gradient(#cc0000, #ffffff 100px);
+}
