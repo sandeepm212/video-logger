@@ -1,0 +1,53 @@
+/*
+Syntax error: File to import not found or unreadable: bootstrap-mincer.
+              Load paths:
+                C:/Workspace/projects/web/sass
+                jar:file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/compass-0.12.2/frameworks/compass/stylesheets
+                jar:file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/compass-0.12.2/frameworks/blueprint/stylesheets
+                Compass::SpriteImporter
+                C:/Workspace/projects/web/src/main/sass
+        on line 1 of C:/Workspace/projects/web/src/main/sass/bootstrap-sass-3.2.0/test/dummy_node_mincer/application.css.ejs.scss
+
+1: @import "bootstrap-mincer";
+2: @import "bootstrap";
+3: 
+4: #image-retina {
+5:   @include img-retina("apple-touch-icon-144-precomposed.png", "apple-touch-icon-144-precomposed.png", 72px, 72px);
+6: }
+
+Backtrace:
+C:/Workspace/projects/web/src/main/sass/bootstrap-sass-3.2.0/test/dummy_node_mincer/application.css.ejs.scss:1
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/import_node.rb:67:in `import'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/import_node.rb:28:in `imported_file'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/import_node.rb:37:in `css_import?'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/perform.rb:217:in `visit_import'
+org/jruby/RubyKernel.java:2109:in `send'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/base.rb:37:in `visit'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/perform.rb:100:in `visit'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+org/jruby/RubyArray.java:2339:in `collect'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/perform.rb:109:in `visit_children'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/perform.rb:121:in `with_environment'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/perform.rb:108:in `visit_children'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/base.rb:37:in `visit'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/perform.rb:128:in `visit_root'
+org/jruby/RubyKernel.java:2109:in `send'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/base.rb:37:in `visit'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/perform.rb:100:in `visit'
+org/jruby/RubyKernel.java:2109:in `send'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/visitors/perform.rb:7:in `visit'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/tree/root_node.rb:20:in `render'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/engine.rb:315:in `_render'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/engine.rb:262:in `render'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/plugin/compiler.rb:341:in `update_stylesheet'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/plugin/compiler.rb:203:in `update_stylesheets'
+org/jruby/RubyArray.java:1620:in `each'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/plugin/compiler.rb:201:in `update_stylesheets'
+file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/sass-3.2.8/lib/sass/plugin.rb:81:in `update_stylesheets'
+<script>:29:in `(root)'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: File to import not found or unreadable: bootstrap-mincer.\A               Load paths:\A                 C:/Workspace/projects/web/sass\A                 jar:file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/compass-0.12.2/frameworks/compass/stylesheets\A                 jar:file:C:/Users/mandrs01/.m2/repository/org/jasig/maven/sass-maven-plugin/1.1.1/sass-maven-plugin-1.1.1.jar!/gems/compass-0.12.2/frameworks/blueprint/stylesheets\A                 Compass::SpriteImporter\A                 C:/Workspace/projects/web/src/main/sass\A         on line 1 of C:/Workspace/projects/web/src/main/sass/bootstrap-sass-3.2.0/test/dummy_node_mincer/application.css.ejs.scss\A \A 1: @import \"bootstrap-mincer\";\A 2: @import \"bootstrap\";\A 3: \A 4: #image-retina {\A 5:   @include img-retina(\"apple-touch-icon-144-precomposed.png\", \"apple-touch-icon-144-precomposed.png\", 72px, 72px);\A 6: }"; }

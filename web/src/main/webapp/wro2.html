@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web Frameworks Comparison</title>
+    <link rel="stylesheet" type="text/css" href="/wro/groupName.css" />
+    <script type="text/javascript" src="/wro/groupName.js"></script>
+    <style type="text/css">
+    	body {
+  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding: 20px 50px 150px;
+  font-size: 13px;
+  text-align: center;
+  background: #E3CAA1;
+}
+
+ul {
+  text-align: left;
+  display: inline;
+  margin: 0;
+  padding: 15px 4px 17px 0;
+  list-style: none;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+ul li {
+  font: bold 12px/18px sans-serif;
+  display: inline-block;
+  margin-right: -4px;
+  position: relative;
+  padding: 15px 20px;
+  background: #fff;
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+ul li:hover {
+  background: #555;
+  color: #fff;
+}
+ul li ul {
+  padding: 0;
+  position: absolute;
+  top: 48px;
+  left: 0;
+  /* width: 150px; */
+  z-index:1000;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transiton: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -transition: opacity 0.2s;
+}
+
+ul li ul {
+	 display: none;
+    opacity: 1;
+    z-index: 1000;
+    
+    left: 0 !important;
+    right: 0 !important;
+    background-color: #42403f;
+    
+    border: 1px solid #3a3837;
+    
+     bottom: auto;
+    left: 0;
+    right: auto;
+    top: 100%;
+    
+    position: absolute;
+    
+    list-style: none outside none !important;
+    margin: 0 !important;
+    outline: 0 none !important;
+    padding: 0 !important;
+}
+
+ul li ul li {
+	position: relative;
+	
+}
+ul li ul li { 
+  background: #555; 
+  display: block; 
+  color: #fff;
+  text-shadow: 0 -1px 0 #000;
+}
+ul li ul li:hover { background: #666; }
+ul li:hover ul {
+  display: block;
+  opacity: 1;
+  /* width: 400px; */
+  /* left: -146px; */
+  visibility: visible;
+}
+
+ul li ul li {
+  float:left;
+  position: relative;
+}
+
+.sub-menu {
+    left: 0 !important;
+    right: 0 !important;
+}
+    </style>
+  </head>
+  <body>
+    //Body
+    
+    <ul><li>Home</li>
+  <li>About</li>
+  <li>
+    Portfolio
+    <ul class="sub-menu">
+      <li>Web Design</li>
+      <li>Web Development</li>
+      <li>Illustrations</li>
+    </ul>
+  </li>
+  <li>Blog</li>
+  <li>Contact</li>
+</ul>
+
+  </body>
+</html>
